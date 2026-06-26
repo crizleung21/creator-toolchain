@@ -1,0 +1,23 @@
+# slide-deck Config
+
+- rigor: `standard`
+- minimum_acceptance_criteria: 3
+- recommended_handoff_target: `creator-paul-loop`
+
+## Required Sections
+
+- Goal
+- Context
+- Scope
+- Out of Scope
+- Acceptance Criteria
+- Risks
+- Open Questions
+- Handoff Target
+
+## Optional Sections
+
+- Source Assets
+- Stakeholders
+- Timeline
+- Rollback
