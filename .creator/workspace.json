@@ -1,0 +1,10 @@
+{
+  "schema_version": "0.1.0",
+  "workspace_id": "creator-toolchain",
+  "display_name": "Creator Toolchain",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "publishable_template",
+  "state_contract": ".creator/*.json",
+  "source_map": "docs/source-analysis/christopherkahler-toolchain-map.md",
+  "active_plan": "IMPLEMENTATION_PLAN.md"
+}

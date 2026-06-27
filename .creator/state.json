@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "repository_workflow_state",
+  "active_projects": ["creator-toolchain-implementation"],
+  "blocked_projects": [],
+  "last_pulse": null,
+  "drift": {
+    "score": 0,
+    "level": "green",
+    "notes": "Initial state surface."
+  }
+}

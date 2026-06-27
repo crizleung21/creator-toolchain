@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "repository_workflow_state",
+  "items": [
+    {
+      "id": "BACKLOG-001",
+      "title": "Validate plugin manifest against current Codex schema",
+      "phase": 5,
+      "status": "pending_external_schema_validation"
+    }
+  ]
+}
