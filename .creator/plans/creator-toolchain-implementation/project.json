@@ -1,0 +1,8 @@
+{
+  "schema_version": "0.1.0",
+  "project_id": "creator-toolchain-implementation",
+  "source_skill": "creator-seed-incubator",
+  "handoff_target": "creator-paul-loop",
+  "active_sequence": 1,
+  "manifest_policy": "creator-native; do not copy paul.toml or paul.json"
+}

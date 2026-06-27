@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.1.0",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "repository_workflow_state",
+  "items": [
+    {
+      "id": "BACKLOG-001",
+      "title": "Complete public plugin release gates",
+      "phase": "public-release",
+      "status": "deferred",
+      "notes": "Local schema/install/discovery validation passed. Public release still requires license and manual Codex App behavior/UI acceptance."
+    }
+  ]
+}

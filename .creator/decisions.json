@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1.0",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "repository_workflow_state",
+  "decisions": [
+    {
+      "decision_id": "DEC-001",
+      "date": "2026-06-26",
+      "title": "Use Creator-native .creator manifests instead of paul.toml or paul.json",
+      "status": "accepted",
+      "rationale": "Avoid inheriting upstream version drift while preserving PAUL closure semantics."
+    },
+    {
+      "decision_id": "DEC-002",
+      "date": "2026-06-27",
+      "title": "Use repo-local skills as the authoritative development source",
+      "status": "accepted",
+      "rationale": "Keep .agents/skills authoritative, generate the plugin skill mirror deterministically, and preserve .creator as the repo-local state contract."
+    },
+    {
+      "decision_id": "DEC-003",
+      "date": "2026-06-27",
+      "title": "Separate local stabilization from public plugin release",
+      "status": "accepted",
+      "rationale": "Treat local schema, install, discovery, privacy, and payload validation as complete while retaining license and manual Codex App behavior/UI review as explicit public-release gates."
+    }
+  ]
+}

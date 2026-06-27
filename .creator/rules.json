@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.1.0",
+  "owner_skill": "creator-rule-router",
+  "privacy_class": "repository_contract",
+  "domains": [
+    {
+      "domain_id": "GLOBAL",
+      "enabled": true,
+      "priority": 100,
+      "trigger_keywords": [],
+      "rules": [
+        {
+          "rule_id": "GLOBAL-001",
+          "severity": "high",
+          "text": "Do not silently mutate .creator/*.json; propose state changes unless the active workflow owns that surface."
+        },
+        {
+          "rule_id": "GLOBAL-002",
+          "severity": "high",
+          "text": "Do not package private .creator state, upstream research clones, .DS_Store, caches, or local editor metadata."
+        }
+      ],
+      "commands": [],
+      "exclude_patterns": [],
+      "decision_refs": ["DEC-001"]
+    },
+    {
+      "domain_id": "creator-toolchain",
+      "enabled": true,
+      "priority": 80,
+      "trigger_keywords": ["creator-toolchain", "skill", "plugin", "Phase 1", "Phase 5"],
+      "rules": [
+        {
+          "rule_id": "CT-001",
+          "severity": "high",
+          "text": "Phase 1 must prove Seed to Paul closure before relying on hooks, MCP, or plugin packaging."
+        }
+      ],
+      "commands": [
+        {
+          "command_id": "validate-creator-toolchain",
+          "trigger": "validate creator toolchain",
+          "workflow": "python3 scripts/validate_creator_toolchain.py",
+          "status": "active"
+        }
+      ],
+      "exclude_patterns": [],
+      "decision_refs": []
+    }
+  ],
+  "staged_proposals": [],
+  "decision_log": []
+}

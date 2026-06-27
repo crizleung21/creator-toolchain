@@ -1,36 +1,30 @@
 # Manifest Schema Validation
 
-## Status
+## Evidence Header
 
-Pass for local Codex CLI marketplace discovery and install smoke test on 2026-06-26. Re-run before public release.
+- status: `PASS_LOCAL`
+- tested_at: `2026-06-27T15:12:46+0800`
+- tested_commit: `ab507f6807b838bf3b4d04a65ac28e45c7e1cd44`
+- operating_system: `macOS 26.5.1 (25F80)`
+- codex_cli: `0.142.3`
+- python: `3.12.3`
+- manifest_sha256: `39b97cbd956841eb7995349c159e8344ecfc1dde4e97c22e5a4f6e9996a608cc`
+- official_reference: `https://developers.openai.com/codex/plugins/build`
 
-## Requirement
-
-Before release, validate `plugin/creator-toolchain/.codex-plugin/plugin.json` against the current official schema and record the command, source, date, and result here.
-
-## Current Evidence
-
-- Manifest location: `plugin/creator-toolchain/.codex-plugin/plugin.json`
-- Skills location: `plugin/creator-toolchain/skills/`
-- Repo-local marketplace: `.agents/plugins/marketplace.json`
-- Official reference: https://developers.openai.com/codex/plugins/build
-- Schema risk removed: no custom top-level `release_gates` field in manifest.
-
-## CLI Evidence
-
-Executed with temporary `CODEX_HOME` to avoid mutating the user's real Codex config:
+## Commands and Results
 
 ```text
-codex plugin marketplace add /Users/criz/Desktop/creator-toolchain --json
-codex plugin list --available --json
-codex plugin add creator-toolchain --marketplace creator-toolchain-local --json
-codex plugin list --json
+python3 $HOME/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py plugin/creator-toolchain
+exit: 0
+result: Plugin validation passed
+
+python3 scripts/validate_creator_toolchain.py --scope plugin
+exit: 0
+result: manifest, marketplace, mirror parity, and package hygiene passed
 ```
 
-Observed:
+The manifest uses `name: creator-toolchain`, strict-semver prerelease version `1.0.0-draft`, `skills: ./skills/`, and a populated `interface` object. Hooks, apps, and MCP server fields are absent because no reviewed companion configuration is packaged.
 
-- marketplace name: `creator-toolchain-local`
-- plugin id: `creator-toolchain@creator-toolchain-local`
-- version: `1.0.0-draft`
-- installed: `true`
-- enabled: `true`
+## Limitation
+
+This proves local schema ingestion and package validation for the tested Codex CLI. It is not public Plugin Directory approval. Re-run against the then-current official validator before any public release.

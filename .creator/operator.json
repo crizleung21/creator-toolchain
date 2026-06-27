@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1.0",
+  "owner": "workspace-user",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "publishable_template",
+  "preferences": {
+    "language": "workspace-default",
+    "final_output_style": "workspace-default",
+    "require_evidence_refs": true
+  }
+}

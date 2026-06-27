@@ -7,6 +7,9 @@ This repository is `creator-toolchain`, a Codex-native creator workflow system f
 ## Operating Principles
 
 - Use structured planning before non-trivial implementation.
+- Treat `.agents/skills/` as the authoritative development source for Creator Toolchain skills.
+- Generate `plugin/creator-toolchain/skills/` with `python3 scripts/sync_plugin_skills.py --write`; do not hand-edit the plugin skill mirror.
+- Do not enable repo-local and plugin copies of the same skill together except during an explicit collision or provenance test.
 - Use `creator-orchestrator` when workflow selection is unclear.
 - Use `creator-seed-incubator` for raw ideas and typed planning.
 - Use `creator-paul-loop` for implementation from an accepted plan.

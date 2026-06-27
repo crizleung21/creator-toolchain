@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "repository_workflow_state",
+  "active_projects": [],
+  "blocked_projects": [],
+  "last_pulse": "2026-06-27",
+  "drift": {
+    "score": 0,
+    "level": "green",
+    "notes": "Phase 0-9 stabilization closed with local validation complete; public release gates are deferred."
+  }
+}

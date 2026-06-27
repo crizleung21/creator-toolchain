@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1.0",
+  "owner_skill": "creator-base-workspace",
+  "privacy_class": "repository_workflow_state",
+  "projects": [
+    {
+      "project_id": "creator-toolchain-implementation",
+      "title": "Implement Creator Toolchain Phase 1-5",
+      "type": "creator-tooling",
+      "status": "completed",
+      "plan_path": ".creator/plans/creator-toolchain-implementation/PLANNING.md",
+      "last_summary": ".creator/plans/creator-toolchain-implementation/SUMMARY-001.md",
+      "last_updated": "2026-06-27"
+    },
+    {
+      "project_id": "creator-toolchain-stabilization",
+      "title": "Stabilize Creator Toolchain and preserve six-tool capabilities",
+      "type": "creator-tooling",
+      "status": "completed",
+      "plan_path": ".creator/plans/creator-toolchain-stabilization/PLANNING.md",
+      "last_summary": ".creator/plans/creator-toolchain-stabilization/SUMMARY-001.md",
+      "last_updated": "2026-06-27"
+    }
+  ]
+}

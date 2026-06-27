@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.1.0",
+  "project_id": "creator-toolchain-stabilization",
+  "source_skill": "creator-paul-loop",
+  "handoff_target": "creator-paul-loop",
+  "active_sequence": 1,
+  "status": "completed",
+  "manifest_policy": "repo-local .agents/skills is authoritative; plugin skills are generated"
+}

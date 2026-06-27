@@ -1,68 +1,25 @@
 #!/usr/bin/env python3
-"""Validate the Creator Toolchain scaffold.
-
-This validator checks repository artifacts, JSON state surfaces, skill metadata,
-and plugin packaging hygiene. It intentionally does not validate the live Codex
-plugin schema; that remains a Phase 5 external freshness gate.
-"""
+"""Validate Creator Toolchain repository, state, and plugin contracts."""
 
 from __future__ import annotations
 
+import argparse
 import json
+import re
 import sys
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
+
+try:
+    from sync_plugin_skills import SKILLS, SyncError, synchronize
+except ImportError:  # Imported as scripts.validate_creator_toolchain in tests.
+    from scripts.sync_plugin_skills import SKILLS, SyncError, synchronize
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
-REQUIRED_FILES = [
-    "AGENTS.md",
-    "README.md",
-    "IMPLEMENTATION_PLAN.v0.4.1.md",
-    "SOURCE_TRACEABILITY_AND_AUDIT.md",
-    "docs/source-analysis/christopherkahler-toolchain-map.md",
-    "docs/phase-1-test-prompts.md",
-    "docs/phase-1-acceptance-checklist.md",
-    "docs/examples/character-image-slide-project.md",
-    ".creator/workspace.json",
-    ".creator/projects.json",
-    ".creator/entities.json",
-    ".creator/state.json",
-    ".creator/psmm.json",
-    ".creator/operator.json",
-    ".creator/backlog.json",
-    ".creator/surfaces.json",
-    ".creator/decisions.json",
-    ".creator/rules.json",
-    ".creator/plans/creator-toolchain-implementation/project.json",
-    ".creator/plans/creator-toolchain-implementation/activity_ledger.jsonl",
-    ".creator/plans/creator-toolchain-implementation/PLANNING.md",
-    ".creator/plans/creator-toolchain-implementation/SEED-STATE.md",
-    ".creator/plans/creator-toolchain-implementation/HANDOFF.md",
-    ".creator/plans/creator-toolchain-implementation/PLAN-001.md",
-    ".creator/plans/creator-toolchain-implementation/UNIFY-001.md",
-    ".creator/plans/creator-toolchain-implementation/SUMMARY-001.md",
-    ".agents/plugins/marketplace.json",
-    "plugin/creator-toolchain/.codex-plugin/plugin.json",
-    "plugin/creator-toolchain/README.md",
-    "plugin/creator-toolchain/release-evidence/manifest-schema-validation.md",
-    "plugin/creator-toolchain/release-evidence/package-contents-audit.md",
-    "plugin/creator-toolchain/release-evidence/privacy-sanitization-audit.md",
-    "scripts/validate_creator_toolchain.py",
-    "scripts/materialize_seed_type_refs.py",
-]
-
-SKILLS = [
-    "creator-orchestrator",
-    "creator-seed-incubator",
-    "creator-paul-loop",
-    "creator-base-workspace",
-    "creator-rule-router",
-    "creator-skillsmith-factory",
-    "creator-aegis-audit",
-]
-
-SEED_TYPES = [
+SEED_TYPES = (
     "slide-deck",
     "ai-image-system",
     "characterlock-system",
@@ -76,9 +33,22 @@ SEED_TYPES = [
     "workflow",
     "utility",
     "research-system",
-]
+)
 
-JSON_FILES = [
+REPO_REQUIRED_FILES = (
+    "AGENTS.md",
+    "README.md",
+    "IMPLEMENTATION_PLAN.md",
+    "docs/source-analysis/christopherkahler-toolchain-map.md",
+    "docs/qa/capability-matrix.md",
+    "docs/qa/skill-contract-tests.md",
+    "docs/fixtures/seed/character-image-slide-project.md",
+    "scripts/materialize_seed_type_refs.py",
+    "scripts/sync_plugin_skills.py",
+    "scripts/validate_creator_toolchain.py",
+)
+
+STATE_FILES = (
     ".creator/workspace.json",
     ".creator/projects.json",
     ".creator/entities.json",
@@ -89,168 +59,409 @@ JSON_FILES = [
     ".creator/surfaces.json",
     ".creator/decisions.json",
     ".creator/rules.json",
-    ".creator/plans/creator-toolchain-implementation/project.json",
-    "plugin/creator-toolchain/.codex-plugin/plugin.json",
-    ".agents/plugins/marketplace.json",
-]
+)
 
-DISALLOWED_PACKAGE_PARTS = {"upstream", ".creator", ".DS_Store", "__pycache__"}
-SCHEMA_VERSION_EXEMPT = {
-    "plugin/creator-toolchain/.codex-plugin/plugin.json",
-    ".agents/plugins/marketplace.json",
+STALE_ACTIVE_PATHS = (
+    "docs/phase-1-test-prompts.md",
+    "docs/phase-1-acceptance-checklist.md",
+    "docs/examples/character-image-slide-project.md",
+)
+
+DISALLOWED_PACKAGE_NAMES = {
+    ".agents",
+    ".creator",
+    ".DS_Store",
+    ".env",
+    ".git",
+    ".gitkeep",
+    "__pycache__",
+    "package",
+    "private",
+    "upstream",
 }
 
-
-def fail(message: str, errors: list[str]) -> None:
-    errors.append(message)
-
-
-def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
+SEMVER_RE = re.compile(
+    r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)"
+    r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?"
+    r"(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
+)
 
 
-def validate_required_files(errors: list[str]) -> None:
-    for rel in REQUIRED_FILES:
-        path = ROOT / rel
-        if not path.exists():
-            fail(f"missing required file: {rel}", errors)
+@dataclass(frozen=True, order=True)
+class Finding:
+    check_id: str
+    scope: str
+    path: str
+    message: str
 
 
-def validate_json(errors: list[str]) -> None:
-    for rel in JSON_FILES:
-        path = ROOT / rel
-        if not path.exists():
-            continue
-        try:
-            data = json.loads(read_text(path))
-        except json.JSONDecodeError as exc:
-            fail(f"invalid JSON {rel}: {exc}", errors)
-            continue
-        if "schema_version" not in data and rel not in SCHEMA_VERSION_EXEMPT:
-            fail(f"missing schema_version in {rel}", errors)
+def _finding(check_id: str, scope: str, path: Path | str, message: str) -> Finding:
+    return Finding(check_id, scope, str(path), message)
 
 
-def validate_jsonl(errors: list[str]) -> None:
-    rel = ".creator/plans/creator-toolchain-implementation/activity_ledger.jsonl"
-    path = ROOT / rel
-    if not path.exists():
-        return
-    for idx, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+def _read_json(path: Path, scope: str, check_id: str) -> tuple[Any | None, list[Finding]]:
+    try:
+        return json.loads(path.read_text(encoding="utf-8")), []
+    except (OSError, json.JSONDecodeError) as exc:
+        return None, [_finding(check_id, scope, path, f"invalid JSON: {exc}")]
+
+
+def _frontmatter_findings(path: Path, expected_name: str, scope: str) -> list[Finding]:
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        return [_finding("SKILL_FILE", scope, path, f"cannot read skill: {exc}")]
+
+    if not lines or lines[0] != "---":
+        return [_finding("SKILL_FRONTMATTER", scope, path, "frontmatter must start with ---")]
+    try:
+        closing = lines.index("---", 1)
+    except ValueError:
+        return [_finding("SKILL_FRONTMATTER", scope, path, "frontmatter closing delimiter is missing")]
+
+    values: dict[str, str] = {}
+    findings: list[Finding] = []
+    for line in lines[1:closing]:
         if not line.strip():
             continue
-        try:
-            json.loads(line)
-        except json.JSONDecodeError as exc:
-            fail(f"invalid JSONL {rel}:{idx}: {exc}", errors)
-
-
-def validate_skills(errors: list[str]) -> None:
-    for skill in SKILLS:
-        for base in [ROOT / ".agents/skills", ROOT / "plugin/creator-toolchain/skills"]:
-            path = base / skill / "SKILL.md"
-            if not path.exists():
-                fail(f"missing SKILL.md: {path.relative_to(ROOT)}", errors)
-                continue
-            text = read_text(path)
-            if not text.startswith("---\n"):
-                fail(f"missing YAML frontmatter: {path.relative_to(ROOT)}", errors)
-            if f"name: {skill}" not in text:
-                fail(f"frontmatter name mismatch in {path.relative_to(ROOT)}", errors)
-            if "description:" not in text:
-                fail(f"missing description in {path.relative_to(ROOT)}", errors)
-
-
-def validate_seed_types(errors: list[str]) -> None:
-    bases = [
-        ROOT / ".agents/skills/creator-seed-incubator/references/types",
-        ROOT / "plugin/creator-toolchain/skills/creator-seed-incubator/references/types",
-    ]
-    for base in bases:
-        for type_id in SEED_TYPES:
-            for filename in ["guide.md", "config.md", "skill-loadout.md"]:
-                path = base / type_id / filename
-                if not path.exists():
-                    fail(f"missing SEED type reference: {path.relative_to(ROOT)}", errors)
-
-
-def validate_rules(errors: list[str]) -> None:
-    path = ROOT / ".creator/rules.json"
-    if not path.exists():
-        return
-    data = json.loads(read_text(path))
-    domains = data.get("domains", [])
-    if not any(domain.get("domain_id") == "GLOBAL" for domain in domains):
-        fail("rules.json missing GLOBAL domain", errors)
-    if "staged_proposals" not in data:
-        fail("rules.json missing staged_proposals", errors)
-    if "decision_log" not in data:
-        fail("rules.json missing decision_log", errors)
-
-
-def validate_plugin(errors: list[str]) -> None:
-    manifest = ROOT / "plugin/creator-toolchain/.codex-plugin/plugin.json"
-    if manifest.exists():
-        data = json.loads(read_text(manifest))
-        for key in ["name", "version", "description", "skills", "interface"]:
-            if key not in data:
-                fail(f"plugin manifest missing key: {key}", errors)
-        if data.get("skills") != "./skills/":
-            fail("plugin manifest skills path must be ./skills/", errors)
-    marketplace = ROOT / ".agents/plugins/marketplace.json"
-    if marketplace.exists():
-        data = json.loads(read_text(marketplace))
-        plugins = data.get("plugins", [])
-        if not any(plugin.get("name") == "creator-toolchain" for plugin in plugins):
-            fail("marketplace missing creator-toolchain entry", errors)
-        for plugin in plugins:
-            if plugin.get("name") == "creator-toolchain":
-                source = plugin.get("source", {})
-                if source.get("source") != "local":
-                    fail("creator-toolchain marketplace source must be local", errors)
-                if source.get("path") != "./plugin/creator-toolchain":
-                    fail("creator-toolchain marketplace path must be ./plugin/creator-toolchain", errors)
-                policy = plugin.get("policy", {})
-                if policy.get("installation") != "AVAILABLE":
-                    fail("creator-toolchain marketplace installation policy must be AVAILABLE", errors)
-                if policy.get("authentication") != "ON_INSTALL":
-                    fail("creator-toolchain marketplace authentication policy must be ON_INSTALL", errors)
-                if plugin.get("category") != "Productivity":
-                    fail("creator-toolchain marketplace category must be Productivity", errors)
-    package_root = ROOT / "plugin/creator-toolchain"
-    if package_root.exists():
-        for path in package_root.rglob("*"):
-            parts = set(path.relative_to(package_root).parts)
-            if parts & DISALLOWED_PACKAGE_PARTS:
-                fail(f"disallowed package path: {path.relative_to(ROOT)}", errors)
-
-
-def validate_workspace_hygiene(errors: list[str]) -> None:
-    for path in ROOT.rglob(".DS_Store"):
-        if "upstream" in path.relative_to(ROOT).parts:
+        if ":" not in line:
+            findings.append(_finding("SKILL_FRONTMATTER", scope, path, f"invalid line: {line}"))
             continue
-        fail(f"disallowed workspace artifact: {path.relative_to(ROOT)}", errors)
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip()
+        if key in values:
+            findings.append(_finding("SKILL_FRONTMATTER", scope, path, f"duplicate key: {key}"))
+        values[key] = value
+
+    if values.get("name") != expected_name:
+        findings.append(
+            _finding(
+                "SKILL_FRONTMATTER",
+                scope,
+                path,
+                f"name must be {expected_name!r}",
+            )
+        )
+    if not values.get("description"):
+        findings.append(_finding("SKILL_FRONTMATTER", scope, path, "description must be non-empty"))
+    return findings
 
 
-def main() -> int:
-    errors: list[str] = []
-    validate_required_files(errors)
-    validate_json(errors)
-    validate_jsonl(errors)
-    validate_skills(errors)
-    validate_seed_types(errors)
-    validate_rules(errors)
-    validate_plugin(errors)
-    validate_workspace_hygiene(errors)
+def _active_text_files(root: Path) -> list[Path]:
+    paths = [root / "README.md", root / "AGENTS.md"]
+    for relative in ("docs/qa", "scripts"):
+        base = root / relative
+        if not base.is_dir():
+            continue
+        paths.extend(
+            path
+            for path in base.rglob("*")
+            if path.suffix in {".md", ".py"}
+            and path.name != "validate_creator_toolchain.py"
+        )
+    return paths
 
-    if errors:
-        print("Creator Toolchain validation failed:")
-        for error in errors:
-            print(f"- {error}")
+
+def validate_repo_contract(root: Path) -> list[Finding]:
+    root = root.resolve()
+    findings: list[Finding] = []
+
+    for relative in REPO_REQUIRED_FILES:
+        path = root / relative
+        if not path.is_file():
+            findings.append(_finding("REPO_REQUIRED", "repo", relative, "required file is missing"))
+
+    skill_root = root / ".agents/skills"
+    found_skills = (
+        {path.name for path in skill_root.iterdir() if path.is_dir() and (path / "SKILL.md").is_file()}
+        if skill_root.is_dir()
+        else set()
+    )
+    if found_skills != set(SKILLS):
+        findings.append(
+            _finding(
+                "REPO_SKILL_COUNT",
+                "repo",
+                skill_root,
+                f"expected {len(SKILLS)} skills, found {sorted(found_skills)}",
+            )
+        )
+
+    reference_re = re.compile(r"`(references/[A-Za-z0-9_./-]+\.(?:md|json))`")
+    for skill in SKILLS:
+        skill_file = skill_root / skill / "SKILL.md"
+        if not skill_file.is_file():
+            findings.append(_finding("SKILL_FILE", "repo", skill_file, "SKILL.md is missing"))
+            continue
+        findings.extend(_frontmatter_findings(skill_file, skill, "repo"))
+        text = skill_file.read_text(encoding="utf-8")
+        for reference in sorted(set(reference_re.findall(text))):
+            reference_path = skill_file.parent / reference
+            if not reference_path.is_file():
+                findings.append(
+                    _finding("SKILL_REFERENCE", "repo", reference_path, "referenced file is missing")
+                )
+
+    type_root = skill_root / "creator-seed-incubator/references/types"
+    found_types = {path.name for path in type_root.iterdir() if path.is_dir()} if type_root.is_dir() else set()
+    if found_types != set(SEED_TYPES):
+        findings.append(
+            _finding(
+                "SEED_TYPE_COUNT",
+                "repo",
+                type_root,
+                f"expected {len(SEED_TYPES)} types, found {sorted(found_types)}",
+            )
+        )
+    for type_id in SEED_TYPES:
+        for filename in ("guide.md", "config.md", "skill-loadout.md"):
+            path = type_root / type_id / filename
+            if not path.is_file():
+                findings.append(_finding("SEED_TYPE_FILE", "repo", path, "type reference is missing"))
+
+    for path in _active_text_files(root):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError as exc:
+            findings.append(_finding("REPO_READ", "repo", path, f"cannot read file: {exc}"))
+            continue
+        for stale in STALE_ACTIVE_PATHS:
+            if stale in text:
+                findings.append(_finding("STALE_PATH", "repo", path, f"stale active path: {stale}"))
+
+    plugin_skill_root = root / "plugin/creator-toolchain/skills"
+    if plugin_skill_root.is_dir() and skill_root.is_dir():
+        try:
+            parity = synchronize(skill_root, plugin_skill_root, write=False)
+        except SyncError as exc:
+            parity = [str(exc)]
+        for message in parity:
+            findings.append(_finding("MIRROR_PARITY", "repo", plugin_skill_root, message))
+
+    return sorted(set(findings))
+
+
+def validate_state_contract(root: Path) -> list[Finding]:
+    root = root.resolve()
+    findings: list[Finding] = []
+    parsed: dict[str, Any] = {}
+
+    for relative in STATE_FILES:
+        path = root / relative
+        if not path.is_file():
+            findings.append(_finding("STATE_REQUIRED", "state", relative, "required state file is missing"))
+            continue
+        data, errors = _read_json(path, "state", "STATE_JSON")
+        findings.extend(errors)
+        if data is None:
+            continue
+        parsed[relative] = data
+        if not isinstance(data, dict) or not data.get("schema_version"):
+            findings.append(_finding("STATE_SCHEMA", "state", relative, "schema_version is required"))
+
+    for path in sorted((root / ".creator/plans").glob("**/*.json")):
+        data, errors = _read_json(path, "state", "STATE_JSON")
+        findings.extend(errors)
+        if data is not None and (not isinstance(data, dict) or not data.get("schema_version")):
+            findings.append(_finding("STATE_SCHEMA", "state", path, "schema_version is required"))
+
+    for path in sorted((root / ".creator/plans").glob("**/*.jsonl")):
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+        except OSError as exc:
+            findings.append(_finding("STATE_JSONL", "state", path, f"cannot read JSONL: {exc}"))
+            continue
+        for line_number, line in enumerate(lines, start=1):
+            if not line.strip():
+                continue
+            try:
+                json.loads(line)
+            except json.JSONDecodeError as exc:
+                findings.append(
+                    _finding("STATE_JSONL", "state", path, f"line {line_number}: {exc.msg}")
+                )
+
+    workspace = parsed.get(".creator/workspace.json", {})
+    if isinstance(workspace, dict):
+        for key in ("source_map", "active_plan"):
+            value = workspace.get(key)
+            if not isinstance(value, str) or not (root / value).is_file():
+                findings.append(
+                    _finding("STATE_POINTER", "state", ".creator/workspace.json", f"{key} target is missing: {value}")
+                )
+
+    surfaces = parsed.get(".creator/surfaces.json", {})
+    if isinstance(surfaces, dict):
+        for surface in surfaces.get("surfaces", []):
+            if not isinstance(surface, dict) or not surface.get("required"):
+                continue
+            value = surface.get("path")
+            if not isinstance(value, str) or not (root / value).is_file():
+                findings.append(_finding("STATE_POINTER", "state", ".creator/surfaces.json", f"surface target is missing: {value}"))
+
+    projects = parsed.get(".creator/projects.json", {})
+    project_ids: set[str] = set()
+    if isinstance(projects, dict):
+        for project in projects.get("projects", []):
+            if not isinstance(project, dict):
+                continue
+            project_id = project.get("project_id")
+            if isinstance(project_id, str):
+                project_ids.add(project_id)
+            for key in ("plan_path", "last_summary"):
+                value = project.get(key)
+                if not isinstance(value, str) or not (root / value).is_file():
+                    findings.append(_finding("STATE_POINTER", "state", ".creator/projects.json", f"{key} target is missing: {value}"))
+
+    state = parsed.get(".creator/state.json", {})
+    if isinstance(state, dict):
+        active = {item for item in state.get("active_projects", []) if isinstance(item, str)}
+        unknown = sorted(active - project_ids)
+        if unknown:
+            findings.append(_finding("STATE_PROJECT", "state", ".creator/state.json", f"unknown active projects: {unknown}"))
+
+    rules = parsed.get(".creator/rules.json", {})
+    if isinstance(rules, dict):
+        domains = rules.get("domains", [])
+        if not any(isinstance(domain, dict) and domain.get("domain_id") == "GLOBAL" for domain in domains):
+            findings.append(_finding("RULE_GLOBAL", "state", ".creator/rules.json", "GLOBAL domain is required"))
+        if "staged_proposals" not in rules:
+            findings.append(_finding("RULE_STAGING", "state", ".creator/rules.json", "staged_proposals is required"))
+        if "decision_log" not in rules:
+            findings.append(_finding("RULE_DECISIONS", "state", ".creator/rules.json", "decision_log is required"))
+
+    return sorted(set(findings))
+
+
+def validate_plugin_package(root: Path) -> list[Finding]:
+    root = root.resolve()
+    findings: list[Finding] = []
+    package_root = root / "plugin/creator-toolchain"
+    if not package_root.is_dir():
+        return [_finding("PLUGIN_ROOT", "plugin", package_root, "plugin package is missing")]
+
+    manifest_path = package_root / ".codex-plugin/plugin.json"
+    manifest, errors = _read_json(manifest_path, "plugin", "MANIFEST_JSON")
+    findings.extend(errors)
+    if isinstance(manifest, dict):
+        for field in ("name", "version", "description", "skills", "interface"):
+            if field not in manifest:
+                findings.append(_finding("MANIFEST_FIELD", "plugin", manifest_path, f"missing field: {field}"))
+        if manifest.get("name") != "creator-toolchain":
+            findings.append(_finding("MANIFEST_NAME", "plugin", manifest_path, "name must be creator-toolchain"))
+        version = manifest.get("version")
+        if not isinstance(version, str) or not SEMVER_RE.fullmatch(version):
+            findings.append(_finding("MANIFEST_VERSION", "plugin", manifest_path, "version must be strict semver"))
+        if manifest.get("skills") != "./skills/":
+            findings.append(_finding("MANIFEST_SKILLS", "plugin", manifest_path, "skills must be ./skills/"))
+        if not isinstance(manifest.get("interface"), dict) or not manifest.get("interface"):
+            findings.append(_finding("MANIFEST_INTERFACE", "plugin", manifest_path, "interface must be a non-empty object"))
+
+    marketplace_path = root / ".agents/plugins/marketplace.json"
+    marketplace, errors = _read_json(marketplace_path, "plugin", "MARKETPLACE_JSON")
+    findings.extend(errors)
+    if isinstance(marketplace, dict):
+        plugins = marketplace.get("plugins", [])
+        entry = next(
+            (item for item in plugins if isinstance(item, dict) and item.get("name") == "creator-toolchain"),
+            None,
+        )
+        if entry is None:
+            findings.append(_finding("MARKETPLACE_ENTRY", "plugin", marketplace_path, "creator-toolchain entry is missing"))
+        else:
+            source = entry.get("source", {})
+            policy = entry.get("policy", {})
+            if source != {"source": "local", "path": "./plugin/creator-toolchain"}:
+                findings.append(_finding("MARKETPLACE_SOURCE", "plugin", marketplace_path, "local source path is invalid"))
+            if policy.get("installation") != "AVAILABLE" or policy.get("authentication") != "ON_INSTALL":
+                findings.append(_finding("MARKETPLACE_POLICY", "plugin", marketplace_path, "policy must be AVAILABLE/ON_INSTALL"))
+            if entry.get("category") != "Productivity":
+                findings.append(_finding("MARKETPLACE_CATEGORY", "plugin", marketplace_path, "category must be Productivity"))
+
+    resolved_package = package_root.resolve()
+    for path in sorted(package_root.rglob("*")):
+        relative = path.relative_to(package_root)
+        parts = set(relative.parts)
+        if ".creator" in parts or path.name.endswith(".local.json"):
+            findings.append(_finding("PACKAGE_PRIVATE", "plugin", relative, "private state is prohibited"))
+        elif (
+            parts & DISALLOWED_PACKAGE_NAMES
+            or path.suffix in {".pyc", ".zip"}
+            or path.name.startswith(".env")
+        ):
+            findings.append(_finding("PACKAGE_ARTIFACT", "plugin", relative, "disallowed package artifact"))
+        if path.is_symlink():
+            try:
+                path.resolve().relative_to(resolved_package)
+            except ValueError:
+                findings.append(_finding("PACKAGE_SYMLINK", "plugin", relative, "symlink escapes package root"))
+
+    plugin_skill_root = package_root / "skills"
+    for skill in SKILLS:
+        skill_file = plugin_skill_root / skill / "SKILL.md"
+        if not skill_file.is_file():
+            findings.append(_finding("PLUGIN_SKILL", "plugin", skill_file, "plugin skill is missing"))
+        else:
+            findings.extend(_frontmatter_findings(skill_file, skill, "plugin"))
+
+    source_root = root / ".agents/skills"
+    try:
+        parity = synchronize(source_root, plugin_skill_root, write=False)
+    except SyncError as exc:
+        parity = [str(exc)]
+    for message in parity:
+        findings.append(_finding("MIRROR_PARITY", "plugin", plugin_skill_root, message))
+
+    return sorted(set(findings))
+
+
+def validate_all(root: Path) -> list[Finding]:
+    return sorted(
+        validate_repo_contract(root)
+        + validate_state_contract(root)
+        + validate_plugin_package(root)
+    )
+
+
+def _parse_args(argv: list[str] | None) -> tuple[argparse.ArgumentParser, argparse.Namespace | None]:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--scope", default="all")
+    parser.add_argument("--root", type=Path, default=ROOT)
+    try:
+        args = parser.parse_args(argv)
+    except SystemExit:
+        return parser, None
+    return parser, args
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser, args = _parse_args(argv)
+    if args is None:
+        return 2
+    validators = {
+        "repo": validate_repo_contract,
+        "state": validate_state_contract,
+        "plugin": validate_plugin_package,
+        "all": validate_all,
+    }
+    if args.scope not in validators:
+        parser.print_usage(sys.stderr)
+        print(f"error: invalid scope {args.scope!r}; choose repo, state, plugin, or all", file=sys.stderr)
+        return 2
+
+    findings = validators[args.scope](args.root)
+    if findings:
+        print(f"Creator Toolchain {args.scope} validation failed ({len(findings)} findings):")
+        for finding in findings:
+            print(f"- [{finding.check_id}] {finding.path}: {finding.message}")
         return 1
 
-    print("Creator Toolchain validation passed.")
-    print(f"Validated {len(REQUIRED_FILES)} required files and {len(SKILLS)} skills.")
-    print("Release note: repeat Codex plugin install and UI skill-selection tests before public release.")
+    print(f"Creator Toolchain {args.scope} validation passed.")
+    if args.scope in {"repo", "all"}:
+        print(f"Validated {len(SKILLS)} authoritative skills and {len(SEED_TYPES)} SEED types.")
+    if args.scope in {"plugin", "all"}:
+        print("Validated plugin manifest, marketplace, mirror parity, and package hygiene.")
     return 0
 
 
