@@ -13,7 +13,7 @@ This package bundles the Creator Toolchain skill suite.
 Run from repository root:
 
 ```bash
-python3 scripts/materialize_seed_type_refs.py
+python3 scripts/materialize_project_type_refs.py
 python3 scripts/sync_plugin_skills.py --write
 python3 scripts/sync_plugin_skills.py --check
 ```

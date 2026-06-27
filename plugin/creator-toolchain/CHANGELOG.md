@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0-draft.1
+
+- Replaces inherited product names with descriptive Creator-native skill identities.
+- Updates commands, execution stages, state surfaces, audit outputs, and project-type references.
+- Uses a direct cutover with no callable compatibility aliases.
+
 ## 1.0.0-draft
 
 - Initial Creator Toolchain plugin scaffold.

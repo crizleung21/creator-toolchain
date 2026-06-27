@@ -1,6 +1,6 @@
 {
   "name": "creator-toolchain",
-  "version": "1.0.0-draft",
+  "version": "1.0.0-draft.1",
   "description": "Codex-native creator workflow system for ideation, execution, state, rules, skill creation, and audit.",
   "author": {
     "name": "Criz leung"
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "Creator Toolchain",
     "shortDescription": "Codex-native creator workflow system for ideation, execution, state, rules, skill creation, and audit.",
-    "longDescription": "Creator Toolchain packages Codex skills for turning ideas into plans, executing work through Plan, Apply, Qualify, Unify, managing repo-local state, routing domain rules, creating new skills, and auditing workflows.",
+    "longDescription": "Creator Toolchain packages Codex skills for turning ideas into plans, executing work through Plan, Execute, Verify, Reconcile, managing repo-local state, routing domain rules, creating new skills, and auditing workflows.",
     "developerName": "Criz leung",
     "category": "Productivity",
     "capabilities": ["Skills", "Workflow", "Planning", "Audit"],
