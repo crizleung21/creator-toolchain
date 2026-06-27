@@ -75,6 +75,7 @@ DISALLOWED_PACKAGE_NAMES = {
     ".git",
     ".gitkeep",
     "__pycache__",
+    "package",
     "private",
     "upstream",
 }
@@ -382,9 +383,13 @@ def validate_plugin_package(root: Path) -> list[Finding]:
     for path in sorted(package_root.rglob("*")):
         relative = path.relative_to(package_root)
         parts = set(relative.parts)
-        if ".creator" in parts:
+        if ".creator" in parts or path.name.endswith(".local.json"):
             findings.append(_finding("PACKAGE_PRIVATE", "plugin", relative, "private state is prohibited"))
-        elif parts & DISALLOWED_PACKAGE_NAMES or path.suffix == ".pyc" or path.name.startswith(".env"):
+        elif (
+            parts & DISALLOWED_PACKAGE_NAMES
+            or path.suffix in {".pyc", ".zip"}
+            or path.name.startswith(".env")
+        ):
             findings.append(_finding("PACKAGE_ARTIFACT", "plugin", relative, "disallowed package artifact"))
         if path.is_symlink():
             try:

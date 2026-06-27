@@ -15,13 +15,13 @@
 | capability proof | six-tool matrix and prompt contracts | implemented with structural tests and explicit manual model gate |
 | docs | archive Phase 1 and move fixture | completed with Git renames and zero active stale references |
 | cleanup | 19 placeholders and expected 5 OS files | 13 skill placeholders were removed during sync, 6 remaining placeholders in cleanup; Finder regenerated 8 OS files at baseline, all removed |
-| validator | repo/state/plugin/all scopes | implemented through 12 red-to-green regression tests |
+| validator | repo/state/plugin/all scopes | implemented through 14 red-to-green regression tests |
 | plugin | freeze and validate | bundled validator, custom validator, isolated install, and provenance discovery passed |
 | evidence | exact environment and hashes | generated for frozen commit `ab507f6807b838bf3b4d04a65ac28e45c7e1cd44` |
 
 ## Verification Evidence
 
-- `python3 -m unittest discover -s tests -p 'test_*.py' -v`: 26 tests, 0 failures.
+- `python3 -m unittest discover -s tests -p 'test_*.py' -v`: 28 tests, 0 failures.
 - `python3 scripts/validate_creator_toolchain.py --scope all`: pass.
 - `python3 scripts/sync_plugin_skills.py --check`: seven-skill parity pass.
 - bundled plugin validator: pass.
@@ -47,7 +47,7 @@
 
 ## Rollback Points
 
-Each phase is an independent commit from `e6aedad` through `c1327be`. Revert the smallest responsible phase; do not reset or clean the worktree.
+Each phase is an independent commit from `e6aedad` through `c1327be`, followed by one completion-audit hardening commit. Revert the smallest responsible commit; do not reset or clean the worktree.
 
 ## Remaining Concern
 

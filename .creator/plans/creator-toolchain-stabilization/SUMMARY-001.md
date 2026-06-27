@@ -8,7 +8,7 @@ The reviewed Phase 0-9 plan has been implemented on `codex/stabilize-creator-too
 
 - 7 authoritative skills and 7 generated plugin mirrors;
 - 13 SEED types with 39 required reference files per tree;
-- 26 automated tests;
+- 28 automated tests;
 - 4 passing validation scopes;
 - 90-file frozen payload inventory;
 - local-only and plugin-only provenance tests;

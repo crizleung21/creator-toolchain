@@ -96,6 +96,25 @@ class ValidatorTests(unittest.TestCase):
 
         self.assertIn("PACKAGE_ARTIFACT", self._ids(findings))
 
+    def test_scope_plugin_rejects_local_override(self) -> None:
+        root = self._plugin_root()
+        override = root / "plugin/creator-toolchain/settings.local.json"
+        override.write_text("{}\n", encoding="utf-8")
+
+        findings = validator.validate_plugin_package(root)
+
+        self.assertIn("PACKAGE_PRIVATE", self._ids(findings))
+
+    def test_scope_plugin_rejects_package_directory_and_zip(self) -> None:
+        root = self._plugin_root()
+        package_dir = root / "plugin/creator-toolchain/package"
+        package_dir.mkdir()
+        (package_dir / "creator-toolchain.zip").write_bytes(b"archive")
+
+        findings = validator.validate_plugin_package(root)
+
+        self.assertIn("PACKAGE_ARTIFACT", self._ids(findings))
+
     def test_scope_plugin_rejects_extra_mirror_file(self) -> None:
         root = self._plugin_root()
         extra = root / "plugin/creator-toolchain/skills/creator-paul-loop/extra.md"
