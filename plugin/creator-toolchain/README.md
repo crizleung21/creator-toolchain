@@ -5,8 +5,20 @@ This package bundles the Creator Toolchain skill suite.
 ## Contents
 
 - `.codex-plugin/plugin.json`
-- `skills/`
+- `skills/` generated from the repository's authoritative `.agents/skills/` source
 - `release-evidence/`
+
+## Generated Skill Mirror
+
+Run from repository root:
+
+```bash
+python3 scripts/materialize_seed_type_refs.py
+python3 scripts/sync_plugin_skills.py --write
+python3 scripts/sync_plugin_skills.py --check
+```
+
+Do not hand-edit `plugin/creator-toolchain/skills/`. Repo-local and installed plugin copies should not be enabled together except during an explicit collision or provenance test.
 
 ## Trust Policy
 
