@@ -392,7 +392,10 @@ def validate_state_contract(root: Path) -> list[Finding]:
             project_id = project.get("project_id")
             if isinstance(project_id, str):
                 project_ids.add(project_id)
-            for key in ("plan_path", "last_summary"):
+            pointer_keys = ["plan_path"]
+            if project.get("status") == "completed" or "last_summary" in project:
+                pointer_keys.append("last_summary")
+            for key in pointer_keys:
                 value = project.get(key)
                 if not isinstance(value, str) or not (root / value).is_file():
                     findings.append(_finding("STATE_POINTER", "state", ".creator/projects.json", f"{key} target is missing: {value}"))

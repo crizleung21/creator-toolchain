@@ -6,9 +6,9 @@
 
 ## Automated Coverage
 
-- six source-tool families mapped to six Creator Toolchain skills;
+- six researched capability families mapped to six Creator Toolchain specialist skills;
 - seven authoritative skills and seven generated mirrors;
-- 13 SEED types with three files each;
+- 13 project types with three files each;
 - positive and boundary concepts asserted in skill entry points;
 - repo/state/plugin/all validation scopes passed;
 - plugin-only and local-only discovery provenance passed.

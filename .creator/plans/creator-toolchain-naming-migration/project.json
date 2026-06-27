@@ -1,0 +1,8 @@
+{
+  "schema_version": "0.2.0",
+  "project_id": "creator-toolchain-naming-migration",
+  "source_skill": "creator-intake-planner",
+  "handoff_target": "creator-execution-cycle",
+  "status": "active",
+  "manifest_policy": "creator-native direct cutover with preserved provenance"
+}

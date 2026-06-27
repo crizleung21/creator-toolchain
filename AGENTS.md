@@ -11,21 +11,21 @@ This repository is `creator-toolchain`, a Codex-native creator workflow system f
 - Generate `plugin/creator-toolchain/skills/` with `python3 scripts/sync_plugin_skills.py --write`; do not hand-edit the plugin skill mirror.
 - Do not enable repo-local and plugin copies of the same skill together except during an explicit collision or provenance test.
 - Use `creator-orchestrator` when workflow selection is unclear.
-- Use `creator-seed-incubator` for raw ideas and typed planning.
-- Use `creator-paul-loop` for implementation from an accepted plan.
+- Use `creator-intake-planner` for raw ideas and typed planning.
+- Use `creator-execution-cycle` for implementation from an accepted plan.
 - Keep durable project state inside `.creator/`.
 - Do not silently mutate `.creator/*.json`; propose state updates unless the workflow explicitly owns that surface.
 - Do not use `upstream/` repos as runtime dependencies; they are research evidence only.
-- Every implementation cycle must end with Unify.
+- Every implementation cycle must end with Reconcile.
 
 ## File Conventions
 
 - Plans: `.creator/plans/{project_slug}/PLANNING.md`
-- Seed state: `.creator/plans/{project_slug}/SEED-STATE.md`
+- Intake state: `.creator/plans/{project_slug}/INTAKE-STATE.md`
 - Project manifest: `.creator/plans/{project_slug}/project.json`
 - Activity ledger: `.creator/plans/{project_slug}/activity_ledger.jsonl`
 - Execution plans: `.creator/plans/{project_slug}/PLAN-{sequence}.md`
-- Unify summaries: `.creator/plans/{project_slug}/UNIFY-{sequence}.md`
+- Reconciliation records: `.creator/plans/{project_slug}/RECONCILIATION-{sequence}.md`
 - Summary files: `.creator/plans/{project_slug}/SUMMARY-{sequence}.md`
 - Reports: `.creator/reports/`
 
@@ -33,8 +33,8 @@ This repository is `creator-toolchain`, a Codex-native creator workflow system f
 
 - Phase 1 proves the MVP skill loop only.
 - Phase 2 adds repo-local state surfaces.
-- Phase 3 adds CARL-style rules and Skillsmith-style skill factory.
-- Phase 4 adds AEGIS-style audit and remediation handoff.
+- Phase 3 adds domain-rule governance and a skill workbench.
+- Phase 4 adds evidence-first audit and remediation handoff.
 - Phase 5 packages the suite as a Codex plugin.
 
 ## Safety

@@ -1,6 +1,6 @@
 {
-  "schema_version": "0.1.0",
-  "owner_skill": "creator-base-workspace",
+  "schema_version": "0.2.0",
+  "owner_skill": "creator-workspace-manager",
   "privacy_class": "repository_workflow_state",
   "projects": [
     {
@@ -19,6 +19,14 @@
       "status": "completed",
       "plan_path": ".creator/plans/creator-toolchain-stabilization/PLANNING.md",
       "last_summary": ".creator/plans/creator-toolchain-stabilization/SUMMARY-001.md",
+      "last_updated": "2026-06-27"
+    },
+    {
+      "project_id": "creator-toolchain-naming-migration",
+      "title": "Adopt Creator-native workflow names",
+      "type": "creator-tooling",
+      "status": "active",
+      "plan_path": ".creator/plans/creator-toolchain-naming-migration/PLAN-001.md",
       "last_updated": "2026-06-27"
     }
   ]

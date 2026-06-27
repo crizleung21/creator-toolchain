@@ -1,15 +1,15 @@
 # creator-toolchain
 
-`creator-toolchain` is a Codex-native skill suite that adapts high-value workflow patterns from ChristopherKahler's PAUL, SEED, BASE, CARL, Skillsmith, and AEGIS into a Creator-first system.
+`creator-toolchain` is a Codex-native skill suite for turning creator ideas into plans, executing accepted work, maintaining repository state, routing rules, building skills, and auditing evidence. Upstream research remains documented in the [source map](docs/source-analysis/upstream-toolchain-map.md).
 
 It is not a direct Claude Code clone. The active architecture is:
 
 ```text
 Codex Skills
 + repo-local .creator/ state
-+ CARL-style domain rules
-+ Skillsmith-style skill factory
-+ AEGIS-style evidence-first audit
++ domain-rule governance
++ skill creation and audit workbench
++ evidence-first workflow audit
 + optional Codex Plugin package
 ```
 
@@ -18,18 +18,18 @@ Codex Skills
 | Phase | Skill | Purpose |
 |---:|---|---|
 | 1 | `creator-orchestrator` | Route user intent to the right workflow. |
-| 1 | `creator-seed-incubator` | Turn raw ideas into typed `PLANNING.md` files. |
-| 1 | `creator-paul-loop` | Execute accepted plans through Plan, Apply, Qualify, Unify. |
-| 2 | `creator-base-workspace` | Manage repo-local state, pulse, groom, drift, and surfaces. |
+| 1 | `creator-intake-planner` | Turn raw ideas into typed `PLANNING.md` files. |
+| 1 | `creator-execution-cycle` | Execute accepted plans through Plan, Execute, Verify, Reconcile. |
+| 2 | `creator-workspace-manager` | Manage repo-local state, health, maintenance, divergence, and surfaces. |
 | 3 | `creator-rule-router` | Load, stage, recall, exclude, and audit domain rules. |
-| 3 | `creator-skillsmith-factory` | Discover, scaffold, distill, score, and audit Codex skills. |
-| 4 | `creator-aegis-audit` | Produce evidence-first audits and PAUL-ready remediation handoffs. |
+| 3 | `creator-skill-workbench` | Discover, scaffold, distill, score, and audit Codex skills. |
+| 4 | `creator-evidence-audit` | Produce evidence-first audits and execution-ready remediation handoffs. |
 
 ## Quick Start
 
 1. Use `creator-orchestrator` when the workflow is unclear.
-2. Use `creator-seed-incubator` for raw ideas.
-3. Use `creator-paul-loop` after a plan is accepted.
+2. Use `creator-intake-planner` for raw ideas.
+3. Use `creator-execution-cycle` after a plan is accepted.
 4. Run `python3 scripts/validate_creator_toolchain.py` before treating the repo as release-ready.
 
 ## Current Package
@@ -37,7 +37,7 @@ Codex Skills
 The authoritative development skill suite lives under `.agents/skills/`. The installable mirror under `plugin/creator-toolchain/skills/` is generated with:
 
 ```bash
-python3 scripts/materialize_seed_type_refs.py
+python3 scripts/materialize_project_type_refs.py
 python3 scripts/sync_plugin_skills.py --write
 python3 scripts/sync_plugin_skills.py --check
 ```

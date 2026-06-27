@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "owner": "workspace-user",
-  "owner_skill": "creator-base-workspace",
+  "owner_skill": "creator-workspace-manager",
   "privacy_class": "publishable_template",
   "preferences": {
     "language": "workspace-default",

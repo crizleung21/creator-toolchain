@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "owner_skill": "creator-rule-router",
   "privacy_class": "repository_contract",
   "domains": [

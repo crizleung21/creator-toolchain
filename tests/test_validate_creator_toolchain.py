@@ -100,6 +100,22 @@ class ValidatorTests(unittest.TestCase):
 
         self.assertIn("STATE_FIELD", self._ids(findings))
 
+    def test_scope_state_allows_active_project_without_summary(self) -> None:
+        root = self._state_root()
+        projects_path = root / ".creator/projects.json"
+        projects = json.loads(projects_path.read_text(encoding="utf-8"))
+        active_project = next(
+            project
+            for project in projects["projects"]
+            if project["project_id"] == "creator-toolchain-naming-migration"
+        )
+        active_project.pop("last_summary", None)
+        projects_path.write_text(json.dumps(projects), encoding="utf-8")
+
+        findings = validator.validate_state_contract(root)
+
+        self.assertNotIn("STATE_POINTER", self._ids(findings))
+
     def test_scope_plugin_rejects_private_state(self) -> None:
         root = self._plugin_root()
         private = root / "plugin/creator-toolchain/.creator/private.json"
