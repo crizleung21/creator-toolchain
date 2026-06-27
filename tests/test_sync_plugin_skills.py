@@ -75,6 +75,15 @@ class SyncPluginSkillsTests(unittest.TestCase):
         self.assertFalse((copied / ".gitkeep").exists())
         self.assertFalse((copied / "cache.pyc").exists())
 
+    def test_write_removes_stale_generated_skill_directory(self) -> None:
+        stale = self.destination / "stale-generated-skill"
+        self._write_skill(self.destination, stale.name)
+
+        findings = sync.synchronize(self.source, self.destination, write=True)
+
+        self.assertEqual(findings, [])
+        self.assertFalse(stale.exists())
+
     def test_rejects_unknown_source_skill_directory(self) -> None:
         self._write_skill(self.source, "unknown-skill")
 

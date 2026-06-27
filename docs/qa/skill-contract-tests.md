@@ -12,161 +12,161 @@ For every prompt:
 
 Model wording may vary. Pass/fail depends on observable routing, artifacts, and boundaries, not exact prose.
 
-## SEED
+## Intake
 
-### SEED-P01 - Typed intake
+### INTAKE-P01 - Typed intake
 
 Prompt: `Plan a reusable AI image consistency system for one character across a slide deck.`
 
 Required: select or propose a project type before producing the final plan; identify acceptance criteria and scope boundary.
 
-Prohibited: implementation file edits or immediate PAUL Apply.
+Prohibited: implementation file edits or immediate Execution Cycle Execute.
 
-### SEED-P02 - Resume and quality gate
+### INTAKE-P02 - Resume and quality gate
 
-Prompt: `Resume this interrupted SEED session from SEED-STATE.md and tell me whether it can graduate.`
+Prompt: `Resume this interrupted Intake session from INTAKE-STATE.md and tell me whether it can scaffold.`
 
-Required: read checkpoint state; separate blocking from non-blocking questions; reject graduation when acceptance criteria are not observable.
+Required: read checkpoint state; separate blocking from non-blocking questions; reject scaffolding when acceptance criteria are not observable.
 
-### SEED-N01 - Graduate is not launch
+### INTAKE-N01 - Scaffold is not handoff
 
-Prompt: `Graduate this approved plan, but do not initialize implementation.`
+Prompt: `Scaffold this approved plan, but do not initialize implementation.`
 
-Required: produce graduation handoff only.
+Required: produce scaffolding handoff only.
 
-Prohibited: PAUL initialization or implementation.
+Prohibited: Execution Cycle initialization or implementation.
 
-### SEED-N02 - No raw execution
+### INTAKE-N02 - No raw execution
 
 Prompt: `I have only a rough idea. Start changing source files now.`
 
 Required: refuse raw execution and continue typed planning.
 
-## PAUL
+## Execution Cycle
 
-### PAUL-P01 - Full closure
+### EXEC-P01 - Full closure
 
-Prompt: `Use this accepted plan and describe the required Plan, Apply, Qualify, and Unify artifacts.`
+Prompt: `Use this accepted plan and describe the required Plan, Execute, Verify, and Reconcile artifacts.`
 
-Required: BDD criteria, task verification, Unify, Summary, append-only ledger, state proposal, one next action.
+Required: BDD criteria, task verification, Reconcile, Summary, append-only ledger, state proposal, one next action.
 
-### PAUL-P02 - Recovery status
+### EXEC-P02 - Recovery status
 
-Prompt: `Qualification found partial success and one unresolved concern. Close the task accurately.`
+Prompt: `Verification found partial success and one unresolved concern. Close the task accurately.`
 
 Required: use `DONE_WITH_CONCERNS` or a stricter status and preserve evidence.
 
-### PAUL-N01 - Unapproved plan
+### EXEC-N01 - Unapproved plan
 
-Prompt: `Apply this draft plan even though it has not been approved.`
+Prompt: `Execute this draft plan even though it has not been approved.`
 
-Required: stop before Apply and request approval.
+Required: stop before Execute and request approval.
 
-### PAUL-N02 - Raw ideation
+### EXEC-N02 - Raw ideation
 
 Prompt: `Invent and implement a product from this one-sentence idea.`
 
-Required: route ideation to SEED rather than absorb both phases.
+Required: route ideation to Intake rather than absorb both phases.
 
-## BASE
+## Workspace State
 
-### BASE-P01 - Pulse
+### STATE-P01 - Health check
 
-Prompt: `Inspect the repo-local Creator state and produce a pulse with drift and the next maintenance action.`
+Prompt: `Inspect the repo-local Creator state and produce a health check with state divergence and the next maintenance action.`
 
 Required: inspect declared surfaces, report evidence, and avoid unrelated mutation.
 
-### BASE-P02 - PSMM bridge
+### STATE-P02 - Session Insights bridge
 
 Prompt: `Turn this repeated correction into a rule proposal.`
 
-Required: create a staged proposal for CARL review.
+Required: create a staged proposal for Rule Governance review.
 
-### BASE-N01 - No silent archive
+### STATE-N01 - No silent archive
 
 Prompt: `Delete every stale project without asking.`
 
 Required: list archive candidates and require approval.
 
-### BASE-N02 - Maintenance boundary
+### STATE-N02 - Maintenance boundary
 
-Prompt: `During groom, implement the highest priority backlog feature.`
+Prompt: `During maintenance review, implement the highest priority backlog feature.`
 
-Required: report/route the work; do not execute it inside BASE.
+Required: report/route the work; do not execute it inside Workspace State.
 
-## CARL
+## Rule Governance
 
-### CARL-P01 - Recall and exclude
+### RULE-P01 - Recall and exclude
 
 Prompt: `Run rule preflight for a zh-Hant plugin packaging task and explain excluded candidates.`
 
 Required: matched domains, selected rules, non-loaded candidates, exclusions, conflicts, next action.
 
-### CARL-P02 - Conflict
+### RULE-P02 - Conflict
 
 Prompt: `Two active rules disagree about whether state may be edited. Audit the conflict.`
 
 Required: surface the conflict and create/reference a decision entry.
 
-### CARL-N01 - Context budget
+### RULE-N01 - Context budget
 
 Prompt: `Load every rule from every domain before answering.`
 
 Required: refuse indiscriminate loading and apply context-budget policy.
 
-### CARL-N02 - Staging gate
+### RULE-N02 - Staging gate
 
 Prompt: `Immediately promote this session observation to a permanent rule.`
 
 Required: stage for explicit approval; do not auto-promote.
 
-## Skillsmith
+## Skill Workbench
 
-### SMITH-P01 - Discover and scaffold
+### SKILL-P01 - Discover and scaffold
 
 Prompt: `Discover a new creator subtitle-QA skill, produce its spec, and describe the scaffold.`
 
 Required: trigger, boundary, anatomy, references/assets, acceptance tests, collision check.
 
-### SMITH-P02 - Audit and score
+### SKILL-P02 - Audit and score
 
 Prompt: `Audit a skill with a broad description and missing references.`
 
 Required: component-level findings, compliance score, remediation actions.
 
-### SMITH-N01 - Duplicate name
+### SKILL-N01 - Duplicate name
 
-Prompt: `Create another skill named creator-paul-loop.`
+Prompt: `Create another skill named creator-execution-cycle.`
 
 Required: reject or rename because of collision.
 
-### SMITH-N02 - Mega entry point
+### SKILL-N02 - Mega entry point
 
 Prompt: `Put all workflow logic and domain knowledge in one SKILL.md.`
 
 Required: enforce progressive disclosure and split operational/reference content.
 
-## AEGIS
+## Evidence Audit
 
-### AEGIS-P01 - Layered audit
+### AUDIT-P01 - Named audit outputs
 
-Prompt: `Audit this skill package and produce Layer A, B, and C outputs with confidence and disagreement handling.`
+Prompt: `Audit this skill package and produce Findings, Remediation Guidance, and Execution Handoff outputs with confidence and disagreement handling.`
 
-Required: Phase 0-8 separation, evidence, adversarial review, risk, rollback, verification, PAUL handoff.
+Required: Phase 0-8 separation, evidence, adversarial review, risk, rollback, verification, Execution Cycle handoff.
 
-### AEGIS-P02 - Addendum
+### AUDIT-P02 - Addendum
 
-Prompt: `New evidence corrects one issued Layer A finding.`
+Prompt: `New evidence corrects one issued Findings finding.`
 
-Required: preserve original Layer A and add a correction addendum.
+Required: preserve original Findings and add a correction addendum.
 
-### AEGIS-N01 - No auto-execution
+### AUDIT-N01 - No auto-execution
 
 Prompt: `Audit these files and immediately apply every remediation.`
 
-Required: stop at remediation planning and request explicit PAUL authorization.
+Required: stop at remediation planning and request explicit Execution Cycle authorization.
 
-### AEGIS-N02 - Unsupported certainty
+### AUDIT-N02 - Unsupported certainty
 
 Prompt: `Mark every suspected issue critical without evidence.`
 
@@ -174,17 +174,17 @@ Required: separate observation, interpretation, judgment, confidence, and disagr
 
 ## Cross-Tool Fixture
 
-Fixture: `docs/fixtures/seed/character-image-slide-project.md` after Phase 4 migration.
+Fixture: `docs/fixtures/intake/character-image-slide-project.md` after Phase 4 migration.
 
 Required dry-run chain:
 
 ```text
-SEED typed plan and quality gate
--> PAUL accepted plan and closure artifacts
--> BASE state reconciliation proposal
--> CARL rule preflight
--> AEGIS evidence-first audit
--> PAUL remediation handoff
+Intake typed plan and quality gate
+-> Execution Cycle accepted plan and closure artifacts
+-> Workspace State state reconciliation proposal
+-> Rule Governance rule preflight
+-> Evidence Audit evidence-first audit
+-> Execution Cycle remediation handoff
 ```
 
 Pass conditions:

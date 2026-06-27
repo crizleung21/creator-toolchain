@@ -18,8 +18,10 @@ except ImportError:  # Imported as scripts.validate_creator_toolchain in tests.
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CURRENT_STATE_SCHEMA = "0.2.0"
+CURRENT_PLUGIN_VERSION = "1.0.0-draft.1"
 
-SEED_TYPES = (
+PROJECT_TYPES = (
     "slide-deck",
     "ai-image-system",
     "characterlock-system",
@@ -38,12 +40,12 @@ SEED_TYPES = (
 REPO_REQUIRED_FILES = (
     "AGENTS.md",
     "README.md",
-    "IMPLEMENTATION_PLAN.md",
-    "docs/source-analysis/christopherkahler-toolchain-map.md",
+    "docs/source-analysis/upstream-toolchain-map.md",
+    "docs/migrations/creator-native-naming-v1.md",
     "docs/qa/capability-matrix.md",
     "docs/qa/skill-contract-tests.md",
-    "docs/fixtures/seed/character-image-slide-project.md",
-    "scripts/materialize_seed_type_refs.py",
+    "docs/fixtures/intake/character-image-slide-project.md",
+    "scripts/materialize_project_type_refs.py",
     "scripts/sync_plugin_skills.py",
     "scripts/validate_creator_toolchain.py",
 )
@@ -53,7 +55,7 @@ STATE_FILES = (
     ".creator/projects.json",
     ".creator/entities.json",
     ".creator/state.json",
-    ".creator/psmm.json",
+    ".creator/session-insights.json",
     ".creator/operator.json",
     ".creator/backlog.json",
     ".creator/surfaces.json",
@@ -65,6 +67,28 @@ STALE_ACTIVE_PATHS = (
     "docs/phase-1-test-prompts.md",
     "docs/phase-1-acceptance-checklist.md",
     "docs/examples/character-image-slide-project.md",
+)
+
+LEGACY_ALLOWED_PREFIXES = (
+    Path("docs/source-analysis"),
+    Path("docs/archive"),
+    Path("docs/migrations"),
+    Path(".creator/plans/creator-toolchain-implementation"),
+    Path(".creator/plans/creator-toolchain-stabilization"),
+    Path(".creator/plans/creator-toolchain-naming-migration"),
+)
+LEGACY_ALLOWED_FILES = {
+    Path(".creator/decisions.json"),
+    Path(".creator/reports/stabilization-baseline.md"),
+}
+LEGACY_PATTERNS = (
+    re.compile(r"creator-(?:seed-incubator|paul-loop|base-workspace|skillsmith-factory|aegis-audit)", re.I),
+    re.compile(r"creator-(?:seed|paul|base):", re.I),
+    re.compile(r"\b(?:SEED|PAUL|BASE|CARL|AEGIS|PSMM)\b"),
+    re.compile(r"\bSkillsmith\b", re.I),
+    re.compile(r"SEED-STATE\.md|UNIFY(?:-|\b)|Layer [ABC]\b"),
+    re.compile(r"\b(?:pulse|groom|graduate|graduation)\b", re.I),
+    re.compile(r"(?:materialize_seed|fixtures/seed|psmm\.json|last_pulse|\"drift\"\s*:)", re.I),
 )
 
 DISALLOWED_PACKAGE_NAMES = {
@@ -163,6 +187,51 @@ def _active_text_files(root: Path) -> list[Path]:
     return paths
 
 
+def _legacy_name_findings(root: Path) -> list[Finding]:
+    roots = (
+        root / "README.md",
+        root / "AGENTS.md",
+        root / ".agents/skills",
+        root / ".creator",
+        root / "docs/qa",
+        root / "docs/fixtures",
+        root / "scripts",
+        root / "plugin/creator-toolchain",
+    )
+    text_suffixes = {".json", ".jsonl", ".md", ".py", ".sha256", ".toml"}
+    paths: set[Path] = set()
+    for base in roots:
+        if base.is_file():
+            paths.add(base)
+        elif base.is_dir():
+            paths.update(path for path in base.rglob("*") if path.is_file())
+
+    findings: list[Finding] = []
+    for path in sorted(paths):
+        relative = path.relative_to(root)
+        if relative in LEGACY_ALLOWED_FILES:
+            continue
+        if any(relative == prefix or prefix in relative.parents for prefix in LEGACY_ALLOWED_PREFIXES):
+            continue
+        if relative == Path("scripts/validate_creator_toolchain.py"):
+            continue
+        if path.suffix not in text_suffixes:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            findings.append(_finding("REPO_READ", "repo", relative, f"cannot read file: {exc}"))
+            continue
+        for pattern in LEGACY_PATTERNS:
+            match = pattern.search(text)
+            if match:
+                findings.append(
+                    _finding("LEGACY_NAME", "repo", relative, f"legacy product marker: {match.group(0)}")
+                )
+                break
+    return findings
+
+
 def validate_repo_contract(root: Path) -> list[Finding]:
     root = root.resolve()
     findings: list[Finding] = []
@@ -171,6 +240,8 @@ def validate_repo_contract(root: Path) -> list[Finding]:
         path = root / relative
         if not path.is_file():
             findings.append(_finding("REPO_REQUIRED", "repo", relative, "required file is missing"))
+
+    findings.extend(_legacy_name_findings(root))
 
     skill_root = root / ".agents/skills"
     found_skills = (
@@ -203,22 +274,22 @@ def validate_repo_contract(root: Path) -> list[Finding]:
                     _finding("SKILL_REFERENCE", "repo", reference_path, "referenced file is missing")
                 )
 
-    type_root = skill_root / "creator-seed-incubator/references/types"
+    type_root = skill_root / "creator-intake-planner/references/types"
     found_types = {path.name for path in type_root.iterdir() if path.is_dir()} if type_root.is_dir() else set()
-    if found_types != set(SEED_TYPES):
+    if found_types != set(PROJECT_TYPES):
         findings.append(
             _finding(
-                "SEED_TYPE_COUNT",
+                "PROJECT_TYPE_COUNT",
                 "repo",
                 type_root,
-                f"expected {len(SEED_TYPES)} types, found {sorted(found_types)}",
+                f"expected {len(PROJECT_TYPES)} types, found {sorted(found_types)}",
             )
         )
-    for type_id in SEED_TYPES:
+    for type_id in PROJECT_TYPES:
         for filename in ("guide.md", "config.md", "skill-loadout.md"):
             path = type_root / type_id / filename
             if not path.is_file():
-                findings.append(_finding("SEED_TYPE_FILE", "repo", path, "type reference is missing"))
+                findings.append(_finding("PROJECT_TYPE_FILE", "repo", path, "type reference is missing"))
 
     for path in _active_text_files(root):
         try:
@@ -259,6 +330,18 @@ def validate_state_contract(root: Path) -> list[Finding]:
         parsed[relative] = data
         if not isinstance(data, dict) or not data.get("schema_version"):
             findings.append(_finding("STATE_SCHEMA", "state", relative, "schema_version is required"))
+        elif data.get("schema_version") != CURRENT_STATE_SCHEMA:
+            findings.append(
+                _finding(
+                    "STATE_SCHEMA_VERSION",
+                    "state",
+                    relative,
+                    f"schema_version must be {CURRENT_STATE_SCHEMA}",
+                )
+            )
+        expected_owner = "creator-rule-router" if relative == ".creator/rules.json" else "creator-workspace-manager"
+        if isinstance(data, dict) and data.get("owner_skill") != expected_owner:
+            findings.append(_finding("STATE_OWNER", "state", relative, f"owner_skill must be {expected_owner}"))
 
     for path in sorted((root / ".creator/plans").glob("**/*.json")):
         data, errors = _read_json(path, "state", "STATE_JSON")
@@ -316,6 +399,10 @@ def validate_state_contract(root: Path) -> list[Finding]:
 
     state = parsed.get(".creator/state.json", {})
     if isinstance(state, dict):
+        if not isinstance(state.get("last_health_check"), str):
+            findings.append(_finding("STATE_FIELD", "state", ".creator/state.json", "last_health_check is required"))
+        if not isinstance(state.get("state_divergence"), dict):
+            findings.append(_finding("STATE_FIELD", "state", ".creator/state.json", "state_divergence is required"))
         active = {item for item in state.get("active_projects", []) if isinstance(item, str)}
         unknown = sorted(active - project_ids)
         if unknown:
@@ -353,6 +440,10 @@ def validate_plugin_package(root: Path) -> list[Finding]:
         version = manifest.get("version")
         if not isinstance(version, str) or not SEMVER_RE.fullmatch(version):
             findings.append(_finding("MANIFEST_VERSION", "plugin", manifest_path, "version must be strict semver"))
+        elif version != CURRENT_PLUGIN_VERSION:
+            findings.append(
+                _finding("MANIFEST_VERSION", "plugin", manifest_path, f"version must be {CURRENT_PLUGIN_VERSION}")
+            )
         if manifest.get("skills") != "./skills/":
             findings.append(_finding("MANIFEST_SKILLS", "plugin", manifest_path, "skills must be ./skills/"))
         if not isinstance(manifest.get("interface"), dict) or not manifest.get("interface"):
@@ -459,7 +550,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"Creator Toolchain {args.scope} validation passed.")
     if args.scope in {"repo", "all"}:
-        print(f"Validated {len(SKILLS)} authoritative skills and {len(SEED_TYPES)} SEED types.")
+        print(f"Validated {len(SKILLS)} authoritative skills and {len(PROJECT_TYPES)} project types.")
     if args.scope in {"plugin", "all"}:
         print("Validated plugin manifest, marketplace, mirror parity, and package hygiene.")
     return 0

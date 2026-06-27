@@ -15,12 +15,12 @@ DESTINATION_ROOT = ROOT / "plugin/creator-toolchain/skills"
 
 SKILLS = (
     "creator-orchestrator",
-    "creator-seed-incubator",
-    "creator-paul-loop",
-    "creator-base-workspace",
+    "creator-intake-planner",
+    "creator-execution-cycle",
+    "creator-workspace-manager",
     "creator-rule-router",
-    "creator-skillsmith-factory",
-    "creator-aegis-audit",
+    "creator-skill-workbench",
+    "creator-evidence-audit",
 )
 
 EXCLUDED_NAMES = {".DS_Store", ".gitkeep", "__pycache__"}
@@ -116,6 +116,16 @@ def synchronize(
     _validate_source(source_root)
 
     if write:
+        if (
+            source_root == destination_root
+            or source_root.is_relative_to(destination_root)
+            or destination_root.is_relative_to(source_root)
+        ):
+            raise SyncError("source and destination roots must not overlap")
+        if destination_root.exists():
+            if destination_root.is_symlink():
+                raise SyncError(f"destination skill root must not be a symlink: {destination_root}")
+            shutil.rmtree(destination_root)
         destination_root.mkdir(parents=True, exist_ok=True)
         ignore = shutil.ignore_patterns(
             *sorted(EXCLUDED_NAMES),
@@ -123,8 +133,6 @@ def synchronize(
         )
         for skill in SKILLS:
             destination = destination_root / skill
-            if destination.exists():
-                shutil.rmtree(destination)
             shutil.copytree(source_root / skill, destination, ignore=ignore)
 
     return _compare(source_root, destination_root)

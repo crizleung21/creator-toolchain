@@ -23,12 +23,12 @@ Return:
 
 | Situation | Route |
 |---|---|
-| Raw idea or unclear scope | `creator-seed-incubator` |
-| Accepted plan ready for work | `creator-paul-loop` |
-| Project state, drift, pulse, groom | `creator-base-workspace` |
+| Raw idea or unclear scope | `creator-intake-planner` |
+| Accepted plan ready for work | `creator-execution-cycle` |
+| Project state, divergence, health, maintenance | `creator-workspace-manager` |
 | Domain rules or instruction recall | `creator-rule-router` |
-| Build or audit a skill | `creator-skillsmith-factory` |
-| Evidence-first audit | `creator-aegis-audit` |
+| Build or audit a skill | `creator-skill-workbench` |
+| Evidence-first audit | `creator-evidence-audit` |
 | Package or release plugin | Phase 5 plugin workflow |
 
 ## Guardrails

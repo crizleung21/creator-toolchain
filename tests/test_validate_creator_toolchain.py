@@ -29,7 +29,6 @@ class ValidatorTests(unittest.TestCase):
 
     def _state_root(self) -> Path:
         self._copy(".creator")
-        self._copy("IMPLEMENTATION_PLAN.md")
         self._copy("docs/source-analysis")
         return self.temp_root
 
@@ -78,6 +77,29 @@ class ValidatorTests(unittest.TestCase):
 
         self.assertIn("RULE_GLOBAL", self._ids(findings))
 
+    def test_scope_state_rejects_legacy_schema_version(self) -> None:
+        root = self._state_root()
+        workspace_path = root / ".creator/workspace.json"
+        workspace = json.loads(workspace_path.read_text(encoding="utf-8"))
+        workspace["schema_version"] = "0.1.0"
+        workspace_path.write_text(json.dumps(workspace), encoding="utf-8")
+
+        findings = validator.validate_state_contract(root)
+
+        self.assertIn("STATE_SCHEMA_VERSION", self._ids(findings))
+
+    def test_scope_state_requires_creator_native_health_fields(self) -> None:
+        root = self._state_root()
+        state_path = root / ".creator/state.json"
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        state.pop("last_health_check", None)
+        state.pop("state_divergence", None)
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+
+        findings = validator.validate_state_contract(root)
+
+        self.assertIn("STATE_FIELD", self._ids(findings))
+
     def test_scope_plugin_rejects_private_state(self) -> None:
         root = self._plugin_root()
         private = root / "plugin/creator-toolchain/.creator/private.json"
@@ -117,7 +139,8 @@ class ValidatorTests(unittest.TestCase):
 
     def test_scope_plugin_rejects_extra_mirror_file(self) -> None:
         root = self._plugin_root()
-        extra = root / "plugin/creator-toolchain/skills/creator-paul-loop/extra.md"
+        extra = root / "plugin/creator-toolchain/skills/creator-execution-cycle/extra.md"
+        self.assertTrue(extra.parent.is_dir())
         extra.write_text("extra\n", encoding="utf-8")
 
         findings = validator.validate_plugin_package(root)
@@ -129,15 +152,15 @@ class ValidatorTests(unittest.TestCase):
             ".agents/skills",
             "AGENTS.md",
             "README.md",
-            "IMPLEMENTATION_PLAN.md",
             "docs/source-analysis",
             "docs/qa",
-            "scripts/materialize_seed_type_refs.py",
+            "scripts/materialize_project_type_refs.py",
             "scripts/sync_plugin_skills.py",
             "scripts/validate_creator_toolchain.py",
         ]:
             self._copy(relative)
-        skill = self.temp_root / ".agents/skills/creator-paul-loop/SKILL.md"
+        skill = self.temp_root / ".agents/skills/creator-execution-cycle/SKILL.md"
+        self.assertTrue(skill.is_file())
         skill.write_text("# Missing frontmatter\n", encoding="utf-8")
 
         findings = validator.validate_repo_contract(self.temp_root)
@@ -149,39 +172,59 @@ class ValidatorTests(unittest.TestCase):
             ".agents/skills",
             "AGENTS.md",
             "README.md",
-            "IMPLEMENTATION_PLAN.md",
             "docs/source-analysis",
             "docs/qa",
-            "scripts/materialize_seed_type_refs.py",
+            "scripts/materialize_project_type_refs.py",
             "scripts/sync_plugin_skills.py",
             "scripts/validate_creator_toolchain.py",
         ]:
             self._copy(relative)
-        shutil.rmtree(self.temp_root / ".agents/skills/creator-aegis-audit")
+        skill_root = self.temp_root / ".agents/skills/creator-evidence-audit"
+        self.assertTrue(skill_root.is_dir())
+        shutil.rmtree(skill_root)
 
         findings = validator.validate_repo_contract(self.temp_root)
 
         self.assertIn("REPO_SKILL_COUNT", self._ids(findings))
 
-    def test_scope_repo_requires_all_thirteen_seed_types(self) -> None:
+    def test_scope_repo_requires_all_thirteen_project_types(self) -> None:
         for relative in [
             ".agents/skills",
             "AGENTS.md",
             "README.md",
-            "IMPLEMENTATION_PLAN.md",
             "docs/source-analysis",
             "docs/qa",
-            "scripts/materialize_seed_type_refs.py",
+            "scripts/materialize_project_type_refs.py",
             "scripts/sync_plugin_skills.py",
             "scripts/validate_creator_toolchain.py",
         ]:
             self._copy(relative)
-        missing_type = self.temp_root / ".agents/skills/creator-seed-incubator/references/types/utility"
+        missing_type = self.temp_root / ".agents/skills/creator-intake-planner/references/types/utility"
+        self.assertTrue(missing_type.is_dir())
         shutil.rmtree(missing_type)
 
         findings = validator.validate_repo_contract(self.temp_root)
 
-        self.assertIn("SEED_TYPE_COUNT", self._ids(findings))
+        self.assertIn("PROJECT_TYPE_COUNT", self._ids(findings))
+
+    def test_scope_repo_rejects_legacy_product_marker(self) -> None:
+        for relative in [
+            ".agents/skills",
+            "AGENTS.md",
+            "README.md",
+            "docs/source-analysis",
+            "docs/qa",
+            "scripts/materialize_project_type_refs.py",
+            "scripts/sync_plugin_skills.py",
+            "scripts/validate_creator_toolchain.py",
+        ]:
+            self._copy(relative)
+        marker = "creator-" + "paul-loop"
+        (self.temp_root / "README.md").write_text(f"Legacy marker: {marker}\n", encoding="utf-8")
+
+        findings = validator.validate_repo_contract(self.temp_root)
+
+        self.assertIn("LEGACY_NAME", self._ids(findings))
 
     def test_scope_all_aggregates_failures(self) -> None:
         findings = validator.validate_all(self.temp_root)
