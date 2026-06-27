@@ -1,21 +1,26 @@
 # Local Install Test
 
-## Status
+## Evidence Header
 
-Pass with temporary `CODEX_HOME` on 2026-06-26.
+- status: `PASS`
+- tested_at: `2026-06-27T15:12:46+0800`
+- tested_commit: `ab507f6807b838bf3b4d04a65ac28e45c7e1cd44`
+- codex_cli: `0.142.3`
+- environment: fresh temporary `CODEX_HOME`
+- working_directory: neutral temporary directory for discovery
 
-## Required Evidence
+## Sequence
 
-- plugin appears in local marketplace: pass
-- install command succeeds: pass
-- plugin appears as installed and enabled: pass
-- hooks are absent by scaffold policy: pass
-- debug prompt-input exposes all seven skill names: pass
-- default prompt manual UI run: optional repeat before public release
+```text
+codex plugin marketplace add $REPO_ROOT --json
+codex plugin add creator-toolchain --marketplace creator-toolchain-local --json
+codex plugin list --json
+codex -C $NEUTRAL_DIR debug prompt-input "Use creator-orchestrator to route this request."
+```
 
-## Evidence
+All commands exited `0`.
 
-`codex plugin add creator-toolchain --marketplace creator-toolchain-local --json` returned:
+## Observed Install State
 
 ```json
 {
@@ -23,6 +28,10 @@ Pass with temporary `CODEX_HOME` on 2026-06-26.
   "name": "creator-toolchain",
   "marketplaceName": "creator-toolchain-local",
   "version": "1.0.0-draft",
+  "installed": true,
+  "enabled": true,
   "authPolicy": "ON_INSTALL"
 }
 ```
+
+The temporary home and neutral directory were removed after the test. The user's normal Codex configuration was not modified.
