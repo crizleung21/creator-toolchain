@@ -5,9 +5,10 @@
   "items": [
     {
       "id": "BACKLOG-001",
-      "title": "Validate plugin manifest against current Codex schema",
-      "phase": 5,
-      "status": "pending_external_schema_validation"
+      "title": "Complete public plugin release gates",
+      "phase": "public-release",
+      "status": "deferred",
+      "notes": "Local schema/install/discovery validation passed. Public release still requires license and manual Codex App behavior/UI acceptance."
     }
   ]
 }

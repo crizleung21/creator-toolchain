@@ -16,6 +16,13 @@
       "title": "Use repo-local skills as the authoritative development source",
       "status": "accepted",
       "rationale": "Keep .agents/skills authoritative, generate the plugin skill mirror deterministically, and preserve .creator as the repo-local state contract."
+    },
+    {
+      "decision_id": "DEC-003",
+      "date": "2026-06-27",
+      "title": "Separate local stabilization from public plugin release",
+      "status": "accepted",
+      "rationale": "Treat local schema, install, discovery, privacy, and payload validation as complete while retaining license and manual Codex App behavior/UI review as explicit public-release gates."
     }
   ]
 }

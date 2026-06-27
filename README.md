@@ -44,4 +44,4 @@ python3 scripts/sync_plugin_skills.py --check
 
 Do not hand-edit the generated plugin skill mirror. Do not enable repo-local and plugin copies simultaneously except in an explicit provenance test.
 
-Plugin packaging is a Phase 5 surface. The manifest is a draft until validated against the current Codex plugin schema.
+Plugin packaging is a Phase 5 surface. The draft manifest has passed local bundled validation, isolated install, and plugin-only discovery on Codex CLI `0.142.3`; public release remains gated by license and manual Codex App acceptance.
