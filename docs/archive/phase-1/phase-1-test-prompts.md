@@ -46,7 +46,7 @@ Create a plan for a Character Image Slide Project using front, side, and back re
 Expected:
 
 - route to `creator-seed-incubator`
-- use fixture in `docs/examples/character-image-slide-project.md`
+- use fixture in `docs/fixtures/seed/character-image-slide-project.md`
 - treat character registries as out of Phase 1 scope
 
 ## TP-005 — Negative Hook / MCP / Plugin Trigger
