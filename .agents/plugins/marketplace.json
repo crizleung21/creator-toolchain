@@ -1,0 +1,21 @@
+{
+  "name": "creator-toolchain-local",
+  "interface": {
+    "displayName": "Creator Toolchain Local"
+  },
+  "plugins": [
+    {
+      "name": "creator-toolchain",
+      "description": "Codex-native creator workflow system for ideation, execution, state, rules, skill creation, and audit.",
+      "source": {
+        "source": "local",
+        "path": "./plugin/creator-toolchain"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
