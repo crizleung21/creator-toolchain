@@ -109,6 +109,7 @@ class ValidatorTests(unittest.TestCase):
             for project in projects["projects"]
             if project["project_id"] == "creator-toolchain-naming-migration"
         )
+        active_project["status"] = "active"
         active_project.pop("last_summary", None)
         projects_path.write_text(json.dumps(projects), encoding="utf-8")
 

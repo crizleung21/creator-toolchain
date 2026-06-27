@@ -3,8 +3,8 @@
 ## Evidence Header
 
 - status: `PASS`
-- tested_at: `2026-06-27T15:12:46+0800`
-- tested_commit: `ab507f6807b838bf3b4d04a65ac28e45c7e1cd44`
+- tested_at: `2026-06-27T21:23:43+0800`
+- tested_commit: `11d7e5991a2d0c00d4a392e23b52bc5311ed50f9`
 - codex_cli: `0.142.3`
 - environment: fresh temporary `CODEX_HOME`
 - working_directory: neutral temporary directory for discovery
@@ -27,7 +27,7 @@ All commands exited `0`.
   "pluginId": "creator-toolchain@creator-toolchain-local",
   "name": "creator-toolchain",
   "marketplaceName": "creator-toolchain-local",
-  "version": "1.0.0-draft",
+  "version": "1.0.0-draft.1",
   "installed": true,
   "enabled": true,
   "authPolicy": "ON_INSTALL"

@@ -2,12 +2,12 @@
   "schema_version": "0.2.0",
   "owner_skill": "creator-workspace-manager",
   "privacy_class": "repository_workflow_state",
-  "active_projects": ["creator-toolchain-naming-migration"],
+  "active_projects": [],
   "blocked_projects": [],
   "last_health_check": "2026-06-27",
   "state_divergence": {
     "score": 0,
     "level": "green",
-    "notes": "Creator-native naming migration is active; public release gates remain deferred."
+    "notes": "Creator-native naming migration closed with local validation and isolated discovery complete; public release gates remain deferred."
   }
 }

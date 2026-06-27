@@ -3,8 +3,8 @@
 ## Evidence Header
 
 - status: `PASS_WITH_DECLARED_PUBLISHER_IDENTITY`
-- tested_at: `2026-06-27T15:12:46+0800`
-- tested_commit: `ab507f6807b838bf3b4d04a65ac28e45c7e1cd44`
+- tested_at: `2026-06-27T21:23:43+0800`
+- tested_commit: `11d7e5991a2d0c00d4a392e23b52bc5311ed50f9`
 - scope: `plugin/creator-toolchain/`
 
 ## Automated Checks
@@ -16,7 +16,7 @@
 
 ## Manual Review
 
-- state entities, operator preferences, PSMM, decisions, and project data are outside the package;
+- state entities, operator preferences, Session Insights, decisions, and project data are outside the package;
 - test fixture content contains no client or account information;
 - prompts contain workflow examples only;
 - `author.name` and `interface.developerName` intentionally identify the declared plugin publisher;

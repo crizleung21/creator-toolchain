@@ -3,6 +3,6 @@
   "project_id": "creator-toolchain-naming-migration",
   "source_skill": "creator-intake-planner",
   "handoff_target": "creator-execution-cycle",
-  "status": "active",
+  "status": "completed",
   "manifest_policy": "creator-native direct cutover with preserved provenance"
 }
