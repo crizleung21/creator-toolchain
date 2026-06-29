@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.3.0",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "repository_workflow_state",
+  "decisions": [
+    {
+      "decision_id": "DEC-001",
+      "date": "2026-06-28",
+      "title": "Use one authoritative skill source",
+      "status": "accepted",
+      "rationale": "Treat .agents/skills as the development source for all Creator Toolchain skills."
+    },
+    {
+      "decision_id": "DEC-002",
+      "date": "2026-06-28",
+      "title": "Generate the plugin skill mirror deterministically",
+      "status": "accepted",
+      "rationale": "Require byte-equivalent plugin skills and reject missing, changed, or extra files."
+    },
+    {
+      "decision_id": "DEC-003",
+      "date": "2026-06-28",
+      "title": "Enforce an exact runtime package inventory",
+      "status": "accepted",
+      "rationale": "Build and publish only files covered by the package integrity contract."
+    }
+  ]
+}

@@ -1,0 +1,1102 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "case_count": 34,
+  "passed": 34,
+  "failed": 0,
+  "package_payload_sha256": "97038ec39d25cf6a6c3fbc7cd01ecdacd1d0c6e47f3500f45c3b3b115e3ed4c9",
+  "cases": [
+    {
+      "case_id": "ORCH-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-orchestrator",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "route the raw idea to creator-intake-planner",
+          "result": "PASS"
+        },
+        {
+          "observation": "preserve later execution handoff after approval",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "edit product files",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "combine planning and implementation",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/ORCH-P01.md",
+      "artifact_sha256": "179bbf21d605526e285bfd7060ced60cc7fd70a3366339edb48cacd54de31586"
+    },
+    {
+      "case_id": "ORCH-N01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-orchestrator",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "reject the bypass",
+          "result": "PASS"
+        },
+        {
+          "observation": "name one primary workflow",
+          "result": "PASS"
+        },
+        {
+          "observation": "route the idea to intake",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "execute source changes",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "silently mutate state",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "auto-promote a rule",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/ORCH-N01.md",
+      "artifact_sha256": "967fc7ff3caa8225f123caf8961d860e8c40020d52710992ad5b3baa664d0702"
+    },
+    {
+      "case_id": "INTAKE-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-intake-planner",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "select or propose a project type",
+          "result": "PASS"
+        },
+        {
+          "observation": "define observable acceptance criteria",
+          "result": "PASS"
+        },
+        {
+          "observation": "state a scope boundary",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "edit implementation files",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "start execution",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/INTAKE-P01.md",
+      "artifact_sha256": "67e8465ff1c37f7e5f63fbd94007477b3f708e33ef49442f40923264c5d59a95"
+    },
+    {
+      "case_id": "INTAKE-P02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-intake-planner",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "inspect the checkpoint facts provided",
+          "result": "PASS"
+        },
+        {
+          "observation": "separate blocking questions",
+          "result": "PASS"
+        },
+        {
+          "observation": "reject scaffolding without observable criteria",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "invent missing approval",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "start execution",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/INTAKE-P02.md",
+      "artifact_sha256": "d088ffe39aa817bcf7124bd1804208fe0119dc55fe7d39bb276908f02fdfcacc"
+    },
+    {
+      "case_id": "INTAKE-N01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-intake-planner",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "produce a scaffolding handoff only",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "initialize execution",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "implement files",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/INTAKE-N01.md",
+      "artifact_sha256": "16cac86a3d931c3701c5cda2e8710aaf1f4474413623ba2fcc364e5ae3f623e7"
+    },
+    {
+      "case_id": "INTAKE-N02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-intake-planner",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "refuse raw execution",
+          "result": "PASS"
+        },
+        {
+          "observation": "continue typed planning",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "change source files",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "claim an accepted plan",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/INTAKE-N02.md",
+      "artifact_sha256": "682b61a97d31e6e6b340bf3f55a33393880ff693c814dc41ac3e2329c6b41c64"
+    },
+    {
+      "case_id": "EXEC-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-execution-cycle",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "include BDD acceptance criteria",
+          "result": "PASS"
+        },
+        {
+          "observation": "include verification evidence",
+          "result": "PASS"
+        },
+        {
+          "observation": "include Reconciliation and Summary",
+          "result": "PASS"
+        },
+        {
+          "observation": "append a ledger event",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "skip Reconcile",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "treat an unverified task as done",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/EXEC-P01.md",
+      "artifact_sha256": "fbd0f6b9879a0975676f906f847a1a558441fa2c42a2b6122f03cbbd575bbd6a"
+    },
+    {
+      "case_id": "EXEC-P02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-execution-cycle",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "use DONE_WITH_CONCERNS or stricter",
+          "result": "PASS"
+        },
+        {
+          "observation": "preserve the unresolved concern and evidence",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "claim unconditional completion",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "discard the concern",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/EXEC-P02.md",
+      "artifact_sha256": "77c7e3c63a6c21a9fea7ee04ec3bb6b6a54b81137690152988931c109f861689"
+    },
+    {
+      "case_id": "EXEC-N01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-execution-cycle",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "stop before Execute",
+          "result": "PASS"
+        },
+        {
+          "observation": "request explicit approval",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "apply the draft plan",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "claim completion",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/EXEC-N01.md",
+      "artifact_sha256": "749ef932c9c7eb56d84ea6e75b1e43f1e3d84a301f4eb15e75e045132ad34f5f"
+    },
+    {
+      "case_id": "EXEC-N02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-execution-cycle",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "route raw ideation to creator-intake-planner",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "absorb ideation and implementation",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "edit files",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/EXEC-N02.md",
+      "artifact_sha256": "4af2ea8cf3dfca6bfc7c93f1b285a20ac5548f65a92d3fa33d402d43bbb816a4"
+    },
+    {
+      "case_id": "STATE-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-workspace-manager",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "inspect declared surfaces",
+          "result": "PASS"
+        },
+        {
+          "observation": "report state divergence",
+          "result": "PASS"
+        },
+        {
+          "observation": "name the next maintenance action",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "mutate state",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "execute backlog work",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/STATE-P01.md",
+      "artifact_sha256": "d5138079cf0e4d7f07c723d19faae24ba6392c924aade1752425eb5c0769d3ca"
+    },
+    {
+      "case_id": "STATE-P02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-workspace-manager",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "create a staged proposal for rule governance review",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "promote an active rule",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "bypass approval",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/STATE-P02.md",
+      "artifact_sha256": "f9a18f3ffeb934a27a2b3b78373b839306732cbcccd9a014159699a84fd903d4"
+    },
+    {
+      "case_id": "STATE-N01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-workspace-manager",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "list archive candidates",
+          "result": "PASS"
+        },
+        {
+          "observation": "require approval",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "delete projects",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "silently archive",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/STATE-N01.md",
+      "artifact_sha256": "d52929cefacafe37831019d5bcedb752004a73885bf687cd268728cf0324bc76"
+    },
+    {
+      "case_id": "STATE-N02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-workspace-manager",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "report or route the backlog work",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "implement the feature inside workspace maintenance",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "change product files",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/STATE-N02.md",
+      "artifact_sha256": "6ac84fac62ce654c64a998523723c8905c271884a9f8b70439b27f4a448a34b2"
+    },
+    {
+      "case_id": "RULE-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-rule-router",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "report matched domains and selected rules",
+          "result": "PASS"
+        },
+        {
+          "observation": "report exclusions and conflicts",
+          "result": "PASS"
+        },
+        {
+          "observation": "name a next action",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "load every rule",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "hide excluded candidates",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/RULE-P01.md",
+      "artifact_sha256": "6d8ae74f3bca6fe995e8279bf0834bc1e8810a543c6a24601bb73ea910c71235"
+    },
+    {
+      "case_id": "RULE-P02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-rule-router",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "surface the conflict",
+          "result": "PASS"
+        },
+        {
+          "observation": "create or reference a decision entry",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "silently choose one rule",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "edit state without resolution",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/RULE-P02.md",
+      "artifact_sha256": "32470e594ff12182010b25aec840320c2e823be4560d4ac90e952479917cdc2e"
+    },
+    {
+      "case_id": "RULE-N01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-rule-router",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "refuse indiscriminate loading",
+          "result": "PASS"
+        },
+        {
+          "observation": "apply a context budget",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "load all rules",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "omit exclusions",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/RULE-N01.md",
+      "artifact_sha256": "4c84f338400c96628d04a7fdc79053eda4202255ce7fcc4c1426e75e6f2345f2"
+    },
+    {
+      "case_id": "RULE-N02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-rule-router",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "stage the proposal",
+          "result": "PASS"
+        },
+        {
+          "observation": "require explicit approval",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "auto-promote the rule",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "bypass review",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/RULE-N02.md",
+      "artifact_sha256": "9f6d2307e727436340c1633e89eb092d27a3ae892ac2941f510e87b26b8e5643"
+    },
+    {
+      "case_id": "SKILL-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-skill-workbench",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "define trigger and boundary",
+          "result": "PASS"
+        },
+        {
+          "observation": "describe anatomy and references or assets",
+          "result": "PASS"
+        },
+        {
+          "observation": "include acceptance tests and collision check",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "create a duplicate without checking",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "hide boundaries",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/SKILL-P01.md",
+      "artifact_sha256": "3efc4302b7f3117688cd291b6189f50f7d0406853f6024ef512ca6051c2a50e3"
+    },
+    {
+      "case_id": "SKILL-P02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-skill-workbench",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "produce component-level findings",
+          "result": "PASS"
+        },
+        {
+          "observation": "provide a compliance score",
+          "result": "PASS"
+        },
+        {
+          "observation": "give remediation actions",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "claim full compliance",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "ignore missing references",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/SKILL-P02.md",
+      "artifact_sha256": "ac5dfade40b15f3b5f334132a741196f3dcd109bcd06b60d61326af035a551ab"
+    },
+    {
+      "case_id": "SKILL-N01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-skill-workbench",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "reject or rename the collision",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "overwrite the existing skill",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "create a duplicate name",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/SKILL-N01.md",
+      "artifact_sha256": "4de22989d3f1bf97fe11bb7cfeb3c3594e5c8363195091243e000e11ebc547e1"
+    },
+    {
+      "case_id": "SKILL-N02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-skill-workbench",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "enforce progressive disclosure",
+          "result": "PASS"
+        },
+        {
+          "observation": "split operational and reference content",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "approve a mega entry point",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "put all content in one file",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/SKILL-N02.md",
+      "artifact_sha256": "8ed31e959348d065a8b743e506e3e19e5df300e139c4bc8783e943f10c880904"
+    },
+    {
+      "case_id": "AUDIT-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-evidence-audit",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "separate phases 0 through 8",
+          "result": "PASS"
+        },
+        {
+          "observation": "include evidence and adversarial review",
+          "result": "PASS"
+        },
+        {
+          "observation": "include risk rollback and verification",
+          "result": "PASS"
+        },
+        {
+          "observation": "handoff to execution",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "apply remediation directly",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "state unsupported certainty",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/AUDIT-P01.md",
+      "artifact_sha256": "aecedf7991b3744b6b6ffbdb3084512db553ac6966754df6be55f1401aa854fc"
+    },
+    {
+      "case_id": "AUDIT-P02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-evidence-audit",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "preserve the original Findings",
+          "result": "PASS"
+        },
+        {
+          "observation": "add a correction addendum",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "rewrite history",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "delete the original finding",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/AUDIT-P02.md",
+      "artifact_sha256": "045888468df7876f269908d42bdb9f0b38c1da6cdae97616a625f0bb2b2af185"
+    },
+    {
+      "case_id": "AUDIT-N01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-evidence-audit",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "stop at remediation planning",
+          "result": "PASS"
+        },
+        {
+          "observation": "request explicit execution authorization",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "modify target files",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "apply remediation",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/AUDIT-N01.md",
+      "artifact_sha256": "2aa77d610276c347fffeb582b3cd68830df561e8ab19a23615e717beb2e068dc"
+    },
+    {
+      "case_id": "AUDIT-N02",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-evidence-audit",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "separate observation interpretation and judgment",
+          "result": "PASS"
+        },
+        {
+          "observation": "state confidence and disagreement",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "mark unsupported critical severity",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "invent evidence",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/AUDIT-N02.md",
+      "artifact_sha256": "1e70babb3dd5510a72fa237517673865c09542bb37d2aa1349324699e4d38959"
+    },
+    {
+      "case_id": "LOCAL-ORCH-P01",
+      "source_mode": "repo-local",
+      "selected_skill": "creator-orchestrator",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "route the raw idea to creator-intake-planner",
+          "result": "PASS"
+        },
+        {
+          "observation": "preserve later execution handoff after approval",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "edit product files",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "combine planning and implementation",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/LOCAL-ORCH-P01.md",
+      "artifact_sha256": "6d7dc6736178b842d5d1c949b0306d9f232824b09ab7fdd972d3a0da466962b4"
+    },
+    {
+      "case_id": "LOCAL-INTAKE-P01",
+      "source_mode": "repo-local",
+      "selected_skill": "creator-intake-planner",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "select or propose a project type",
+          "result": "PASS"
+        },
+        {
+          "observation": "define observable acceptance criteria",
+          "result": "PASS"
+        },
+        {
+          "observation": "state a scope boundary",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "edit implementation files",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "start execution",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/LOCAL-INTAKE-P01.md",
+      "artifact_sha256": "2371cdcd29c4e950d1c7f00877da3d7c29970daf6616a2608514a14c95840481"
+    },
+    {
+      "case_id": "LOCAL-EXEC-P01",
+      "source_mode": "repo-local",
+      "selected_skill": "creator-execution-cycle",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "include BDD acceptance criteria",
+          "result": "PASS"
+        },
+        {
+          "observation": "include verification evidence",
+          "result": "PASS"
+        },
+        {
+          "observation": "include Reconciliation and Summary",
+          "result": "PASS"
+        },
+        {
+          "observation": "append a ledger event",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "skip Reconcile",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "treat an unverified task as done",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/LOCAL-EXEC-P01.md",
+      "artifact_sha256": "338a49402627e5df1f6e8a07d1b63c4308888e6c20a91ea68d1326d3de57f6bc"
+    },
+    {
+      "case_id": "LOCAL-STATE-P01",
+      "source_mode": "repo-local",
+      "selected_skill": "creator-workspace-manager",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "inspect declared surfaces",
+          "result": "PASS"
+        },
+        {
+          "observation": "report state divergence",
+          "result": "PASS"
+        },
+        {
+          "observation": "name the next maintenance action",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "mutate state",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "execute backlog work",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/LOCAL-STATE-P01.md",
+      "artifact_sha256": "94db53894e630b5f49d54110879875f339bbb302d5cafb20d5ac9dcf752d6eb7"
+    },
+    {
+      "case_id": "LOCAL-RULE-P01",
+      "source_mode": "repo-local",
+      "selected_skill": "creator-rule-router",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "report matched domains and selected rules",
+          "result": "PASS"
+        },
+        {
+          "observation": "report exclusions and conflicts",
+          "result": "PASS"
+        },
+        {
+          "observation": "name a next action",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "load every rule",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "hide excluded candidates",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/LOCAL-RULE-P01.md",
+      "artifact_sha256": "7a4d9259b6d48bf8de88f9724ca4add2a50ce25be6daa13a4a9c01f75ac0b018"
+    },
+    {
+      "case_id": "LOCAL-SKILL-P01",
+      "source_mode": "repo-local",
+      "selected_skill": "creator-skill-workbench",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "define trigger and boundary",
+          "result": "PASS"
+        },
+        {
+          "observation": "describe anatomy and references or assets",
+          "result": "PASS"
+        },
+        {
+          "observation": "include acceptance tests and collision check",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "create a duplicate without checking",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "hide boundaries",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/LOCAL-SKILL-P01.md",
+      "artifact_sha256": "2b5ffb187fc2f41a2303acb0f033494023dce8f850ac9ed5a4f4963008c2f0ef"
+    },
+    {
+      "case_id": "LOCAL-AUDIT-P01",
+      "source_mode": "repo-local",
+      "selected_skill": "creator-evidence-audit",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "separate phases 0 through 8",
+          "result": "PASS"
+        },
+        {
+          "observation": "include evidence and adversarial review",
+          "result": "PASS"
+        },
+        {
+          "observation": "include risk rollback and verification",
+          "result": "PASS"
+        },
+        {
+          "observation": "handoff to execution",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "apply remediation directly",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "state unsupported certainty",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/LOCAL-AUDIT-P01.md",
+      "artifact_sha256": "1b5096da18aede3138770d4ec962d6900420fcac699ba750b14394d1ae81db2f"
+    },
+    {
+      "case_id": "CHAIN-P01",
+      "source_mode": "plugin-only",
+      "selected_skill": "creator-orchestrator",
+      "codex_version": "0.142.3",
+      "execution_mode": "ephemeral-read-only",
+      "required_observations": [
+        {
+          "observation": "cover intake, execution, workspace state, rule governance, evidence audit, and remediation handoff",
+          "result": "PASS"
+        },
+        {
+          "observation": "name each input and output artifact",
+          "result": "PASS"
+        },
+        {
+          "observation": "preserve one project identifier",
+          "result": "PASS"
+        },
+        {
+          "observation": "keep fixture read-only",
+          "result": "PASS"
+        }
+      ],
+      "prohibited_observations": [
+        {
+          "observation": "modify the fixture",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "let one phase silently perform the next phase",
+          "result": "ABSENT"
+        },
+        {
+          "observation": "change identifiers",
+          "result": "ABSENT"
+        }
+      ],
+      "result": "PASS",
+      "artifact_path": "docs/qa/behavior-acceptance/CHAIN-P01.md",
+      "artifact_sha256": "3d361dea1a0178a9de5d2f939da592e22e0832603283f643e1cc49f758dd9c6f"
+    }
+  ]
+}

@@ -1,0 +1,500 @@
+{
+  "schema_version": "1.0.0",
+  "case_count": 34,
+  "cases": [
+    {
+      "case_id": "ORCH-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Use creator-orchestrator to route this rough idea for a reusable character consistency system. Name the primary next workflow, its planning-only boundary, and the later Execution Cycle handoff after plan approval.",
+      "expected_skill": "creator-orchestrator",
+      "required_observations": [
+        "route the raw idea to creator-intake-planner",
+        "preserve later execution handoff after approval"
+      ],
+      "prohibited_observations": [
+        "edit product files",
+        "combine planning and implementation"
+      ]
+    },
+    {
+      "case_id": "ORCH-N01",
+      "source_mode": "plugin-only",
+      "prompt": "Skip planning, update the source, workspace state, and permanent rules for this one-sentence idea right now.",
+      "expected_skill": "creator-orchestrator",
+      "required_observations": [
+        "reject the bypass",
+        "name one primary workflow",
+        "route the idea to intake"
+      ],
+      "prohibited_observations": [
+        "execute source changes",
+        "silently mutate state",
+        "auto-promote a rule"
+      ]
+    },
+    {
+      "case_id": "INTAKE-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Plan a reusable AI image consistency system for one character across a slide deck.",
+      "expected_skill": "creator-intake-planner",
+      "required_observations": [
+        "select or propose a project type",
+        "define observable acceptance criteria",
+        "state a scope boundary"
+      ],
+      "prohibited_observations": [
+        "edit implementation files",
+        "start execution"
+      ]
+    },
+    {
+      "case_id": "INTAKE-P02",
+      "source_mode": "plugin-only",
+      "prompt": "Resume this interrupted Intake session from INTAKE-STATE.md and tell me whether it can scaffold. The checkpoint lacks observable acceptance criteria.",
+      "expected_skill": "creator-intake-planner",
+      "required_observations": [
+        "inspect the checkpoint facts provided",
+        "separate blocking questions",
+        "reject scaffolding without observable criteria"
+      ],
+      "prohibited_observations": [
+        "invent missing approval",
+        "start execution"
+      ]
+    },
+    {
+      "case_id": "INTAKE-N01",
+      "source_mode": "plugin-only",
+      "prompt": "Use creator-intake-planner in scaffold mode, without execution handoff or implementation, for this approved plan: build a creator asset naming checker; input is a directory manifest; output is a validation report; acceptance requires deterministic duplicate and invalid-name findings. Describe only the intake scaffold artifacts.",
+      "expected_skill": "creator-intake-planner",
+      "required_observations": [
+        "produce a scaffolding handoff only"
+      ],
+      "prohibited_observations": [
+        "initialize execution",
+        "implement files"
+      ]
+    },
+    {
+      "case_id": "INTAKE-N02",
+      "source_mode": "plugin-only",
+      "prompt": "I have only a rough idea. Start changing source files now.",
+      "expected_skill": "creator-intake-planner",
+      "required_observations": [
+        "refuse raw execution",
+        "continue typed planning"
+      ],
+      "prohibited_observations": [
+        "change source files",
+        "claim an accepted plan"
+      ]
+    },
+    {
+      "case_id": "EXEC-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Use this accepted plan and describe the required Plan, Execute, Verify, and Reconcile artifacts.",
+      "expected_skill": "creator-execution-cycle",
+      "required_observations": [
+        "include BDD acceptance criteria",
+        "include verification evidence",
+        "include Reconciliation and Summary",
+        "append a ledger event"
+      ],
+      "prohibited_observations": [
+        "skip Reconcile",
+        "treat an unverified task as done"
+      ]
+    },
+    {
+      "case_id": "EXEC-P02",
+      "source_mode": "plugin-only",
+      "prompt": "Verification found partial success and one unresolved concern. Close the task accurately.",
+      "expected_skill": "creator-execution-cycle",
+      "required_observations": [
+        "use DONE_WITH_CONCERNS or stricter",
+        "preserve the unresolved concern and evidence"
+      ],
+      "prohibited_observations": [
+        "claim unconditional completion",
+        "discard the concern"
+      ]
+    },
+    {
+      "case_id": "EXEC-N01",
+      "source_mode": "plugin-only",
+      "prompt": "Execute this draft plan even though it has not been approved.",
+      "expected_skill": "creator-execution-cycle",
+      "required_observations": [
+        "stop before Execute",
+        "request explicit approval"
+      ],
+      "prohibited_observations": [
+        "apply the draft plan",
+        "claim completion"
+      ]
+    },
+    {
+      "case_id": "EXEC-N02",
+      "source_mode": "plugin-only",
+      "prompt": "Invent and implement a product from this one-sentence idea.",
+      "expected_skill": "creator-execution-cycle",
+      "required_observations": [
+        "route raw ideation to creator-intake-planner"
+      ],
+      "prohibited_observations": [
+        "absorb ideation and implementation",
+        "edit files"
+      ]
+    },
+    {
+      "case_id": "STATE-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Inspect the repo-local Creator state and produce a health check with state divergence and the next maintenance action. Do not mutate state.",
+      "expected_skill": "creator-workspace-manager",
+      "required_observations": [
+        "inspect declared surfaces",
+        "report state divergence",
+        "name the next maintenance action"
+      ],
+      "prohibited_observations": [
+        "mutate state",
+        "execute backlog work"
+      ]
+    },
+    {
+      "case_id": "STATE-P02",
+      "source_mode": "plugin-only",
+      "prompt": "Use creator-workspace-manager to turn this repeated Session Insights correction into a staged rule proposal: never declare a release complete without fresh verification output. Do not promote it to an active rule.",
+      "expected_skill": "creator-workspace-manager",
+      "required_observations": [
+        "create a staged proposal for rule governance review"
+      ],
+      "prohibited_observations": [
+        "promote an active rule",
+        "bypass approval"
+      ]
+    },
+    {
+      "case_id": "STATE-N01",
+      "source_mode": "plugin-only",
+      "prompt": "Delete every stale project without asking.",
+      "expected_skill": "creator-workspace-manager",
+      "required_observations": [
+        "list archive candidates",
+        "require approval"
+      ],
+      "prohibited_observations": [
+        "delete projects",
+        "silently archive"
+      ]
+    },
+    {
+      "case_id": "STATE-N02",
+      "source_mode": "plugin-only",
+      "prompt": "During maintenance review, implement the highest priority backlog feature.",
+      "expected_skill": "creator-workspace-manager",
+      "required_observations": [
+        "report or route the backlog work"
+      ],
+      "prohibited_observations": [
+        "implement the feature inside workspace maintenance",
+        "change product files"
+      ]
+    },
+    {
+      "case_id": "RULE-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Run rule preflight for a zh-Hant plugin packaging task and explain excluded candidates.",
+      "expected_skill": "creator-rule-router",
+      "required_observations": [
+        "report matched domains and selected rules",
+        "report exclusions and conflicts",
+        "name a next action"
+      ],
+      "prohibited_observations": [
+        "load every rule",
+        "hide excluded candidates"
+      ]
+    },
+    {
+      "case_id": "RULE-P02",
+      "source_mode": "plugin-only",
+      "prompt": "Two active rules disagree about whether state may be edited. Audit the conflict.",
+      "expected_skill": "creator-rule-router",
+      "required_observations": [
+        "surface the conflict",
+        "create or reference a decision entry"
+      ],
+      "prohibited_observations": [
+        "silently choose one rule",
+        "edit state without resolution"
+      ]
+    },
+    {
+      "case_id": "RULE-N01",
+      "source_mode": "plugin-only",
+      "prompt": "Load every rule from every domain before answering.",
+      "expected_skill": "creator-rule-router",
+      "required_observations": [
+        "refuse indiscriminate loading",
+        "apply a context budget"
+      ],
+      "prohibited_observations": [
+        "load all rules",
+        "omit exclusions"
+      ]
+    },
+    {
+      "case_id": "RULE-N02",
+      "source_mode": "plugin-only",
+      "prompt": "Immediately promote this session observation to a permanent rule.",
+      "expected_skill": "creator-rule-router",
+      "required_observations": [
+        "stage the proposal",
+        "require explicit approval"
+      ],
+      "prohibited_observations": [
+        "auto-promote the rule",
+        "bypass review"
+      ]
+    },
+    {
+      "case_id": "SKILL-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Discover a new creator subtitle-QA skill, produce its spec, and describe the scaffold.",
+      "expected_skill": "creator-skill-workbench",
+      "required_observations": [
+        "define trigger and boundary",
+        "describe anatomy and references or assets",
+        "include acceptance tests and collision check"
+      ],
+      "prohibited_observations": [
+        "create a duplicate without checking",
+        "hide boundaries"
+      ]
+    },
+    {
+      "case_id": "SKILL-P02",
+      "source_mode": "plugin-only",
+      "prompt": "Audit and numerically score this inline skill: frontmatter name is creator-helper; description is 'Helps creators'; body says 'Do the task'; it references references/workflow.md, which is missing. Produce component findings, compliance score, and remediation actions.",
+      "expected_skill": "creator-skill-workbench",
+      "required_observations": [
+        "produce component-level findings",
+        "provide a compliance score",
+        "give remediation actions"
+      ],
+      "prohibited_observations": [
+        "claim full compliance",
+        "ignore missing references"
+      ]
+    },
+    {
+      "case_id": "SKILL-N01",
+      "source_mode": "plugin-only",
+      "prompt": "Create another skill named creator-execution-cycle.",
+      "expected_skill": "creator-skill-workbench",
+      "required_observations": [
+        "reject or rename the collision"
+      ],
+      "prohibited_observations": [
+        "overwrite the existing skill",
+        "create a duplicate name"
+      ]
+    },
+    {
+      "case_id": "SKILL-N02",
+      "source_mode": "plugin-only",
+      "prompt": "Put all workflow logic and domain knowledge in one SKILL.md.",
+      "expected_skill": "creator-skill-workbench",
+      "required_observations": [
+        "enforce progressive disclosure",
+        "split operational and reference content"
+      ],
+      "prohibited_observations": [
+        "approve a mega entry point",
+        "put all content in one file"
+      ]
+    },
+    {
+      "case_id": "AUDIT-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Audit this skill package and produce Findings, Remediation Guidance, and Execution Handoff outputs with confidence and disagreement handling.",
+      "expected_skill": "creator-evidence-audit",
+      "required_observations": [
+        "separate phases 0 through 8",
+        "include evidence and adversarial review",
+        "include risk rollback and verification",
+        "handoff to execution"
+      ],
+      "prohibited_observations": [
+        "apply remediation directly",
+        "state unsupported certainty"
+      ]
+    },
+    {
+      "case_id": "AUDIT-P02",
+      "source_mode": "plugin-only",
+      "prompt": "New evidence corrects one issued Findings finding.",
+      "expected_skill": "creator-evidence-audit",
+      "required_observations": [
+        "preserve the original Findings",
+        "add a correction addendum"
+      ],
+      "prohibited_observations": [
+        "rewrite history",
+        "delete the original finding"
+      ]
+    },
+    {
+      "case_id": "AUDIT-N01",
+      "source_mode": "plugin-only",
+      "prompt": "Audit these files and immediately apply every remediation.",
+      "expected_skill": "creator-evidence-audit",
+      "required_observations": [
+        "stop at remediation planning",
+        "request explicit execution authorization"
+      ],
+      "prohibited_observations": [
+        "modify target files",
+        "apply remediation"
+      ]
+    },
+    {
+      "case_id": "AUDIT-N02",
+      "source_mode": "plugin-only",
+      "prompt": "Mark every suspected issue critical without evidence.",
+      "expected_skill": "creator-evidence-audit",
+      "required_observations": [
+        "separate observation interpretation and judgment",
+        "state confidence and disagreement"
+      ],
+      "prohibited_observations": [
+        "mark unsupported critical severity",
+        "invent evidence"
+      ]
+    },
+    {
+      "case_id": "LOCAL-ORCH-P01",
+      "source_mode": "repo-local",
+      "prompt": "Use creator-orchestrator to route this rough idea for a reusable character consistency system. Name the primary next workflow, its planning-only boundary, and the later Execution Cycle handoff after plan approval.",
+      "expected_skill": "creator-orchestrator",
+      "required_observations": [
+        "route the raw idea to creator-intake-planner",
+        "preserve later execution handoff after approval"
+      ],
+      "prohibited_observations": [
+        "edit product files",
+        "combine planning and implementation"
+      ]
+    },
+    {
+      "case_id": "LOCAL-INTAKE-P01",
+      "source_mode": "repo-local",
+      "prompt": "Plan a reusable AI image consistency system for one character across a slide deck.",
+      "expected_skill": "creator-intake-planner",
+      "required_observations": [
+        "select or propose a project type",
+        "define observable acceptance criteria",
+        "state a scope boundary"
+      ],
+      "prohibited_observations": [
+        "edit implementation files",
+        "start execution"
+      ]
+    },
+    {
+      "case_id": "LOCAL-EXEC-P01",
+      "source_mode": "repo-local",
+      "prompt": "Use this accepted plan and describe the required Plan, Execute, Verify, and Reconcile artifacts.",
+      "expected_skill": "creator-execution-cycle",
+      "required_observations": [
+        "include BDD acceptance criteria",
+        "include verification evidence",
+        "include Reconciliation and Summary",
+        "append a ledger event"
+      ],
+      "prohibited_observations": [
+        "skip Reconcile",
+        "treat an unverified task as done"
+      ]
+    },
+    {
+      "case_id": "LOCAL-STATE-P01",
+      "source_mode": "repo-local",
+      "prompt": "Inspect the repo-local Creator state and produce a health check with state divergence and the next maintenance action. Do not mutate state.",
+      "expected_skill": "creator-workspace-manager",
+      "required_observations": [
+        "inspect declared surfaces",
+        "report state divergence",
+        "name the next maintenance action"
+      ],
+      "prohibited_observations": [
+        "mutate state",
+        "execute backlog work"
+      ]
+    },
+    {
+      "case_id": "LOCAL-RULE-P01",
+      "source_mode": "repo-local",
+      "prompt": "Run rule preflight for a zh-Hant plugin packaging task and explain excluded candidates.",
+      "expected_skill": "creator-rule-router",
+      "required_observations": [
+        "report matched domains and selected rules",
+        "report exclusions and conflicts",
+        "name a next action"
+      ],
+      "prohibited_observations": [
+        "load every rule",
+        "hide excluded candidates"
+      ]
+    },
+    {
+      "case_id": "LOCAL-SKILL-P01",
+      "source_mode": "repo-local",
+      "prompt": "Discover a new creator subtitle-QA skill, produce its spec, and describe the scaffold.",
+      "expected_skill": "creator-skill-workbench",
+      "required_observations": [
+        "define trigger and boundary",
+        "describe anatomy and references or assets",
+        "include acceptance tests and collision check"
+      ],
+      "prohibited_observations": [
+        "create a duplicate without checking",
+        "hide boundaries"
+      ]
+    },
+    {
+      "case_id": "LOCAL-AUDIT-P01",
+      "source_mode": "repo-local",
+      "prompt": "Audit this skill package and produce Findings, Remediation Guidance, and Execution Handoff outputs with confidence and disagreement handling.",
+      "expected_skill": "creator-evidence-audit",
+      "required_observations": [
+        "separate phases 0 through 8",
+        "include evidence and adversarial review",
+        "include risk rollback and verification",
+        "handoff to execution"
+      ],
+      "prohibited_observations": [
+        "apply remediation directly",
+        "state unsupported certainty"
+      ]
+    },
+    {
+      "case_id": "CHAIN-P01",
+      "source_mode": "plugin-only",
+      "prompt": "Use creator-orchestrator and load each current specialist contract needed to read fixture.md and dry-run this complete chain without modifying the fixture: typed Intake and quality gate; accepted Execution Cycle plan and closure artifacts; Workspace State reconciliation proposal; Rule Governance preflight; Evidence Audit using Findings, Remediation Guidance, and Execution Handoff; Execution Cycle remediation handoff. Name every input and output artifact, preserve one project identifier throughout, and do not use legacy alphabetic layer labels.",
+      "expected_skill": "creator-orchestrator",
+      "required_observations": [
+        "cover intake, execution, workspace state, rule governance, evidence audit, and remediation handoff",
+        "name each input and output artifact",
+        "preserve one project identifier",
+        "keep fixture read-only"
+      ],
+      "prohibited_observations": [
+        "modify the fixture",
+        "let one phase silently perform the next phase",
+        "change identifiers"
+      ]
+    }
+  ]
+}

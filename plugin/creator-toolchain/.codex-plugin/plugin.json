@@ -1,0 +1,25 @@
+{
+  "name": "creator-toolchain",
+  "version": "1.0.1",
+  "description": "Codex-native creator workflow system for ideation, execution, state, rules, skill creation, and audit.",
+  "author": {
+    "name": "crizleung21",
+    "url": "https://github.com/crizleung21"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/crizleung21/creator-toolchain",
+  "repository": "https://github.com/crizleung21/creator-toolchain",
+  "keywords": ["creator", "workflow", "codex", "skills", "audit"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Creator Toolchain",
+    "shortDescription": "Codex-native creator workflow system for ideation, execution, state, rules, skill creation, and audit.",
+    "longDescription": "Creator Toolchain packages Codex skills for turning ideas into plans, executing work through Plan, Execute, Verify, Reconcile, managing repo-local state, routing domain rules, creating new skills, and auditing workflows.",
+    "developerName": "crizleung21",
+    "category": "Productivity",
+    "capabilities": ["Skills", "Workflow", "Planning", "Audit"],
+    "defaultPrompt": [
+      "Use creator-orchestrator to help me choose the right Creator Toolchain workflow."
+    ]
+  }
+}

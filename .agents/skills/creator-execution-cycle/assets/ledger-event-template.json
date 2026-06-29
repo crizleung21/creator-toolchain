@@ -1,0 +1,11 @@
+{
+  "event_id": "EVT-001",
+  "ts": "YYYY-MM-DDTHH:MM:SSZ",
+  "sequence": 1,
+  "phase": "plan|execute|verify|reconcile|recover",
+  "task_id": "TASK-001",
+  "artifact": "",
+  "status": "DONE|DONE_WITH_CONCERNS|NEEDS_CONTEXT|BLOCKED",
+  "evidence_path": "",
+  "notes": ""
+}

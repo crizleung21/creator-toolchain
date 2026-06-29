@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.3.0",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "private",
+  "entries": [],
+  "promotion_policy": "Session insights may create staged rule proposals but must not auto-promote active rules."
+}

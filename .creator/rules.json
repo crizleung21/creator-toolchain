@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.3.0",
+  "owner_skill": "creator-rule-router",
+  "privacy_class": "repository_contract",
+  "domains": [
+    {
+      "domain_id": "GLOBAL",
+      "enabled": true,
+      "priority": 100,
+      "trigger_keywords": [],
+      "rules": [
+        {
+          "rule_id": "GLOBAL-001",
+          "severity": "high",
+          "text": "Do not silently mutate .creator/*.json; propose state changes unless the active workflow owns that surface."
+        },
+        {
+          "rule_id": "GLOBAL-002",
+          "severity": "high",
+          "text": "Do not package private state, caches, environment files, editor metadata, build archives, or operating-system artifacts."
+        }
+      ],
+      "commands": [],
+      "exclude_patterns": [],
+      "decision_refs": ["DEC-001", "DEC-003"]
+    },
+    {
+      "domain_id": "creator-toolchain",
+      "enabled": true,
+      "priority": 80,
+      "trigger_keywords": ["creator-toolchain", "skill", "plugin", "package", "validation"],
+      "rules": [
+        {
+          "rule_id": "CT-001",
+          "severity": "high",
+          "text": "Creator Toolchain changes must preserve skill mirror parity and exact package integrity."
+        }
+      ],
+      "commands": [
+        {
+          "command_id": "validate-creator-toolchain",
+          "trigger": "validate creator toolchain",
+          "workflow": "python3 scripts/validate_creator_toolchain.py --scope all",
+          "status": "active"
+        }
+      ],
+      "exclude_patterns": [],
+      "decision_refs": ["DEC-002", "DEC-003"]
+    }
+  ],
+  "staged_proposals": [],
+  "decision_log": []
+}

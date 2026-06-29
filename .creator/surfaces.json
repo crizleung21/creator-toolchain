@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.3.0",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "publishable_template",
+  "surfaces": [
+    {"surface_id": "workspace", "path": ".creator/workspace.json", "required": true},
+    {"surface_id": "projects", "path": ".creator/projects.json", "required": true},
+    {"surface_id": "entities", "path": ".creator/entities.json", "required": true},
+    {"surface_id": "state", "path": ".creator/state.json", "required": true},
+    {"surface_id": "session-insights", "path": ".creator/session-insights.json", "required": true},
+    {"surface_id": "operator", "path": ".creator/operator.json", "required": true},
+    {"surface_id": "backlog", "path": ".creator/backlog.json", "required": true},
+    {"surface_id": "surfaces", "path": ".creator/surfaces.json", "required": true},
+    {"surface_id": "decisions", "path": ".creator/decisions.json", "required": true},
+    {"surface_id": "rules", "path": ".creator/rules.json", "required": true}
+  ]
+}

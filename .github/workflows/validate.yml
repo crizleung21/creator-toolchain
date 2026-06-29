@@ -1,0 +1,24 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - run: python3 scripts/sync_plugin_skills.py --check
+      - run: python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --check docs/qa/package-integrity-report.json
+      - run: python3 scripts/validate_creator_toolchain.py --scope all
+      - run: |
+          python3 scripts/build_plugin_package.py --root . --output /tmp/build-a.zip
+          python3 scripts/build_plugin_package.py --root . --output /tmp/build-b.zip
+          cmp /tmp/build-a.zip /tmp/build-b.zip
+      - run: git diff --exit-code

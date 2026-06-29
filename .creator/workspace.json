@@ -1,0 +1,10 @@
+{
+  "schema_version": "0.3.0",
+  "workspace_id": "creator-toolchain",
+  "display_name": "Creator Toolchain",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "publishable_template",
+  "state_contract": ".creator/*.json",
+  "architecture_map": "docs/architecture/creator-toolchain.md",
+  "active_plan": null
+}

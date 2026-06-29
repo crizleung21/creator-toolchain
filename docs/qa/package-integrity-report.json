@@ -1,0 +1,376 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "package_version": "1.0.1",
+  "package_root": "plugin/creator-toolchain",
+  "file_count": 91,
+  "payload_sha256": "97038ec39d25cf6a6c3fbc7cd01ecdacd1d0c6e47f3500f45c3b3b115e3ed4c9",
+  "files": [
+    {
+      "path": ".codex-plugin/plugin.json",
+      "sha256": "37153b532d06bb6dd9528cd35f81b5a0dead6c1e5df8bb923d0a14b1898c5df2"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "df21c6f7dc5539a4631a2a3c3c6e4a2d1bff306bbb22c56e05c4337ddae872b1"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "1662b7b97d53e791adf103e394f3ee5b1d437486954cddd52fb7d51a169dd5fb"
+    },
+    {
+      "path": "README.md",
+      "sha256": "d28f42c9c369aab351c0bb545233526c586688b8b05adc3cf4de66ae7f7c352f"
+    },
+    {
+      "path": "skills/creator-evidence-audit/SKILL.md",
+      "sha256": "9fd6beed4365667def5924d7e5e1a8fb35a2500f8dc9fc52d92d883f26117710"
+    },
+    {
+      "path": "skills/creator-evidence-audit/assets/execution-handoff-template.md",
+      "sha256": "f8a6a3816d48bf15473ed1254528d1d62695e83fbe66b751575ef4b754824001"
+    },
+    {
+      "path": "skills/creator-evidence-audit/assets/findings-template.md",
+      "sha256": "c44ed3fc2a8122286cc9bd0cedf436b950af7c009a9b635048d000f9a71545b5"
+    },
+    {
+      "path": "skills/creator-evidence-audit/assets/remediation-guidance-template.md",
+      "sha256": "141968184bf107b069e20f7e9f2fb742096bd3e584e68a33853b37689b152182"
+    },
+    {
+      "path": "skills/creator-evidence-audit/references/audit-output-model.md",
+      "sha256": "e5b808453fc3b398cc20856a497e7d04cc347073b17fc5aa45aeb7d768d8784c"
+    },
+    {
+      "path": "skills/creator-evidence-audit/references/audit-pipeline.md",
+      "sha256": "486cbfac2a0bafe1dc30a3ddbf723282cf4de6e3f979e0adcdb73395847d2c2d"
+    },
+    {
+      "path": "skills/creator-evidence-audit/references/remediation-schema.md",
+      "sha256": "7c665e34e542bcdc15a37035612183503f70ce774d0f9fb539d23d9f2ce2054c"
+    },
+    {
+      "path": "skills/creator-execution-cycle/SKILL.md",
+      "sha256": "e0f0960a2fe634aaea5994262d2ac7089877d144135aca1e97114a88ecc0eb01"
+    },
+    {
+      "path": "skills/creator-execution-cycle/assets/decision-template.md",
+      "sha256": "4cd24aa5fee05d38e5be7fe9b3ff425062318b2f6aadfb8e7405f1928c184ae0"
+    },
+    {
+      "path": "skills/creator-execution-cycle/assets/ledger-event-template.json",
+      "sha256": "f1147660572237b5957bf9a62b5400920e257f8deca6ce4d5b4cce15a8f29f06"
+    },
+    {
+      "path": "skills/creator-execution-cycle/assets/plan-template.md",
+      "sha256": "db3b1632b62063566d79ff030dfc7696b5fbc1e4016b07db6d10f87a86ee5b59"
+    },
+    {
+      "path": "skills/creator-execution-cycle/assets/reconciliation-template.md",
+      "sha256": "73e123c86aeb2cd40df7977a1a7689dbccad7f9f6900cd7a4eeb2974dfed7686"
+    },
+    {
+      "path": "skills/creator-execution-cycle/assets/summary-template.md",
+      "sha256": "6af93accc8b596e8257e286a8cbb7a590b3002e8607939ec178588ef6b6f80dc"
+    },
+    {
+      "path": "skills/creator-execution-cycle/references/acceptance-driven-work.md",
+      "sha256": "04d6251369957f43a37c50a7eb7ae3d987f353cfa2c63773a1e5cb174a530953"
+    },
+    {
+      "path": "skills/creator-execution-cycle/references/escalation-statuses.md",
+      "sha256": "0e4da8218fc3c56ad36ac3c793ef5d5f7df6c7075061efe89af888e36056c0b6"
+    },
+    {
+      "path": "skills/creator-execution-cycle/references/execution-lifecycle.md",
+      "sha256": "972a3091903a8052c7d5499b94892ba44ce1e87a67cfdfa336ffcfcf8b2f0e09"
+    },
+    {
+      "path": "skills/creator-execution-cycle/references/in-session-context-policy.md",
+      "sha256": "6331bd1d902f4a6af20e51f0fe8847d1aa5bef3fed575d599216449bdfa56421"
+    },
+    {
+      "path": "skills/creator-execution-cycle/references/recovery-workflows.md",
+      "sha256": "ba9d00c53949cadb4b121ebbd13c7694b610b5330077239434ddcfb6a28855f9"
+    },
+    {
+      "path": "skills/creator-intake-planner/SKILL.md",
+      "sha256": "1975e7544bda86fc3da2bad4aa96ef0aac0593b83157b6a8c8c893f0dbe6ff51"
+    },
+    {
+      "path": "skills/creator-intake-planner/assets/custom-type-template.md",
+      "sha256": "734d90a98b3df322f44f42a38519b4e79473b06e6674fc8cd4cfae3eb18c862b"
+    },
+    {
+      "path": "skills/creator-intake-planner/assets/handoff-template.md",
+      "sha256": "9ecda81ae856f101f9fca7a03c5e91603020bfde04400663cd765b173f3150e0"
+    },
+    {
+      "path": "skills/creator-intake-planner/assets/intake-state-template.md",
+      "sha256": "56bab42dc6f91e4e62a01402a9d882b62cdeff8975f1f9b581cc67486709782b"
+    },
+    {
+      "path": "skills/creator-intake-planner/assets/open-questions-template.md",
+      "sha256": "1f20332a9bf520f1265ac6aad871d2679e27763041fbf69b7e65c05c12bef5cb"
+    },
+    {
+      "path": "skills/creator-intake-planner/assets/planning-template.md",
+      "sha256": "4b8d9671d7130bc0afc4b68b701601fc8a534f97cdec2b6358485ce8a2ee9583"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/add-type-workflow.md",
+      "sha256": "2c496fae69fb251451eccb8b56844ed2b9f06f5383bfe7da64b1c3ffd168ffe8"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/handoff-workflow.md",
+      "sha256": "a779e8dbf005020759d22c720c184a2281f8803444b83921aa0ec664a8daf427"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/intake-status-output.md",
+      "sha256": "98c3779df4cf9a613fd01de9205b80b644edcf37200ac85483ff0a1dda16f156"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/planning-quality-gate.md",
+      "sha256": "8c54e630b74f97524ef93c144db434ce13f0ae15e95bf85cbe91465e91181454"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/project-types.md",
+      "sha256": "16118825de94cf91d3447726385e40fff9757bd65dccf208bb9a88c7bb59b7ef"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/scaffolding-workflow.md",
+      "sha256": "f182007fe9bf850d8ea39b17d4a8d89b71ee1f77b02d3e6399edd25dd6ab8aeb"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/type-loadouts.md",
+      "sha256": "c6b93fc339ebbed94ffcb5c9e99c94883ba503c51ce669076e17100693df525b"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/ai-image-system/config.md",
+      "sha256": "1990aa1d245c53683d8a0458891a774042b028c754e676939e018dae619f220e"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/ai-image-system/guide.md",
+      "sha256": "a615e5e8f62f5005183ffc12c7574c57b639211cae2d70f69b474b42a0b84ed2"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/ai-image-system/skill-loadout.md",
+      "sha256": "2c18b21d0d6ffb6ef6ecbb46e3f8adc69e04b35e600bdccdb96baba87ac18033"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/ai-video-system/config.md",
+      "sha256": "1f597d1ae3bb98be380330883eac75086974545ec01b24261749fc47a043b246"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/ai-video-system/guide.md",
+      "sha256": "4b2118f56f1d130445df6227e43d0af6ee98d982d7085db7b3e66913a239f00b"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/ai-video-system/skill-loadout.md",
+      "sha256": "efd286797e7c86b640c9baa5a2690ea7e7c724098d3ce2935498ee5fc509abbc"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/application/config.md",
+      "sha256": "3263017031b8aaaa4ddfa1db1d8ae44b173ccb05260d8029d0ac098c60a8f95b"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/application/guide.md",
+      "sha256": "cbd082a5ba8745f3ff607be559feac9408dfe716e0f0a191e81c7a608efb2434"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/application/skill-loadout.md",
+      "sha256": "c9d26a4e48cf2486d7f71cf35523b451388e81a2faec6f6a869109d750661e9e"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/character-registry/config.md",
+      "sha256": "cf415008d89f517976bbbb0ddb8e3ec069893efb9ff79b093ad1e8340a1990ce"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/character-registry/guide.md",
+      "sha256": "dc3eecb51098d351ead61ffa0045daf632c633f14e17e38c754e9db8250da2c8"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/character-registry/skill-loadout.md",
+      "sha256": "c6ccdfdbdf21f93d3eff0b4ebe4a2ccaf82b3a734cef776333188a6fcfe836c2"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/characterlock-system/config.md",
+      "sha256": "f6fb965b075411d0a9618f5a3a6b0326a27885287a746e5563077a809305e58b"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/characterlock-system/guide.md",
+      "sha256": "dbfcf714e85da054750df6cd950e736239de50d50e8a55e77fcaeb93bb4521cb"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/characterlock-system/skill-loadout.md",
+      "sha256": "228c6a3ff2c62bbfb4ac84988a7cc301a8247563225a1a31870ce9ec3bbf66e9"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/content-campaign/config.md",
+      "sha256": "785daa84e77d393624c33d7d243520d8a6a08c645ba23b47c743afba283ff482"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/content-campaign/guide.md",
+      "sha256": "91c4fbb2c0d024352c909b087ddabc4449eff079bb45c69469c3cf9646299e24"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/content-campaign/skill-loadout.md",
+      "sha256": "e438ecfc376012235f400ed513471563b2476378efbe32ef96a2c179ab640259"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/creator-tooling/config.md",
+      "sha256": "d9bba4eb8f626024422f4a334a81f05b2da413e3873c0b2906b0cac9246a3c6d"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/creator-tooling/guide.md",
+      "sha256": "1545df4c2e81c75ea64343ad1c48caef0787ff7cf35ca3e93e33b1a4687e8a04"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/creator-tooling/skill-loadout.md",
+      "sha256": "2a46ebbf57545542008272285df57c1e068c04ad3c3225290c1ad196902c0a37"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/headlock-system/config.md",
+      "sha256": "b8907d9a2430fe14c40f0dca5e6146b826e97311e3083ce5286a2ed1d8f9e36a"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/headlock-system/guide.md",
+      "sha256": "2d8b1b5b2d506f780426538b416db8ab799305d5c3042508c026d40f3fad0620"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/headlock-system/skill-loadout.md",
+      "sha256": "49c7e3602f4cd15e15f57b53202562b05a2cff58eb50b4e67c440c1c6e78b77c"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/prompt-pack/config.md",
+      "sha256": "fc70e3e78a5db37dc03de0bfbbc05d37e2f39c085ed4a5f82bdab3aeb37b5150"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/prompt-pack/guide.md",
+      "sha256": "e0c0607bba36bbbdcb541a618280c3385ce9569a741ea8d8c7608d437ec919b5"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/prompt-pack/skill-loadout.md",
+      "sha256": "aeb7c6aca58ab42c3f13fda0585f18ecfd9faf6fdc55089cf28bbcdf79410d31"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/research-system/config.md",
+      "sha256": "d45841976c42623ab7571e55aeaa1efc2812dceef746390712dde1795929ae34"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/research-system/guide.md",
+      "sha256": "3a1209fb0f8467bbf4329084470f73ffe989da36aa63bf931a784f79c9ef1c77"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/research-system/skill-loadout.md",
+      "sha256": "1b8273fa3327a6742f3d8778de1f9699159bcfcb05b188723c51597ba9ce7d4e"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/slide-deck/config.md",
+      "sha256": "98fac795cb0e1910491bc5a09a906f1923fde3f0d2acc566524bb024b75a4b2a"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/slide-deck/guide.md",
+      "sha256": "d26c12857a93d413a63bf29fe196dcd09ddb8c7f178941a9066d5f9b482cdfa4"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/slide-deck/skill-loadout.md",
+      "sha256": "68aacaa41f17bbc0c6314b5ddb27f4ddf5928bacc7c161ea8d1b03048029064d"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/utility/config.md",
+      "sha256": "02d9c830f633be5efde705353aab221cc943f2b6ee2885795600f02fae626e41"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/utility/guide.md",
+      "sha256": "d5e5435787dd72f3edafae27e2ac979f96bb6c1037a647bd3a0ad48994e80a68"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/utility/skill-loadout.md",
+      "sha256": "08f0adac6770e4ca716c6440aa69e2b27452b54c1c1b65aa8f7360ea8d6ad970"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/workflow/config.md",
+      "sha256": "9f54203a4dacba4eabe3b59c04764cde11605c795bac70bb8a812d66400a2367"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/workflow/guide.md",
+      "sha256": "75fc89746d7fb3759e5ad8413bd4347f7e61e1e13f89697af24c5d542416a6ae"
+    },
+    {
+      "path": "skills/creator-intake-planner/references/types/workflow/skill-loadout.md",
+      "sha256": "0fa0e73d9edaa2df8da86fa00350c966aa1b79d85f4339a8d79cabf132c0204a"
+    },
+    {
+      "path": "skills/creator-orchestrator/SKILL.md",
+      "sha256": "419e841ea6d8b2bacd347e9de6aacf544eb88ab8758f585ac509ccc89cfed8f9"
+    },
+    {
+      "path": "skills/creator-orchestrator/references/workflow-routing.md",
+      "sha256": "23a3608bad147bca8ca25ded79babaded1955a1b871260ca5b2b8f322a0791ec"
+    },
+    {
+      "path": "skills/creator-rule-router/SKILL.md",
+      "sha256": "d07b3fef090f94c24b7e3bd247301e692dae196b0d8ff36310322994ce898906"
+    },
+    {
+      "path": "skills/creator-rule-router/assets/rule-proposal-template.json",
+      "sha256": "d982b5674f3445e0c10875d1da62deab45ee26e45b31a016cfa724ebdd7cbecb"
+    },
+    {
+      "path": "skills/creator-rule-router/references/context-budget.md",
+      "sha256": "b04f6bf4657334f76676fb872dffacaccb7dd07b3302d7dc5b1f1cf15c0dd497"
+    },
+    {
+      "path": "skills/creator-rule-router/references/rule-preflight.md",
+      "sha256": "88865353ba1be813930fdcedaec11a2aa5fd862dfee115f5440a968d0578c983"
+    },
+    {
+      "path": "skills/creator-rule-router/references/rule-schema.md",
+      "sha256": "9f1f5c817e2a1cc85b2c8107ed839aecb08590d0b957cdb52840d30707741ba0"
+    },
+    {
+      "path": "skills/creator-skill-workbench/SKILL.md",
+      "sha256": "fafa67d3273418b6243d31dc316f8e142b7b92a11571196f35ed3d26f888ba1d"
+    },
+    {
+      "path": "skills/creator-skill-workbench/assets/skill-spec-template.md",
+      "sha256": "62709bfd4b410dd874bf0ba65fef74418dd1f8c7c613ac1c454785b0e305f9fd"
+    },
+    {
+      "path": "skills/creator-skill-workbench/references/compliance-score.md",
+      "sha256": "68daf8af20feb1286d741438b3f37ab18460f4712dd49e7557fdfc4b27acd182"
+    },
+    {
+      "path": "skills/creator-skill-workbench/references/distill-chunk.md",
+      "sha256": "db3d37d21f40b332af77f74f11909802b3aebbcbaa081615997d98b86d909bff"
+    },
+    {
+      "path": "skills/creator-skill-workbench/references/skill-spec.md",
+      "sha256": "c342f3f6eb0cdfa73e08a60638aa6f357c1f830d0216573f946384fda2d866f4"
+    },
+    {
+      "path": "skills/creator-workspace-manager/SKILL.md",
+      "sha256": "1655a489d4bdfeda895b8c1829450312bb665cec2e37f88a98b1649e0101129f"
+    },
+    {
+      "path": "skills/creator-workspace-manager/assets/surface-template.json",
+      "sha256": "b9f224de5aa1d0c6287c671ae7532459b1c379fe503e6910e00edc7981919497"
+    },
+    {
+      "path": "skills/creator-workspace-manager/references/health-maintenance.md",
+      "sha256": "6a429b72cf3697eca290381fecf328de335b7001fbe54004eff9583164dce64d"
+    },
+    {
+      "path": "skills/creator-workspace-manager/references/session-insight-rule-bridge.md",
+      "sha256": "9af2d1736a5bcd99fa76f3177c96a7b11434f72722b1e3921386fdedcaf40117"
+    },
+    {
+      "path": "skills/creator-workspace-manager/references/state-surfaces.md",
+      "sha256": "30186f555090e89441adb7bd39b36fdff263e2a8fdf6fd07f9c37a7698b2d452"
+    }
+  ],
+  "mirror_status": "PASS",
+  "findings": []
+}

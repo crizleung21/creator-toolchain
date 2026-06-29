@@ -1,0 +1,14 @@
+.DS_Store
+*.pyc
+__pycache__/
+.venv/
+.env
+.env.*
+.codebase-memory/
+.creator/*.local.json
+.creator/private/
+plugin/creator-toolchain/package/
+plugin/creator-toolchain/*.zip
+dist/
+.local-research/
+research-snapshots/

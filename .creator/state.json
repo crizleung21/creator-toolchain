@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.3.0",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "repository_workflow_state",
+  "active_projects": [],
+  "blocked_projects": [],
+  "last_health_check": "2026-06-28",
+  "state_divergence": {
+    "score": 0,
+    "level": "green",
+    "notes": "Repository contracts, state surfaces, and package validation are consistent."
+  }
+}
