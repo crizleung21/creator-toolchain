@@ -1,0 +1,12 @@
+{
+  "schema_version": "0.4.0",
+  "workspace_id": "{{workspace_id}}",
+  "display_name": "{{display_name}}",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "publishable_template",
+  "state_contract": ".creator/*.json",
+  "architecture_map": ".creator/ARCHITECTURE.md",
+  "active_plan": null,
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}"
+}

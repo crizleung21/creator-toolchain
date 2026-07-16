@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://github.com/crizleung21/creator-toolchain/schemas/workspace/state.schema.json",
+  "title":"Creator Toolchain state surface",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["schema_version","owner_skill","privacy_class","created_at","updated_at","active_projects","blocked_projects","last_health_check","state_divergence"],
+  "properties":{"schema_version":{"const":"0.4.0"},"owner_skill":{"type":"string","minLength":1},"privacy_class":{"enum":["publishable_template","repository_workflow_state","private","repository_contract"]},"created_at":{"type":"string","minLength":1},"updated_at":{"type":"string","minLength":1},"active_projects":{"type":"array","items":{"type":"string"},"uniqueItems":true},"blocked_projects":{"type":"array","items":{"type":"string"},"uniqueItems":true},"last_health_check":{"type":"string","minLength":1},"state_divergence":{"type":"object","required":["score","level","notes"],"properties":{"score":{"type":"integer","minimum":0},"level":{"enum":["green","amber","red"]},"notes":{"type":"string"}},"additionalProperties":false}}
+}

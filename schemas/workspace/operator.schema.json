@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://github.com/crizleung21/creator-toolchain/schemas/workspace/operator.schema.json",
+  "title":"Creator Toolchain operator surface",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["schema_version","owner_skill","privacy_class","created_at","updated_at","owner","preferences"],
+  "properties":{"schema_version":{"const":"0.4.0"},"owner_skill":{"type":"string","minLength":1},"privacy_class":{"const":"private"},"created_at":{"type":"string","minLength":1},"updated_at":{"type":"string","minLength":1},"owner":{"type":"string","minLength":1},"preferences":{"type":"object"}}
+}

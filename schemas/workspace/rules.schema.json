@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://github.com/crizleung21/creator-toolchain/schemas/workspace/rules.schema.json",
+  "title":"Creator Toolchain rules surface",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["schema_version","owner_skill","privacy_class","created_at","updated_at","domains","staged_proposals","decision_log"],
+  "properties":{"schema_version":{"const":"0.4.0"},"owner_skill":{"const":"creator-rule-router"},"privacy_class":{"const":"repository_contract"},"created_at":{"type":"string","minLength":1},"updated_at":{"type":"string","minLength":1},"domains":{"type":"array","minItems":1,"items":{"type":"object"}},"staged_proposals":{"type":"array","items":{"type":"object"}},"decision_log":{"type":"array","items":{"type":"object"}}}
+}

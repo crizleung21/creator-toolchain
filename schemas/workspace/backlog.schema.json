@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://github.com/crizleung21/creator-toolchain/schemas/workspace/backlog.schema.json",
+  "title":"Creator Toolchain backlog surface",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["schema_version","owner_skill","privacy_class","created_at","updated_at","items"],
+  "properties":{"schema_version":{"const":"0.4.0"},"owner_skill":{"type":"string","minLength":1},"privacy_class":{"enum":["publishable_template","repository_workflow_state","private","repository_contract"]},"created_at":{"type":"string","minLength":1},"updated_at":{"type":"string","minLength":1},"items":{"type":"array","items":{"type":"object"}}}
+}

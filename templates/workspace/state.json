@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.4.0",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "repository_workflow_state",
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}",
+  "active_projects": [],
+  "blocked_projects": [],
+  "last_health_check": "{{timestamp}}",
+  "state_divergence": {
+    "score": 0,
+    "level": "green",
+    "notes": "Fresh workspace bootstrap completed."
+  }
+}
