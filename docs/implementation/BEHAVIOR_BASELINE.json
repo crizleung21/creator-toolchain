@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "frozen_at": "2026-07-16T12:00:48Z",
+  "source_branch": "main",
+  "source_commit": "337468cc36e5b4b5b18fc4ec4b129264e3c3c2f5",
+  "implementation_branch": "agent/phase-0-baseline-freeze",
+  "plugin": {
+    "version": "1.0.1",
+    "manifest_blob_sha": "49320e66421c119687b1f702eb333905ab565eaa",
+    "package_status": "PASS",
+    "package_file_count": 91,
+    "package_payload_sha256": "97038ec39d25cf6a6c3fbc7cd01ecdacd1d0c6e47f3500f45c3b3b115e3ed4c9",
+    "package_report_blob_sha": "27af948343cd7beb704fd24807476c60f0a03778"
+  },
+  "state": {
+    "schema_version": "0.3.0",
+    "validator_blob_sha": "17753cbbf8e23b6d936f7df2b0f1211dfe1ae27e"
+  },
+  "behavior": {
+    "catalog_path": "docs/qa/behavior-acceptance-cases.json",
+    "catalog_blob_sha": "8d0d2a7a5d30f217298e52a3b3b19f8c7461eb79",
+    "case_count": 34,
+    "report_path": "docs/qa/behavior-acceptance-report.json",
+    "report_blob_sha": "41499c271e5563dba4168792dd2657f6a056194a",
+    "stored_status": "PASS",
+    "stored_passed": 34,
+    "stored_failed": 0,
+    "rerun_in_phase_0": false
+  },
+  "skills": [
+    "creator-orchestrator",
+    "creator-intake-planner",
+    "creator-execution-cycle",
+    "creator-workspace-manager",
+    "creator-rule-router",
+    "creator-skill-workbench",
+    "creator-evidence-audit"
+  ],
+  "implementation_plan": {
+    "path": "IMPLEMENTATION__PLAN.md",
+    "sha256": "8e3c9fdf52cc5862f0e920af4f0fa48a73b025b622a1ae88c2163b478079e01b",
+    "line_count": 1402,
+    "size_bytes": 32741
+  },
+  "ci": {
+    "combined_status_count": 0,
+    "pull_request_workflow_run_count": 0,
+    "interpretation": "No visible status evidence was available at freeze time; this is not a passing result."
+  }
+}
