@@ -118,7 +118,7 @@ def migrate_workspace(root:Path,backup:Path,*,timestamp:str|None=None,fail_after
         for relative in STATE_FILES:
             atomic_write_json(safe_path(root,relative),migrated[relative],mode=0o600)
             written+=1
-            if fail_after is not None and written>=fail_after* raise MigrationError(f"injected failure after {written} writes")
+            if fail_after is not None and written>=fail_after: raise MigrationError(f"injected failure after {written} writes")
         errors=validate_workspace(root)
         if errors: raise MigrationError("post-write validation failed: "+"; ".join(errors))
     except Exception:
