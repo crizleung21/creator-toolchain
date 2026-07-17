@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "status": "APPLIED_AND_LOCALLY_VALIDATED",
+  "source_schema": "0.3.0",
+  "target_schema": "0.4.0",
+  "migration_timestamp": "2026-07-17T16:47:46Z",
+  "source_branch": "agent/phase-1-state-foundation",
+  "source_head_before_slice_2": "eed0af4eb6ae19ed6fdff3a8ad230efc07abe9cb",
+  "source_blobs": {
+    ".creator/workspace.json": "1feaabdcfb1f1d417058f50385ef6eca65cf5920",
+    ".creator/projects.json": "3542a7a7eecea5cd3da9a482dc1d2880db970a14",
+    ".creator/entities.json": "588813a914e3af9c6bcb401590f08ea3533073ea",
+    ".creator/state.json": "167a2f521c81f55a80216c804f4dd8782816ec52",
+    ".creator/session-insights.json": "a552086ba5e265d6aedaf7febb82bfdac8b5a0f0",
+    ".creator/operator.json": "ffc1ec1844fd6d77729f26f7d8a83fceab5422f6",
+    ".creator/backlog.json": "8779c1f3141215cd94bda7db271e84c98d1b9dcc",
+    ".creator/surfaces.json": "42ef220b91dd4d261fd558b300a508d7a84c9698",
+    ".creator/decisions.json": "d0bd9eb5672aa4e5faec2be579cc00a776a3b42f",
+    ".creator/rules.json": "0ae53a139cee9802c0d30349a454e83104175243"
+  },
+  "target_sha256": {
+    ".creator/workspace.json": "8f3994bf9c637d1bf6bb32228b8249bf9e2a67167f64cf934ddd55cf0244a2ae",
+    ".creator/projects.json": "7f6e0f4fcd2da8b825358b198ca5dd1639048f61a88aa18dc93f2a819cebe642",
+    ".creator/entities.json": "16d889212878b7f392d7513f066d0a528986223d00b888498daa619ac913f443",
+    ".creator/state.json": "1c0d9e3960bb23fc15f60fd3a992f371ac1556101a936131eb31ed397cccee2b",
+    ".creator/session-insights.json": "25713cdecbe6d4842101eba51586e9f53f4c125ca667da82c22b72fe43de2a39",
+    ".creator/operator.json": "f52fb37b34808ada2d0e824b8f548208970ceeb1094df6194e2c026f7cee3684",
+    ".creator/backlog.json": "0536821e6ce31ac5bd67413fb9fdaf050cdffd61428973beb130299389a041a0",
+    ".creator/surfaces.json": "f2d13ffe5d7918871446874c87b564096abb135d86deb14f3edf3b7a6cc6ffa1",
+    ".creator/decisions.json": "a62fc2fb420770c17d7ccb252178ec3b0bea7a0b4088b2a105a345af6055c757",
+    ".creator/rules.json": "e9a08993f4b34bd6d93ffd82aac28d35775094d588756f9a5330ce78a2e86547"
+  },
+  "local_tests": {
+    "slice_2_core": 13,
+    "slice_1_and_slice_2_compatibility": 28,
+    "result": "PASS"
+  },
+  "rollback": {
+    "explicit_byte_equivalent": true,
+    "injected_failure_after_writes": 4,
+    "automatic_byte_equivalent_restore": true
+  },
+  "backup_policy": "The real pre-migration backup is intentionally not committed because repository state includes private surfaces. Source Git blob identities and target SHA-256 values provide durable evidence; repository-equivalent fixtures exercise the same rollback protocol."
+}

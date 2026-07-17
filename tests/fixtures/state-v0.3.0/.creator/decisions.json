@@ -1,0 +1,9 @@
+{
+  "schema_version":"0.3.0","owner_skill":"creator-workspace-manager","privacy_class":"repository_workflow_state",
+  "decisions":[
+    {"decision_id":"DEC-001","date":"2026-06-28","title":"Use one authoritative skill source","status":"accepted","rationale":"Treat .agents/skills as the development source for all Creator Toolchain skills."},
+    {"decision_id":"DEC-002","date":"2026-06-28","title":"Generate the plugin skill mirror deterministically","status":"accepted","rationale":"Require byte-equivalent plugin skills and reject missing, changed, or extra files."},
+    {"decision_id":"DEC-003","date":"2026-06-28","title":"Enforce an exact runtime package inventory","status":"accepted","rationale":"Build and publish only files covered by the package integrity contract."},
+    {"decision_id":"DEC-004","date":"2026-07-16","title":"Upgrade state schema and add deterministic support scripts","status":"accepted","rationale":"Implement the approved P0 and P1 plan by migrating repository state from schema 0.3.0 to 0.4.0 and adding deterministic support scripts beneath the existing seven skills. Preserve .agents/skills as authoritative, do not add an eighth core skill, and keep P2 work in the Roadmap."}
+  ]
+}

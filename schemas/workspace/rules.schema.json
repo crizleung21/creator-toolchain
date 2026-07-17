@@ -1,9 +1,30 @@
 {
-  "$schema":"https://json-schema.org/draft/2020-12/schema",
-  "$id":"https://github.com/crizleung21/creator-toolchain/schemas/workspace/rules.schema.json",
-  "title":"Creator Toolchain rules surface",
-  "type":"object",
-  "additionalProperties":false,
-  "required":["schema_version","owner_skill","privacy_class","created_at","updated_at","domains","staged_proposals","decision_log"],
-  "properties":{"schema_version":{"const":"0.4.0"},"owner_skill":{"const":"creator-rule-router"},"privacy_class":{"const":"repository_contract"},"created_at":{"type":"string","minLength":1},"updated_at":{"type":"string","minLength":1},"domains":{"type":"array","minItems":1,"items":{"type":"object"}},"staged_proposals":{"type":"array","items":{"type":"object"}},"decision_log":{"type":"array","items":{"type":"object"}}}
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "owner_skill", "privacy_class", "created_at", "updated_at", "domains", "staged_proposals", "decision_log"],
+  "properties": {
+    "schema_version": {"const": "0.4.0"},
+    "owner_skill": {"const": "creator-rule-router"},
+    "privacy_class": {"const": "repository_contract"},
+    "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "updated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "domains": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["domain_id", "enabled", "priority", "scope", "trigger_keywords", "rules", "commands", "exclude_patterns", "decision_refs", "owner", "updated_at"], "properties": {
+      "domain_id": {"type": "string", "minLength": 1},
+      "enabled": {"type": "boolean"},
+      "priority": {"type": "integer", "minimum": 0},
+      "scope": {"type": "string", "minLength": 1},
+      "trigger_keywords": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+      "rules": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["rule_id", "severity", "text"], "properties": {"rule_id": {"type": "string", "minLength": 1}, "severity": {"enum": ["low", "medium", "high", "critical"]}, "text": {"type": "string", "minLength": 1}}}},
+      "commands": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["command_id", "trigger", "workflow", "status"], "properties": {"command_id": {"type": "string", "minLength": 1}, "trigger": {"type": "string", "minLength": 1}, "workflow": {"type": "string", "minLength": 1}, "status": {"enum": ["active", "disabled", "deprecated"]}}}},
+      "exclude_patterns": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+      "decision_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+      "owner": {"const": "creator-rule-router"},
+      "updated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"}
+    }}},
+    "staged_proposals": {"type": "array", "items": {"type": "object"}},
+    "decision_log": {"type": "array", "items": {"type": "object"}}
+  },
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/workspace/rules.schema.json",
+  "title": "Creator Toolchain rules surface"
 }
