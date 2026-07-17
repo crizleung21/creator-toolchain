@@ -13,7 +13,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Run unit tests
+        run: |
+          set -o pipefail
+          python3 -m unittest discover -s tests -p 'test_*.py' -v 2>&1 | tee /tmp/creator-toolchain-unit-tests.log
+      - name: Upload unit-test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-log-${{ github.run_id }}
+          path: /tmp/creator-toolchain-unit-tests.log
+          if-no-files-found: error
+          retention-days: 7
       - run: python3 scripts/sync_plugin_skills.py --check
       - run: python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --check docs/qa/package-integrity-report.json
       - run: python3 scripts/validate_creator_toolchain.py --scope all
