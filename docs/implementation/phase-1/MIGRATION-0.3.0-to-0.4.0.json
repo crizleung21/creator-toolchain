@@ -1,11 +1,14 @@
 {
   "schema_version": "1.0.0",
-  "status": "APPLIED_AND_LOCALLY_VALIDATED",
+  "status": "CI_VALIDATED",
   "source_schema": "0.3.0",
   "target_schema": "0.4.0",
   "migration_timestamp": "2026-07-17T16:47:46Z",
   "source_branch": "agent/phase-1-state-foundation",
   "source_head_before_slice_2": "eed0af4eb6ae19ed6fdff3a8ad230efc07abe9cb",
+  "successful_validation_head": "f66d3ba80da041e1e02a9c727cb55aad32f6ba43",
+  "github_actions_run": 29599614902,
+  "unit_tests_passed": 79,
   "source_blobs": {
     ".creator/workspace.json": "1feaabdcfb1f1d417058f50385ef6eca65cf5920",
     ".creator/projects.json": "3542a7a7eecea5cd3da9a482dc1d2880db970a14",
@@ -34,6 +37,11 @@
     "slice_2_core": 13,
     "slice_1_and_slice_2_compatibility": 28,
     "result": "PASS"
+  },
+  "ci": {
+    "run_id": 29599614902,
+    "result": "PASS",
+    "unit_test_log_digest": "sha256:f3f248afaa63a629318dacb78dc6444c8be75fffa8c0e46a89bd53e23b7d8695"
   },
   "rollback": {
     "explicit_byte_equivalent": true,

@@ -14,7 +14,7 @@ Complete the state-schema migration boundary by enabling transactional `0.3.0 â†
 | Implement byte-equivalent rollback | Explicit and automatic rollback restore all original bytes | Failure-injection tests | `DONE` |
 | Add current `0.3.0` fixtures | Fixture represents all ten pre-migration surfaces | Migration fixture tests | `DONE` |
 | Upgrade live state | All ten repository surfaces use `0.4.0` and validate | Repository validator | `DONE` |
-| Integrate Validator | `validate_creator_toolchain.py --scope state` consumes formal Schemas and cross-file rules | CI | `IN_PROGRESS` |
+| Integrate Validator | `validate_creator_toolchain.py --scope state` consumes formal Schemas and cross-file rules | GitHub Actions run `29599614902` | `DONE` |
 
 ## Safety Boundary
 
@@ -25,8 +25,10 @@ Complete the state-schema migration boundary by enabling transactional `0.3.0 â†
 
 ## Rollback
 
-Revert the Slice 2 commit, or run `migrate_creator_state.py --rollback` with the generated backup before merge.
+Revert the Slice 2 commits, or run `migrate_creator_state.py --rollback` with the generated backup before merge.
 
-## Next Action
+## Completion
 
-Run the complete GitHub Actions validation suite, reconcile the result, and keep PR #2 Draft until the Phase 1 exit gate is evaluated.
+`DONE`
+
+GitHub Actions run `29599614902` passed all configured gates. Phase 1 â€” State Schema `0.4.0` and Deterministic Foundation is complete.
