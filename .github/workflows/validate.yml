@@ -25,6 +25,8 @@ jobs:
           path: /tmp/creator-toolchain-unit-tests.log
           if-no-files-found: error
           retention-days: 7
+      - name: Validate canonical surface registry
+        run: python3 scripts/materialize_surface_registry.py --root . --check
       - name: Validate materialized project-type references
         run: python3 scripts/materialize_project_type_refs.py --root . --check
       - run: python3 scripts/sync_plugin_skills.py --check
