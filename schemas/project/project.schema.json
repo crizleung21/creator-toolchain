@@ -14,6 +14,9 @@
     "rigor": {"enum": ["tight", "standard", "deep", "creative"]},
     "stage": {"enum": ["ideating", "planned", "graduated", "launched", "archived"]},
     "approval_status": {"enum": ["pending", "approved", "rejected"]},
+    "approval_decision": {"type": ["string", "null"], "enum": [null, "scaffold-only", "handoff-to-execution"]},
+    "approved_by": {"type": ["string", "null"]},
+    "approved_at": {"type": ["string", "null"]},
     "quality_gate_result": {"enum": ["not_evaluated", "pass", "pass_with_non_blocking_questions", "fail_needs_more_planning"]},
     "handoff_target": {"const": "creator-execution-cycle"},
     "source_assets": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
@@ -31,6 +34,9 @@
         "handoff": {"const": "HANDOFF.md"}
       }
     },
+    "scaffold_path": {"type": ["string", "null"]},
+    "execution_handoff_path": {"type": ["string", "null"]},
+    "state_registration_proposal_path": {"type": ["string", "null"]},
     "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
     "updated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"}
   }
