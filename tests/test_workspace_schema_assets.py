@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_ROOT = ROOT / "schemas/workspace"
 TEMPLATE_ROOT = ROOT / "templates/workspace"
 STATE_SCHEMAS = {"workspace", "projects", "entities", "state", "session-insights", "operator", "backlog", "surfaces", "decisions", "rules"}
-DERIVED_SCHEMAS = {"health-report", "reconciliation-receipt"}
+DERIVED_SCHEMAS = {"health-report", "reconciliation-receipt", "maintenance-report", "archive-proposal", "archive-receipt"}
 
 
 class WorkspaceSchemaAssetTests(unittest.TestCase):
@@ -32,6 +32,7 @@ class WorkspaceSchemaAssetTests(unittest.TestCase):
                 value = json.loads(path.read_text(encoding="utf-8"))
                 self.assertEqual(value["properties"]["schema_version"]["const"], "1.0.0")
                 self.assertEqual(value["$schema"], "https://json-schema.org/draft/2020-12/schema")
+                self.assertFalse(value["additionalProperties"])
 
     def test_templates_target_040(self) -> None:
         for path in TEMPLATE_ROOT.glob("*.json"):

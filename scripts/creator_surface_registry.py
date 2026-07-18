@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Load and validate the canonical Creator Toolchain state-surface registry."""
+"""Load, validate, and inspect the canonical Creator Toolchain state-surface registry."""
 
 from __future__ import annotations
 
+import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -92,3 +94,48 @@ def load_surface_registry(root: Path = ROOT) -> dict[str, dict[str, Any]]:
 
 def state_files(root: Path = ROOT) -> tuple[str, ...]:
     return tuple(load_surface_registry(root))
+
+
+def registry_summary(root: Path = ROOT) -> dict[str, Any]:
+    document = load_registry_document(root)
+    surfaces = list(load_surface_registry(root).values())
+    return {
+        "schema_version": document["schema_version"],
+        "state_schema_version": document["state_schema_version"],
+        "surface_count": len(surfaces),
+        "surfaces": surfaces,
+    }
+
+
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("command", choices=("list", "validate", "get"))
+    parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--path")
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
+    try:
+        if args.command == "get":
+            if not args.path:
+                raise SurfaceRegistryError("get requires --path")
+            registry = load_surface_registry(args.root)
+            if args.path not in registry:
+                raise SurfaceRegistryError(f"unknown canonical surface: {args.path}")
+            result: Any = registry[args.path]
+        else:
+            result = registry_summary(args.root)
+    except (SurfaceRegistryError, OSError) as exc:
+        print(f"Creator surface registry failed: {exc}", file=sys.stderr)
+        return 2
+    if args.command == "validate":
+        print(f"Validated {result['surface_count']} canonical state surfaces.")
+    else:
+        print(json.dumps(result, indent=2, ensure_ascii=False, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

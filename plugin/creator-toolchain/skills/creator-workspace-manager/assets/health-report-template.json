@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "calculated_at": "{{timestamp}}",
+  "score": 0,
+  "level": "green",
+  "summary": "No red or amber signals.",
+  "recommended_next_action": "No corrective action is required.",
+  "counts": {"amber": 0, "red": 0},
+  "signals": []
+}

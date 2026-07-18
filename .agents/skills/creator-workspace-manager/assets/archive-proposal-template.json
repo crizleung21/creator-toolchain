@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "proposal_id": "ARCHIVE-{{id}}",
+  "operation": "archive",
+  "status": "staged",
+  "target_path": ".creator/{{target}}",
+  "target_kind": "file",
+  "target_sha256": "{{sha256}}",
+  "destination_path": ".creator/archive/ARCHIVE-{{id}}/{{name}}",
+  "requested_by": "{{actor}}",
+  "reason": "{{reason}}",
+  "created_at": "{{timestamp}}",
+  "proposal_path": ".creator/maintenance/archive-proposals/ARCHIVE-{{id}}.json"
+}

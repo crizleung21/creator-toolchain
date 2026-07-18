@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.creator_surface_registry import EXPECTED_PATHS, SurfaceRegistryError, load_surface_registry
+from scripts.creator_surface_registry import EXPECTED_PATHS, SurfaceRegistryError, load_surface_registry, registry_summary
 from scripts.materialize_surface_registry import synchronize
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +17,13 @@ class CreatorSurfaceRegistryTests(unittest.TestCase):
         self.assertEqual(tuple(registry), EXPECTED_PATHS)
         self.assertEqual(registry[".creator/rules.json"]["owner_skill"], "creator-rule-router")
         self.assertEqual(sum(item["owner_skill"] == "creator-workspace-manager" for item in registry.values()), 9)
+
+    def test_registry_summary_is_machine_readable(self) -> None:
+        summary = registry_summary(ROOT)
+        self.assertEqual(summary["schema_version"], "1.0.0")
+        self.assertEqual(summary["state_schema_version"], "0.4.0")
+        self.assertEqual(summary["surface_count"], 10)
+        self.assertEqual([item["path"] for item in summary["surfaces"]], list(EXPECTED_PATHS))
 
     def test_materialized_outputs_are_current(self) -> None:
         self.assertEqual(synchronize(ROOT, write=False), [])

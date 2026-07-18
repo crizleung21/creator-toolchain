@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/workspace/maintenance-report.schema.json",
+  "title": "Creator Toolchain workspace maintenance review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "generated_at", "health_level", "health_score", "proposal_counts", "archive_candidates", "state_fixes", "rule_proposals", "recommended_next_action"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "generated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "health_level": {"enum": ["green", "amber", "red"]},
+    "health_score": {"type": "integer", "minimum": 0},
+    "proposal_counts": {"type": "object", "additionalProperties": false, "required": ["staged", "applied", "invalid"], "properties": {"staged": {"type": "integer", "minimum": 0}, "applied": {"type": "integer", "minimum": 0}, "invalid": {"type": "integer", "minimum": 0}}},
+    "archive_candidates": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["path", "reason", "source_signal"], "properties": {"path": {"type": "string", "pattern": "^\\.creator/"}, "reason": {"type": "string", "minLength": 1}, "source_signal": {"type": "string", "minLength": 1}}}},
+    "state_fixes": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["signal_id", "level", "path", "message"], "properties": {"signal_id": {"type": "string", "minLength": 1}, "level": {"enum": ["amber", "red"]}, "path": {"type": "string", "minLength": 1}, "message": {"type": "string", "minLength": 1}}}},
+    "rule_proposals": {"type": "array", "items": {"type": "string", "pattern": "^\\.creator/rule-proposals/"}, "uniqueItems": true},
+    "recommended_next_action": {"type": "string", "minLength": 1}
+  }
+}

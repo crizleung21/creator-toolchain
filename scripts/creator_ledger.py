@@ -28,6 +28,7 @@ ALLOWED_STATUSES = {
     "EXECUTED",
     "VERIFIED",
     "FAILED",
+    "ARCHIVED",
 }
 
 
