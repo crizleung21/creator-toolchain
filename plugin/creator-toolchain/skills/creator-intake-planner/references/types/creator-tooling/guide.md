@@ -2,26 +2,44 @@
 
 ## Purpose
 
-scripts, validators, workflow tools, and skill suites.
+Build scripts, validators, workflow tools, and skill suites.
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs scripts, validators, workflow tools, and skill suites.
+- repository context
+- tool requirements
+- runtime constraints
+
+## Expected Deliverables
+
+- working tool or script
+- tests
+- operator documentation
+
+## Observable Acceptance Patterns
+
+- deterministic command output
+- negative-path validation
+- repeatable installation
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+- unsafe file mutation
+- non-deterministic output
+- hidden dependencies
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
+Creator asset naming checker
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.

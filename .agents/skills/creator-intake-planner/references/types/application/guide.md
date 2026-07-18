@@ -2,26 +2,44 @@
 
 ## Purpose
 
-software, app, UI, API, or service.
+Build a software application, UI, API, or service.
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs software, app, UI, API, or service.
+- user problem
+- platform constraints
+- data model
+
+## Expected Deliverables
+
+- runnable application
+- tests
+- deployment instructions
+
+## Observable Acceptance Patterns
+
+- primary user flow completes
+- error states are observable
+- interfaces match contract
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+- security exposure
+- state corruption
+- deployment mismatch
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
+Creator campaign planning app
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.

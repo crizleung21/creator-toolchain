@@ -2,26 +2,44 @@
 
 ## Purpose
 
-launch, content calendar, and platform publishing plan.
+Plan and produce a multi-channel launch or publishing campaign.
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs launch, content calendar, and platform publishing plan.
+- campaign goal
+- audience
+- channels
+
+## Expected Deliverables
+
+- campaign narrative
+- content calendar
+- asset matrix
+
+## Observable Acceptance Patterns
+
+- each asset maps to an objective
+- channel adaptations are explicit
+- measurement is defined
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+- message inconsistency
+- platform policy violations
+- unmeasured outcomes
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
+Build Week launch campaign
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.

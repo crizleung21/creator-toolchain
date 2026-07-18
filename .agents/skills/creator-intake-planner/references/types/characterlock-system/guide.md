@@ -2,26 +2,44 @@
 
 ## Purpose
 
-identity and viewpoint locked character workflow.
+Lock identity, proportions, wardrobe, and viewpoint across generated character assets.
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs identity and viewpoint locked character workflow.
+- character references
+- identity attributes
+- generation platforms
+
+## Expected Deliverables
+
+- identity specification
+- prompt system
+- consistency test set
+
+## Observable Acceptance Patterns
+
+- identity survives scene changes
+- forbidden drift is detected
+- variants remain traceable
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+- identity drift
+- reference contamination
+- unlicensed likeness
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
+Narrative character identity lock
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.
