@@ -7,6 +7,9 @@
   "rigor": "{{rigor}}",
   "stage": "ideating",
   "approval_status": "pending",
+  "approval_decision": null,
+  "approved_by": null,
+  "approved_at": null,
   "quality_gate_result": "not_evaluated",
   "handoff_target": "creator-execution-cycle",
   "source_assets": [],
@@ -19,6 +22,9 @@
     "open_questions": "OPEN-QUESTIONS.md",
     "handoff": "HANDOFF.md"
   },
+  "scaffold_path": null,
+  "execution_handoff_path": null,
+  "state_registration_proposal_path": null,
   "created_at": "{{timestamp}}",
   "updated_at": "{{timestamp}}"
 }
