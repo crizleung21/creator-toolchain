@@ -2,26 +2,44 @@
 
 ## Purpose
 
-script, checker, converter, or small tool.
+Build a focused script, checker, converter, or small tool.
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs script, checker, converter, or small tool.
+- input format
+- output format
+- error policy
+
+## Expected Deliverables
+
+- executable utility
+- fixtures
+- usage guide
+
+## Observable Acceptance Patterns
+
+- valid input succeeds
+- invalid input is rejected
+- output is deterministic
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+- destructive defaults
+- path traversal
+- ambiguous exit codes
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
+Duplicate asset detector
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.

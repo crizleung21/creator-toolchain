@@ -25,7 +25,19 @@ jobs:
           path: /tmp/creator-toolchain-unit-tests.log
           if-no-files-found: error
           retention-days: 7
+      - name: Validate materialized project-type references
+        run: python3 scripts/materialize_project_type_refs.py --root . --check
       - run: python3 scripts/sync_plugin_skills.py --check
+      - name: Generate package-integrity candidate
+        run: python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --write /tmp/package-integrity-report.json
+      - name: Upload package-integrity candidate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-integrity-candidate-${{ github.run_id }}
+          path: /tmp/package-integrity-report.json
+          if-no-files-found: error
+          retention-days: 7
       - run: python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --check docs/qa/package-integrity-report.json
       - run: python3 scripts/validate_creator_toolchain.py --scope all
       - run: |

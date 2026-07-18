@@ -7,21 +7,28 @@
 ## Secondary Skills
 
 - `creator-execution-cycle`
+- `creator-rule-router`
 - `creator-evidence-audit`
 
 ## Rule Domains
 
 - `GLOBAL`
-- `application`
+- `coding`
+- `safety`
+- `project-execution`
 
 ## Audit Domains
 
-- planning quality
-- source evidence
-- acceptance criteria
+- architecture
+- security
+- runtime behavior
 
 ## State Surfaces
 
-- `.creator/projects.json`
-- `.creator/state.json`
-- `.creator/decisions.json`
+- `.creator/plans/{project_slug}/`
+- `.creator/state-proposals/{project_id}.json`
+- `.creator/projects.json` through a staged proposal owned by `creator-workspace-manager`
+
+## Handoff
+
+After an explicit `handoff-to-execution` approval, generate `.creator/handoffs/{project_id}.json` for `creator-execution-cycle`.

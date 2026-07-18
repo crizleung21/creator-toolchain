@@ -2,26 +2,44 @@
 
 ## Purpose
 
-repo, toolchain, or source analysis system.
+Create a repository, toolchain, or source-analysis system.
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs repo, toolchain, or source analysis system.
+- research question
+- source set
+- evidence standard
+
+## Expected Deliverables
+
+- research protocol
+- evidence index
+- synthesis outputs
+
+## Observable Acceptance Patterns
+
+- sources are traceable
+- claims distinguish evidence and inference
+- limitations are explicit
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+- stale sources
+- citation drift
+- unsupported certainty
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
+Repository evidence audit system
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.

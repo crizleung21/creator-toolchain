@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "proposal_id": "PROPOSAL-XXXXXXXX",
+  "operation": "register-project",
+  "status": "staged",
+  "target_surface": ".creator/projects.json",
+  "owner_skill": "creator-workspace-manager",
+  "requested_by": "creator-intake-planner",
+  "source_plan": ".creator/plans/{project_slug}/PLANNING.md",
+  "proposal_path": ".creator/state-proposals/{project_id}.json",
+  "project": {},
+  "evidence_paths": [],
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "updated_at": "YYYY-MM-DDTHH:MM:SSZ"
+}

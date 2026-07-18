@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.4.0",
+  "project_id": "{{project_id}}",
+  "slug": "{{slug}}",
+  "title": "{{title}}",
+  "project_type": "{{project_type}}",
+  "rigor": "{{rigor}}",
+  "stage": "ideating",
+  "approval_status": "pending",
+  "approval_decision": null,
+  "approved_by": null,
+  "approved_at": null,
+  "quality_gate_result": "not_evaluated",
+  "handoff_target": "creator-execution-cycle",
+  "source_assets": [],
+  "artifact_paths": {
+    "project": "project.json",
+    "ledger": "activity_ledger.jsonl",
+    "intake_state": "INTAKE-STATE.md",
+    "planning": "PLANNING.md",
+    "decisions": "DECISIONS.md",
+    "open_questions": "OPEN-QUESTIONS.md",
+    "handoff": "HANDOFF.md"
+  },
+  "scaffold_path": null,
+  "execution_handoff_path": null,
+  "state_registration_proposal_path": null,
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}"
+}

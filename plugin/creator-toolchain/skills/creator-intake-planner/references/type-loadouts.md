@@ -1,11 +1,9 @@
 # Type Loadouts
 
-Each project type may define:
+For a selected `{type_id}`, load in this order:
 
-- primary skill
-- secondary skills
-- rule domains
-- audit domains
-- state surfaces
+1. `references/types/{type_id}/config.md`
+2. `references/types/{type_id}/guide.md`
+3. `references/types/{type_id}/skill-loadout.md`
 
-Use loadouts to recommend workflow routing, not to force automatic execution.
+Do not load all thirteen reference sets. Use the config for rigor and required sections, the guide for discovery and acceptance framing, and the loadout for secondary skills, rules, audit domains, state surfaces, and handoff ownership.

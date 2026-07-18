@@ -1,0 +1,11 @@
+{
+  "event_id": "EVENT-XXXXXXXX",
+  "ts": "YYYY-MM-DDTHH:MM:SSZ",
+  "sequence": 1,
+  "phase": "intake|gate|approval|scaffold|handoff",
+  "task_id": "PROJECT-XXXXXXXX",
+  "artifact": "",
+  "status": "IN_PROGRESS|DONE|DONE_WITH_CONCERNS|NEEDS_CONTEXT|BLOCKED",
+  "evidence_path": "",
+  "notes": ""
+}

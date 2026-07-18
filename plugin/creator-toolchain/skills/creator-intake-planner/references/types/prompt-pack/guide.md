@@ -2,26 +2,44 @@
 
 ## Purpose
 
-reusable prompts and prompt QA.
+Build reusable prompts with variables, examples, and QA criteria.
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs reusable prompts and prompt QA.
+- target task
+- model constraints
+- example inputs
+
+## Expected Deliverables
+
+- prompt templates
+- variable schema
+- test cases
+
+## Observable Acceptance Patterns
+
+- variables are explicit
+- examples cover edge cases
+- outputs can be evaluated
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+- prompt ambiguity
+- unsafe instructions
+- model-specific assumptions
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
+AI portrait prompt pack
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.

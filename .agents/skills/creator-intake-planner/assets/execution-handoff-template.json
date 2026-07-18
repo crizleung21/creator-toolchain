@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "PROJECT-XXXXXXXX",
+  "source_plan": ".creator/plans/{project_slug}/PLANNING.md",
+  "target_skill": "creator-execution-cycle",
+  "quality_gate_result": "pass",
+  "approval_status": "approved",
+  "approval_decision": "handoff-to-execution",
+  "approved_by": "",
+  "approved_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "artifact_paths": [],
+  "open_questions": [],
+  "generated_at": "YYYY-MM-DDTHH:MM:SSZ"
+}
