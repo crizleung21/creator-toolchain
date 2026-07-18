@@ -52,6 +52,8 @@ An invalid or unapproved handoff produces no execution workspace and no durable 
 ## Canonical Lifecycle
 
 ```text
+PLAN → EXECUTE → VERIFY → RECONCILE → CLOSE
+
 PLANNED
 → APPROVED
 → EXECUTING
