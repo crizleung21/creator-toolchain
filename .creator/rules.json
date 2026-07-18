@@ -1,6 +1,49 @@
 {
   "created_at": "2026-07-17T16:47:46Z",
-  "decision_log": [],
+  "decision_log": [
+    {
+      "actor": "creator-execution-cycle",
+      "affected_domains": [
+        "GLOBAL",
+        "coding",
+        "creator-production",
+        "creator-toolchain",
+        "project-execution",
+        "safety",
+        "zh-hant"
+      ],
+      "changes": [
+        {
+          "action": "bootstrap-domains",
+          "after": [
+            "GLOBAL",
+            "creator-toolchain",
+            "zh-hant",
+            "coding",
+            "safety",
+            "creator-production",
+            "project-execution"
+          ],
+          "before": [
+            "GLOBAL",
+            "creator-toolchain"
+          ],
+          "subject_id": "rule-governance"
+        }
+      ],
+      "conflict_refs": [],
+      "decision_id": "RULEDEC-9581AE40C4AA",
+      "expected_behavior_change": "Rule preflight can match all declared domains while proposals and approvals remain explicit and auditable.",
+      "operation": "bootstrap-domains",
+      "outcome": "approved",
+      "proposal_id": null,
+      "rationale": "Align Rule Router capability claims with real governed domains and establish deterministic rule contracts.",
+      "review_date": "2027-07-18T00:00:00Z",
+      "schema_version": "1.0.0",
+      "source": "IMPLEMENTATION__PLAN.md#phase-5",
+      "timestamp": "2026-07-18T07:30:00Z"
+    }
+  ],
   "domains": [
     {
       "commands": [],
@@ -15,26 +58,173 @@
       "priority": 100,
       "rules": [
         {
+          "created_at": "2026-07-17T16:47:46Z",
+          "review_date": "2027-07-18T00:00:00Z",
           "rule_id": "GLOBAL-001",
+          "scope": "workspace state mutation",
           "severity": "high",
-          "text": "Do not silently mutate .creator/*.json; propose state changes unless the active workflow owns that surface."
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Do not silently mutate .creator/*.json; propose state changes unless the active workflow owns that surface.",
+          "updated_at": "2026-07-18T07:30:00Z"
         },
         {
+          "created_at": "2026-07-17T16:47:46Z",
+          "review_date": "2027-07-18T00:00:00Z",
           "rule_id": "GLOBAL-002",
+          "scope": "published package contents",
           "severity": "high",
-          "text": "Do not package private state, caches, environment files, editor metadata, build archives, or operating-system artifacts."
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Do not package private state, caches, environment files, editor metadata, build archives, or operating-system artifacts.",
+          "updated_at": "2026-07-18T07:30:00Z"
         }
       ],
       "scope": "workspace-wide safety and integrity",
       "trigger_keywords": [],
-      "updated_at": "2026-07-17T16:47:46Z"
+      "updated_at": "2026-07-18T07:30:00Z"
+    },
+    {
+      "commands": [],
+      "decision_refs": [],
+      "domain_id": "safety",
+      "enabled": true,
+      "exclude_patterns": [],
+      "owner": "creator-rule-router",
+      "priority": 95,
+      "rules": [
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "SAFE-001",
+          "scope": "destructive and governance-changing operations",
+          "severity": "critical",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Destructive or governance-changing operations require explicit authorization, validation, and rollback evidence.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        },
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "SAFE-002",
+          "scope": "sensitive data and published packages",
+          "severity": "high",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Secrets, private state, and restricted data must not enter published packages.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        }
+      ],
+      "scope": "destructive operations, sensitive data, and governance safety",
+      "trigger_keywords": [
+        "safety",
+        "unsafe",
+        "destructive",
+        "delete",
+        "secret",
+        "private data",
+        "restricted data"
+      ],
+      "updated_at": "2026-07-18T07:30:00Z"
+    },
+    {
+      "commands": [],
+      "decision_refs": [],
+      "domain_id": "project-execution",
+      "enabled": true,
+      "exclude_patterns": [],
+      "owner": "creator-rule-router",
+      "priority": 90,
+      "rules": [
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "PEX-001",
+          "scope": "execution entry gate",
+          "severity": "high",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Execution requires an explicitly approved plan or handoff.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        },
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "PEX-002",
+          "scope": "execution completion",
+          "severity": "high",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Completion requires current verification evidence, reconciliation, summary, ledger closure, and a next action.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        }
+      ],
+      "scope": "approved project execution, verification, reconciliation, and closure",
+      "trigger_keywords": [
+        "execution",
+        "execute",
+        "approved plan",
+        "approved handoff",
+        "verification",
+        "reconciliation",
+        "closure"
+      ],
+      "updated_at": "2026-07-18T07:30:00Z"
+    },
+    {
+      "commands": [],
+      "decision_refs": [],
+      "domain_id": "coding",
+      "enabled": true,
+      "exclude_patterns": [],
+      "owner": "creator-rule-router",
+      "priority": 85,
+      "rules": [
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "CODE-001",
+          "scope": "code change verification",
+          "severity": "high",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Code changes require executable verification evidence or an explicit unverified status.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        },
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "CODE-002",
+          "scope": "safe repository writes",
+          "severity": "high",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Repository writes must reject path traversal, unsafe symlinks, and partial state.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        }
+      ],
+      "scope": "code changes, tests, repository writes, and implementation verification",
+      "trigger_keywords": [
+        "code",
+        "coding",
+        "python",
+        "test",
+        "debug",
+        "implementation",
+        "repository write"
+      ],
+      "updated_at": "2026-07-18T07:30:00Z"
     },
     {
       "commands": [
         {
           "command_id": "validate-creator-toolchain",
+          "created_at": "2026-07-17T16:47:46Z",
+          "source": "repository-contract",
           "status": "active",
           "trigger": "validate creator toolchain",
+          "updated_at": "2026-07-18T07:30:00Z",
           "workflow": "python3 scripts/validate_creator_toolchain.py --scope all"
         }
       ],
@@ -49,9 +239,15 @@
       "priority": 80,
       "rules": [
         {
+          "created_at": "2026-07-17T16:47:46Z",
+          "review_date": "2027-07-18T00:00:00Z",
           "rule_id": "CT-001",
+          "scope": "Creator Toolchain package changes",
           "severity": "high",
-          "text": "Creator Toolchain changes must preserve skill mirror parity and exact package integrity."
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Creator Toolchain changes must preserve skill mirror parity and exact package integrity.",
+          "updated_at": "2026-07-18T07:30:00Z"
         }
       ],
       "scope": "creator-toolchain repository, skill, plugin, package, and validation work",
@@ -62,12 +258,99 @@
         "package",
         "validation"
       ],
-      "updated_at": "2026-07-17T16:47:46Z"
+      "updated_at": "2026-07-18T07:30:00Z"
+    },
+    {
+      "commands": [],
+      "decision_refs": [],
+      "domain_id": "creator-production",
+      "enabled": true,
+      "exclude_patterns": [],
+      "owner": "creator-rule-router",
+      "priority": 75,
+      "rules": [
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "PROD-001",
+          "scope": "creator production planning",
+          "severity": "medium",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Creator production work must define deliverables, source constraints, and observable acceptance criteria before execution.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        },
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "PROD-002",
+          "scope": "creator asset provenance",
+          "severity": "medium",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Generated assets must preserve source provenance and usage-rights constraints.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        }
+      ],
+      "scope": "creator image, video, slide, prompt, and content production",
+      "trigger_keywords": [
+        "creator production",
+        "image",
+        "video",
+        "slide",
+        "prompt pack",
+        "content campaign",
+        "character consistency"
+      ],
+      "updated_at": "2026-07-18T07:30:00Z"
+    },
+    {
+      "commands": [],
+      "decision_refs": [],
+      "domain_id": "zh-hant",
+      "enabled": true,
+      "exclude_patterns": [],
+      "owner": "creator-rule-router",
+      "priority": 70,
+      "rules": [
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "ZH-001",
+          "scope": "user-facing language",
+          "severity": "medium",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Use Traditional Chinese (zh-Hant) for user-facing output when the request or active context selects it.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        },
+        {
+          "created_at": "2026-07-18T07:30:00Z",
+          "review_date": "2027-07-18T00:00:00Z",
+          "rule_id": "ZH-002",
+          "scope": "technical terminology in zh-Hant output",
+          "severity": "medium",
+          "source": "repository-contract",
+          "status": "active",
+          "text": "Preserve essential English technical terms on first mention when that improves precision.",
+          "updated_at": "2026-07-18T07:30:00Z"
+        }
+      ],
+      "scope": "Traditional Chinese user-facing writing and terminology",
+      "trigger_keywords": [
+        "zh-hant",
+        "traditional chinese",
+        "繁體中文",
+        "繁體",
+        "香港中文",
+        "台灣中文"
+      ],
+      "updated_at": "2026-07-18T07:30:00Z"
     }
   ],
   "owner_skill": "creator-rule-router",
   "privacy_class": "repository_contract",
   "schema_version": "0.4.0",
   "staged_proposals": [],
-  "updated_at": "2026-07-17T16:47:46Z"
+  "updated_at": "2026-07-18T07:30:00Z"
 }

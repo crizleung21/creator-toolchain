@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/rules/decision-entry.schema.json",
+  "title": "Creator Toolchain immutable rule decision entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_id",
+    "proposal_id",
+    "outcome",
+    "operation",
+    "actor",
+    "timestamp",
+    "source",
+    "rationale",
+    "affected_domains",
+    "expected_behavior_change",
+    "review_date",
+    "changes",
+    "conflict_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^RULEDEC-[A-F0-9]{8,64}$"
+    },
+    "proposal_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^PROPOSAL-[A-F0-9]{8,64}$"
+    },
+    "outcome": {
+      "enum": [
+        "approved",
+        "rejected"
+      ]
+    },
+    "operation": {
+      "enum": [
+        "bootstrap-domains",
+        "create-domain",
+        "toggle-domain",
+        "add-rule",
+        "remove-rule",
+        "replace-rule",
+        "add-command",
+        "exclude",
+        "recall"
+      ]
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T"
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "affected_domains": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "expected_behavior_change": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T"
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "conflict_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^CONFLICT-[A-F0-9]{8,64}$"
+      }
+    }
+  }
+}

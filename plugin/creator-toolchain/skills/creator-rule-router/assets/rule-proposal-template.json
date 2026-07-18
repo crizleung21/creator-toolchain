@@ -1,10 +1,20 @@
 {
-  "proposal_id": "RULE-PROP-001",
-  "source": "",
-  "domain_id": "",
-  "rule_text": "",
-  "rationale": "",
-  "expected_behavior_change": "",
-  "review_by": "YYYY-MM-DD",
-  "status": "staged|approved|rejected"
+  "schema_version": "1.0.0",
+  "proposal_id": "PROPOSAL-XXXXXXXX",
+  "operation": "add-rule",
+  "status": "staged",
+  "owner_skill": "creator-rule-router",
+  "requested_by": "requesting-skill-or-actor",
+  "source": "repository-relative evidence path",
+  "rationale": "Why this governed change is proposed.",
+  "affected_domains": ["coding"],
+  "expected_behavior_change": "What should change after approval.",
+  "review_date": "YYYY-MM-DDTHH:MM:SSZ",
+  "payload": {},
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "updated_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "approved_by": null,
+  "approved_at": null,
+  "decision_id": null,
+  "rejection_reason": null
 }

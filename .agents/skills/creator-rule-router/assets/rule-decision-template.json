@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "RULEDEC-XXXXXXXX",
+  "proposal_id": null,
+  "outcome": "approved",
+  "operation": "add-rule",
+  "actor": "reviewer",
+  "timestamp": "YYYY-MM-DDTHH:MM:SSZ",
+  "source": "repository-relative evidence path",
+  "rationale": "Why this decision was made.",
+  "affected_domains": ["coding"],
+  "expected_behavior_change": "Expected governed behavior.",
+  "review_date": "YYYY-MM-DDTHH:MM:SSZ",
+  "changes": [],
+  "conflict_refs": []
+}
