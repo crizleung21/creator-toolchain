@@ -18,6 +18,17 @@ Every result records:
 - result;
 - response artifact path and SHA-256.
 
+## Evidence Freshness
+
+`behavior-acceptance-report.json` and `behavior-acceptance/` preserve the verified result for the package payload recorded inside the report. `behavior-acceptance-status.json` is the authoritative freshness overlay:
+
+- `CURRENT` or `PASS` means the report payload matches the current package-integrity payload;
+- `STALE` means the stored artifacts remain historically verified but have not been rerun against the current package bytes;
+- a stale overlay records both payload hashes, the invalidating change, and the required rerun action;
+- stale behavior evidence cannot satisfy release gates GATE-11 or GATE-12.
+
+Do not rewrite the historical report merely to copy a new package hash. Phase 7 must rerun all cases and issue new evidence.
+
 ## Coverage
 
 | Surface | Positive | Boundary | Required behavior |
@@ -32,4 +43,4 @@ Every result records:
 | Cross-workflow chain | 1 | 0 | Preserve identifiers and owned boundaries across handoffs. |
 | Repository-local smoke | 7 | 0 | Discover every authoritative skill from the repository source. |
 
-The machine-readable definitions live in `behavior-acceptance-cases.json`; verified results live in `behavior-acceptance-report.json` and `behavior-acceptance/`.
+The machine-readable definitions live in `behavior-acceptance-cases.json`; verified results live in `behavior-acceptance-report.json` and `behavior-acceptance/`; freshness lives in `behavior-acceptance-status.json`.
