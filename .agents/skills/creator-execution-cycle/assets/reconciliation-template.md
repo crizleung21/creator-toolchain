@@ -1,11 +1,23 @@
 # RECONCILIATION-{seq}
 
-## Plan vs Actual
+**Project ID:** `{project_id}`  
+**Status:** `{DONE|DONE_WITH_CONCERNS}`  
+**Created At:** `{timestamp}`
 
-## Completed Tasks
+## Planned Tasks
+
+## Actual Verified Tasks
+
+## Deviations
+
+- none
 
 ## Concerns
 
+- none
+
 ## State Update Proposal
 
-## Next Action
+`.creator/executions/{project_id}/state-update-proposal.json`
+
+## Recommended Next Action

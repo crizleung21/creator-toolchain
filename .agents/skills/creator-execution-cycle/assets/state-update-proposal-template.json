@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "proposal_id": "{{proposal_id}}",
+  "operation": "update-project-execution",
+  "status": "staged",
+  "target_surface": ".creator/projects.json",
+  "owner_skill": "creator-workspace-manager",
+  "requested_by": "creator-execution-cycle",
+  "project_id": "{{project_id}}",
+  "execution_status": "{{execution_status}}",
+  "source_execution": ".creator/executions/{{project_id}}",
+  "reconciliation_record": ".creator/executions/{{project_id}}/RECONCILIATION-{{seq}}.json",
+  "reconciliation_markdown": ".creator/executions/{{project_id}}/RECONCILIATION-{{seq}}.md",
+  "summary": ".creator/executions/{{project_id}}/SUMMARY-{{seq}}.md",
+  "verified_tasks": [
+    {
+      "task_id": "{{task_id}}",
+      "evidence_path": "{{evidence_path}}",
+      "evidence_hash": "{{evidence_sha256}}"
+    }
+  ],
+  "concerns": [],
+  "recommended_next_action": "{{recommended_next_action}}",
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}"
+}

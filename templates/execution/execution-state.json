@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "{{project_id}}",
+  "source_handoff": "{{source_handoff}}",
+  "current_state": "APPROVED",
+  "sequence": 1,
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}",
+  "history": [],
+  "artifacts": {
+    "plan": "PLAN-001.md",
+    "tasks": "tasks.json",
+    "ledger": "activity_ledger.jsonl",
+    "blocker": null,
+    "recovery_plan": null,
+    "reconciliation": null,
+    "summary": null,
+    "state_update_proposal": null
+  }
+}
