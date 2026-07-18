@@ -1,9 +1,20 @@
-# Handoff Workflow
+# Execution Handoff Workflow
 
-`creator-intake:handoff` means scaffold plus immediate handoff to `creator-execution-cycle`.
+`creator-intake:handoff` requires:
 
-## Rules
+- a passing Planning Quality Gate;
+- explicit `handoff-to-execution` approval;
+- a preserved canonical project ID;
+- no unresolved blocking questions.
 
-- Do not re-ask questions already answered in `PLANNING.md`.
-- If required fields conflict or are missing, return to planning.
-- `HANDOFF.md` must include target skill `creator-execution-cycle`.
+## Output
+
+```text
+.creator/handoffs/{project_id}.json
+```
+
+The handoff records the source plan, target skill `creator-execution-cycle`, gate result, approval evidence, all canonical artifact paths, remaining non-blocking questions, and generation timestamp.
+
+## Boundary
+
+The handoff authorizes the next workflow; it does not execute the plan. Reject duplicate or conflicting handoffs and never infer approval from prose.

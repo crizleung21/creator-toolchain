@@ -1,12 +1,21 @@
 # Scaffolding Workflow
 
-`creator-intake:scaffold` turns an accepted `PLANNING.md` into a standalone project scaffold. It does not execute the plan.
+`creator-intake:scaffold` requires an approved `scaffold-only` decision and a passing Planning Quality Gate.
 
-## Outputs
+## Default Output
 
-- `PROJECT.md`
-- `README.md`
-- `HANDOFF.md`
-- updated `INTAKE-STATE.md`
+```text
+.creator/scaffolds/{project_slug}/
+├── PROJECT.md
+├── README.md
+└── HANDOFF.md
+```
 
-Scaffolding requires the Planning Quality Gate to pass.
+## Rules
+
+- Generate planning documents only.
+- Do not create source code, media, build files, dependencies, or execution state.
+- State clearly that execution is not authorized.
+- Preserve the canonical project ID and source-plan path.
+- Reject an existing scaffold instead of overwriting it.
+- Update the Intake package and staged state-registration proposal transactionally.

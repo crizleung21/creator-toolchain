@@ -1,13 +1,19 @@
 # Project Types
 
-| Type | Rigor | Purpose |
-|---|---|---|
-| `slide-deck` | standard | presentation, pitch, or teaching deck |
-| `ai-image-system` | deep | image generation workflow |
-| `characterlock-system` | deep | identity/viewpoint locked character workflow |
-| `application` | deep | software, UI, API, or app |
-| `workflow` | standard | repeatable SOP or automation |
-| `utility` | tight | script, checker, converter |
-| `research-system` | standard | repo or tool analysis |
+Creator Toolchain supports exactly thirteen project types:
 
-Project types define guide, config, and skill loadout files under `references/types/{type}/`.
+- `creator-tooling`
+- `application`
+- `workflow`
+- `utility`
+- `characterlock-system`
+- `headlock-system`
+- `ai-image-system`
+- `ai-video-system`
+- `character-registry`
+- `slide-deck`
+- `prompt-pack`
+- `content-campaign`
+- `research-system`
+
+Each type has a materialized `guide.md`, `config.md`, and `skill-loadout.md` under `references/types/{type_id}/`. Load only the selected type. The materialized files define inputs, deliverables, observable acceptance patterns, risk checks, rule domains, audit domains, default handoff, and an example.
