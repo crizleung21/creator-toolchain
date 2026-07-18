@@ -68,6 +68,10 @@ python3 scripts/creator_workspace_maintenance.py archive-status --root . --propo
 python3 scripts/creator_workspace_maintenance.py archive-apply --root . --proposal PROPOSAL_PATH --actor ACTOR --confirm ARCHIVE_ID
 ```
 
+## Session Insights Boundary
+
+Session Insights may be reviewed during maintenance and may produce a staged rule proposal for `creator-rule-router`. Workspace Manager must not promote it or edit `.creator/rules.json`.
+
 ## Proposal Lifecycle
 
 State proposals remain immutable with `status: staged`. Lifecycle status is derived from separate evidence:
