@@ -1,0 +1,21 @@
+{
+  "calculated_at": "2026-07-18T06:00:00Z",
+  "counts": {
+    "amber": 1,
+    "red": 0
+  },
+  "level": "amber",
+  "recommended_next_action": "Resolve the first amber health signal before release.",
+  "schema_version": "1.0.0",
+  "score": 20,
+  "signals": [
+    {
+      "level": "amber",
+      "message": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current Execution Skill, closure, recovery, and package bytes.",
+      "path": "docs/qa/behavior-acceptance-status.json",
+      "signal_id": "BEHAVIOR_EVIDENCE_STALE",
+      "weight": 20
+    }
+  ],
+  "summary": "Derived 0 red and 1 amber signal(s); score=20."
+}
