@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "owner_skill", "privacy_class", "created_at", "updated_at", "entries", "promotion_policy"],
+  "properties": {
+    "schema_version": {"const": "0.4.0"},
+    "owner_skill": {"type": "string", "minLength": 1},
+    "privacy_class": {"const": "private"},
+    "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "updated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "entries": {"type": "array", "items": {"type": "object", "required": ["insight_id"], "properties": {"insight_id": {"type": "string", "minLength": 1}}}},
+    "promotion_policy": {"type": "string", "minLength": 1}
+  },
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/workspace/session-insights.schema.json",
+  "title": "Creator Toolchain session-insights surface"
+}

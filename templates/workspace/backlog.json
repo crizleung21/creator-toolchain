@@ -1,0 +1,8 @@
+{
+  "schema_version": "0.4.0",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "repository_workflow_state",
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}",
+  "items": []
+}

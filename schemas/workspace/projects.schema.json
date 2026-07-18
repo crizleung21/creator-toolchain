@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "owner_skill", "privacy_class", "created_at", "updated_at", "projects"],
+  "properties": {
+    "schema_version": {"const": "0.4.0"},
+    "owner_skill": {"type": "string", "minLength": 1},
+    "privacy_class": {"const": "repository_workflow_state"},
+    "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "updated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "projects": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["project_id", "title", "project_type", "status", "plan_path", "last_summary", "created_at", "updated_at"], "properties": {"project_id": {"type": "string", "minLength": 1}, "title": {"type": "string", "minLength": 1}, "project_type": {"type": "string", "minLength": 1}, "status": {"enum": ["ideating", "planned", "approved", "executing", "blocked", "done", "archived"]}, "plan_path": {"type": ["string", "null"]}, "last_summary": {"type": ["string", "null"]}, "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"}, "updated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"}}}}
+  },
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/workspace/projects.schema.json",
+  "title": "Creator Toolchain projects surface"
+}

@@ -1,6 +1,8 @@
 {
-  "schema_version": "0.3.0",
+  "created_at": "2026-07-17T16:47:46Z",
   "owner_skill": "creator-workspace-manager",
   "privacy_class": "repository_workflow_state",
-  "projects": []
+  "projects": [],
+  "schema_version": "0.4.0",
+  "updated_at": "2026-07-17T16:47:46Z"
 }

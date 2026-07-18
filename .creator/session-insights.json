@@ -1,7 +1,9 @@
 {
-  "schema_version": "0.3.0",
+  "created_at": "2026-07-17T16:47:46Z",
+  "entries": [],
   "owner_skill": "creator-workspace-manager",
   "privacy_class": "private",
-  "entries": [],
-  "promotion_policy": "Session insights may create staged rule proposals but must not auto-promote active rules."
+  "promotion_policy": "Session insights may create staged rule proposals but must not auto-promote active rules.",
+  "schema_version": "0.4.0",
+  "updated_at": "2026-07-17T16:47:46Z"
 }

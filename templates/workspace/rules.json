@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.4.0",
+  "owner_skill": "creator-rule-router",
+  "privacy_class": "repository_contract",
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}",
+  "domains": [
+    {
+      "domain_id": "GLOBAL",
+      "enabled": true,
+      "priority": 100,
+      "scope": "workspace-wide safety and integrity",
+      "trigger_keywords": [],
+      "rules": [],
+      "commands": [],
+      "exclude_patterns": [],
+      "decision_refs": [],
+      "owner": "creator-rule-router",
+      "updated_at": "{{timestamp}}"
+    }
+  ],
+  "staged_proposals": [],
+  "decision_log": []
+}

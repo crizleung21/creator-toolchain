@@ -1,11 +1,13 @@
 {
-  "schema_version": "0.3.0",
+  "created_at": "2026-07-17T16:47:46Z",
   "owner": "workspace-user",
   "owner_skill": "creator-workspace-manager",
-  "privacy_class": "private",
   "preferences": {
-    "language": "workspace-default",
     "final_output_style": "workspace-default",
+    "language": "workspace-default",
     "require_evidence_refs": true
-  }
+  },
+  "privacy_class": "private",
+  "schema_version": "0.4.0",
+  "updated_at": "2026-07-17T16:47:46Z"
 }

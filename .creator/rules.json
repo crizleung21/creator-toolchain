@@ -1,13 +1,18 @@
 {
-  "schema_version": "0.3.0",
-  "owner_skill": "creator-rule-router",
-  "privacy_class": "repository_contract",
+  "created_at": "2026-07-17T16:47:46Z",
+  "decision_log": [],
   "domains": [
     {
+      "commands": [],
+      "decision_refs": [
+        "DEC-001",
+        "DEC-003"
+      ],
       "domain_id": "GLOBAL",
       "enabled": true,
+      "exclude_patterns": [],
+      "owner": "creator-rule-router",
       "priority": 100,
-      "trigger_keywords": [],
       "rules": [
         {
           "rule_id": "GLOBAL-001",
@@ -20,15 +25,28 @@
           "text": "Do not package private state, caches, environment files, editor metadata, build archives, or operating-system artifacts."
         }
       ],
-      "commands": [],
-      "exclude_patterns": [],
-      "decision_refs": ["DEC-001", "DEC-003"]
+      "scope": "workspace-wide safety and integrity",
+      "trigger_keywords": [],
+      "updated_at": "2026-07-17T16:47:46Z"
     },
     {
+      "commands": [
+        {
+          "command_id": "validate-creator-toolchain",
+          "status": "active",
+          "trigger": "validate creator toolchain",
+          "workflow": "python3 scripts/validate_creator_toolchain.py --scope all"
+        }
+      ],
+      "decision_refs": [
+        "DEC-002",
+        "DEC-003"
+      ],
       "domain_id": "creator-toolchain",
       "enabled": true,
+      "exclude_patterns": [],
+      "owner": "creator-rule-router",
       "priority": 80,
-      "trigger_keywords": ["creator-toolchain", "skill", "plugin", "package", "validation"],
       "rules": [
         {
           "rule_id": "CT-001",
@@ -36,18 +54,20 @@
           "text": "Creator Toolchain changes must preserve skill mirror parity and exact package integrity."
         }
       ],
-      "commands": [
-        {
-          "command_id": "validate-creator-toolchain",
-          "trigger": "validate creator toolchain",
-          "workflow": "python3 scripts/validate_creator_toolchain.py --scope all",
-          "status": "active"
-        }
+      "scope": "creator-toolchain repository, skill, plugin, package, and validation work",
+      "trigger_keywords": [
+        "creator-toolchain",
+        "skill",
+        "plugin",
+        "package",
+        "validation"
       ],
-      "exclude_patterns": [],
-      "decision_refs": ["DEC-002", "DEC-003"]
+      "updated_at": "2026-07-17T16:47:46Z"
     }
   ],
+  "owner_skill": "creator-rule-router",
+  "privacy_class": "repository_contract",
+  "schema_version": "0.4.0",
   "staged_proposals": [],
-  "decision_log": []
+  "updated_at": "2026-07-17T16:47:46Z"
 }

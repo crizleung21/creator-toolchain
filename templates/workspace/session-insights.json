@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.4.0",
+  "owner_skill": "creator-workspace-manager",
+  "privacy_class": "private",
+  "created_at": "{{timestamp}}",
+  "updated_at": "{{timestamp}}",
+  "entries": [],
+  "promotion_policy": "Staged proposals require explicit approval."
+}
