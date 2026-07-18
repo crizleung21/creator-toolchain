@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/audit/execution-handoff.schema.json",
+  "title": "Creator Toolchain audit execution handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "handoff_id", "target_skill", "source_findings", "tasks", "dependency_graph", "risks", "verification_gates", "rollback_criteria", "authorization_status"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "handoff_id": {"type": "string", "pattern": "^AUDIT-HANDOFF-[A-Z0-9-]+$"},
+    "target_skill": {"const": "creator-execution-cycle"},
+    "source_findings": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "tasks": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "dependency_graph": {"type": "array", "items": {"type": "object"}},
+    "risks": {"type": "array", "items": {"type": "string"}},
+    "verification_gates": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "rollback_criteria": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "authorization_status": {"enum": ["planned", "approved"]}
+  }
+}

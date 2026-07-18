@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0.0",
+  "routes": [
+    {
+      "route_id": "plugin-release",
+      "priority": 120,
+      "match_any": ["release plugin", "publish plugin", "package plugin", "plugin release", "marketplace release"],
+      "match_all": [],
+      "exclude_any": [],
+      "fallback": false,
+      "primary_workflow": "creator-orchestrator",
+      "secondary_workflow": null,
+      "required_sources": ["approved release scope", "current package-integrity report"],
+      "expected_artifact": "release evidence and a reproducible plugin archive",
+      "boundary": "Coordinate deterministic release scripts; do not invent an undefined phase workflow or package ad hoc.",
+      "support_script": "scripts/release_creator_toolchain.py"
+    },
+    {
+      "route_id": "accepted-plan",
+      "priority": 110,
+      "match_any": ["accepted plan", "approved plan", "handoff-to-execution", "execute this plan", "execution handoff"],
+      "match_all": [],
+      "exclude_any": [],
+      "fallback": false,
+      "primary_workflow": "creator-execution-cycle",
+      "secondary_workflow": null,
+      "required_sources": ["approved plan or execution handoff"],
+      "expected_artifact": "verified execution closure and staged state-update proposal",
+      "boundary": "Execute only an explicitly approved plan; do not absorb raw ideation.",
+      "support_script": "scripts/creator_execution_lifecycle.py"
+    },
+    {
+      "route_id": "workspace-state",
+      "priority": 100,
+      "match_any": ["workspace state", "health check", "state divergence", "maintenance review", "archive proposal", "reconcile state", "workspace reconciliation"],
+      "match_all": [],
+      "exclude_any": [],
+      "fallback": false,
+      "primary_workflow": "creator-workspace-manager",
+      "secondary_workflow": null,
+      "required_sources": ["declared workspace surfaces"],
+      "expected_artifact": "health, maintenance, archive, or reconciliation evidence",
+      "boundary": "Respect surface ownership and do not implement product backlog work.",
+      "support_script": "scripts/creator_workspace_maintenance.py"
+    },
+    {
+      "route_id": "rule-governance",
+      "priority": 90,
+      "match_any": ["rule preflight", "rule governance", "domain rule", "rules.json", "instruction recall", "audit conflicts", "approve proposal"],
+      "match_all": [],
+      "exclude_any": [],
+      "fallback": false,
+      "primary_workflow": "creator-rule-router",
+      "secondary_workflow": null,
+      "required_sources": ["task text or governed rule proposal"],
+      "expected_artifact": "rule preflight, decision, or conflict report",
+      "boundary": "Do not auto-promote proposals or load every rule.",
+      "support_script": "scripts/creator_rule_cli.py"
+    },
+    {
+      "route_id": "skill-workbench",
+      "priority": 80,
+      "match_any": ["build a skill", "create a skill", "scaffold skill", "restructure skill", "score this skill", "audit this skill", "skill package", "skill workbench"],
+      "match_all": [],
+      "exclude_any": [],
+      "fallback": false,
+      "primary_workflow": "creator-skill-workbench",
+      "secondary_workflow": null,
+      "required_sources": ["skill source or skill brief"],
+      "expected_artifact": "skill specification, scaffold, or evidence-backed score report",
+      "boundary": "Limit the workflow to one skill; system or package audits belong to creator-evidence-audit.",
+      "support_script": "scripts/creator_skill_workbench.py"
+    },
+    {
+      "route_id": "evidence-audit",
+      "priority": 70,
+      "match_any": ["evidence-first audit", "system audit", "repository audit", "package audit", "audit this repository", "findings", "remediation guidance"],
+      "match_all": [],
+      "exclude_any": ["audit this skill", "skill package"],
+      "fallback": false,
+      "primary_workflow": "creator-evidence-audit",
+      "secondary_workflow": null,
+      "required_sources": ["audit target and evidence scope"],
+      "expected_artifact": "immutable findings, remediation guidance, and execution handoff",
+      "boundary": "Audit and plan remediation only; do not mutate the audit target.",
+      "support_script": null
+    },
+    {
+      "route_id": "raw-idea",
+      "priority": 0,
+      "match_any": [],
+      "match_all": [],
+      "exclude_any": [],
+      "fallback": true,
+      "primary_workflow": "creator-intake-planner",
+      "secondary_workflow": null,
+      "required_sources": ["raw idea or desired outcome"],
+      "expected_artifact": "typed planning package and quality-gate result",
+      "boundary": "Planning only; do not start implementation before explicit approval.",
+      "support_script": "scripts/creator_intake_artifacts.py"
+    }
+  ]
+}

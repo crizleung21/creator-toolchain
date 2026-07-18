@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/audit/remediation.schema.json",
+  "title": "Creator Toolchain remediation task",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "source_finding", "remediation_type", "intervention_level", "blast_radius", "coupling_risk", "regression_risk", "risk_score", "confidence", "evidence_sources", "verification_gate", "rollback_criteria", "handoff"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "task_id": {"type": "string", "pattern": "^REM-[A-Z0-9-]+$"},
+    "source_finding": {"type": "string", "pattern": "^FIND-[A-Z0-9-]+$"},
+    "remediation_type": {"enum": ["planning", "workflow", "state", "rule", "skill", "code", "plugin"]},
+    "intervention_level": {"enum": ["suggesting", "planning", "authorizing", "executing"]},
+    "blast_radius": {"enum": ["low", "medium", "high"]},
+    "coupling_risk": {"enum": ["low", "medium", "high"]},
+    "regression_risk": {"enum": ["low", "medium", "high"]},
+    "risk_score": {"type": "integer", "minimum": 0},
+    "confidence": {"type": "number", "minimum": 0},
+    "evidence_sources": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "verification_gate": {"type": "string", "minLength": 1},
+    "rollback_criteria": {"type": "string", "minLength": 1},
+    "handoff": {"const": "creator-execution-cycle"}
+  }
+}

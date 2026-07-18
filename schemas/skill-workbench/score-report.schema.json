@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/skill-workbench/score-report.schema.json",
+  "title": "Creator Toolchain skill score report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "skill_name", "skill_path", "score", "status", "dimensions", "deductions", "summary", "recommended_next_action"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "skill_name": {"type": "string", "minLength": 1},
+    "skill_path": {"type": "string", "minLength": 1},
+    "score": {"type": "integer", "minimum": 0},
+    "status": {"enum": ["compliant", "partial", "weak", "non-compliant"]},
+    "dimensions": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["dimension", "weight", "awarded", "findings"], "properties": {"dimension": {"type": "string"}, "weight": {"type": "integer", "minimum": 0}, "awarded": {"type": "integer", "minimum": 0}, "findings": {"type": "array", "items": {"type": "string"}}}},
+    "deductions": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["dimension", "points", "check_id", "evidence"], "properties": {"dimension": {"type": "string"}, "points": {"type": "integer", "minimum": 1}, "check_id": {"type": "string", "minLength": 1}, "evidence": {"type": "string", "minLength": 1}}}},
+    "summary": {"type": "string", "minLength": 1},
+    "recommended_next_action": {"type": "string", "minLength": 1}
+  }
+}

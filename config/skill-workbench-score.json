@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "dimensions": [
+    {"dimension": "trigger_precision", "weight": 15},
+    {"dimension": "boundary_clarity", "weight": 15},
+    {"dimension": "workflow_completeness", "weight": 20},
+    {"dimension": "progressive_disclosure", "weight": 15},
+    {"dimension": "state_safety", "weight": 10},
+    {"dimension": "reference_integrity", "weight": 10},
+    {"dimension": "acceptance_tests", "weight": 10},
+    {"dimension": "naming_collision", "weight": 5}
+  ],
+  "thresholds": [
+    {"minimum": 90, "status": "compliant"},
+    {"minimum": 70, "status": "partial"},
+    {"minimum": 40, "status": "weak"},
+    {"minimum": 0, "status": "non-compliant"}
+  ]
+}
