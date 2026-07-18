@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/workspace/archive-proposal.schema.json",
+  "title": "Creator Toolchain non-destructive archive proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "proposal_id", "operation", "status", "target_path", "target_kind", "target_sha256", "destination_path", "requested_by", "reason", "created_at", "proposal_path"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "proposal_id": {"type": "string", "pattern": "^ARCHIVE-[A-F0-9]{8,64}$"},
+    "operation": {"const": "archive"},
+    "status": {"const": "staged"},
+    "target_path": {"type": "string", "pattern": "^\\.creator/"},
+    "target_kind": {"enum": ["file", "directory"]},
+    "target_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "destination_path": {"type": "string", "pattern": "^\\.creator/archive/ARCHIVE-[A-F0-9]{8,64}/"},
+    "requested_by": {"type": "string", "minLength": 1},
+    "reason": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "proposal_path": {"type": "string", "pattern": "^\\.creator/maintenance/archive-proposals/ARCHIVE-[A-F0-9]{8,64}\\.json$"}
+  }
+}

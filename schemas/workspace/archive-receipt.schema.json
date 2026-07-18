@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/workspace/archive-receipt.schema.json",
+  "title": "Creator Toolchain non-destructive archive receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "proposal_id", "operation", "status", "source_path", "archive_path", "source_sha256", "archived_by", "archived_at", "proposal_path", "receipt_path", "health_report"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "proposal_id": {"type": "string", "pattern": "^ARCHIVE-[A-F0-9]{8,64}$"},
+    "operation": {"const": "archive"},
+    "status": {"const": "archived"},
+    "source_path": {"type": "string", "pattern": "^\\.creator/"},
+    "archive_path": {"type": "string", "pattern": "^\\.creator/archive/ARCHIVE-[A-F0-9]{8,64}/"},
+    "source_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "archived_by": {"type": "string", "minLength": 1},
+    "archived_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "proposal_path": {"type": "string", "pattern": "^\\.creator/maintenance/archive-proposals/ARCHIVE-[A-F0-9]{8,64}\\.json$"},
+    "receipt_path": {"type": "string", "pattern": "^\\.creator/maintenance/archive-receipts/ARCHIVE-[A-F0-9]{8,64}\\.json$"},
+    "health_report": {"const": ".creator/health/health-report.json"}
+  }
+}

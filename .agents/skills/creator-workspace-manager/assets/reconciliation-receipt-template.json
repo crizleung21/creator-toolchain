@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "proposal_id": "PROPOSAL-{{id}}",
+  "operation": "{{operation}}",
+  "status": "applied",
+  "target_surface": ".creator/projects.json",
+  "project_id": "PROJECT-{{id}}",
+  "before_sha256": "{{before_sha256}}",
+  "after_sha256": "{{after_sha256}}",
+  "applied_by": "{{actor}}",
+  "applied_at": "{{timestamp}}",
+  "proposal_path": "{{proposal_path}}",
+  "receipt_path": ".creator/reconciliation/PROPOSAL-{{id}}.json",
+  "health_report": ".creator/health/health-report.json"
+}

@@ -5,14 +5,17 @@ Session insight
 → staged rule proposal
 → creator-workspace:maintenance-review
 → creator-rule-router conflict audit
-→ explicit user approval
+→ explicit approval
 → active rule
 ```
 
-Rule proposals must record:
+Workspace Manager may identify and stage a rule proposal, but it must not edit `.creator/rules.json`, resolve semantic conflicts, or promote the proposal. Phase 5 Rule Governance owns validation, conflict handling, approval, rejection, and activation.
 
-- source session
-- rationale
-- affected domains
-- expiry or review date
-- expected behavior change
+Every staged proposal should record:
+
+- source session or insight ID;
+- rationale;
+- affected domains;
+- expected behavior change;
+- review or expiry date;
+- evidence paths.

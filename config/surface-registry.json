@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "state_schema_version": "0.4.0",
+  "created_at": "2026-07-17T16:47:46Z",
+  "updated_at": "2026-07-17T16:47:46Z",
+  "surfaces": [
+    {"surface_id":"workspace","path":".creator/workspace.json","schema":"schemas/workspace/workspace.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"publishable_template","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"projects","path":".creator/projects.json","schema":"schemas/workspace/projects.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"repository_workflow_state","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"entities","path":".creator/entities.json","schema":"schemas/workspace/entities.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"private","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"state","path":".creator/state.json","schema":"schemas/workspace/state.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"repository_workflow_state","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"session-insights","path":".creator/session-insights.json","schema":"schemas/workspace/session-insights.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"private","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"operator","path":".creator/operator.json","schema":"schemas/workspace/operator.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"private","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"backlog","path":".creator/backlog.json","schema":"schemas/workspace/backlog.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"repository_workflow_state","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"surfaces","path":".creator/surfaces.json","schema":"schemas/workspace/surfaces.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"publishable_template","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"decisions","path":".creator/decisions.json","schema":"schemas/workspace/decisions.schema.json","owner_skill":"creator-workspace-manager","privacy_class":"repository_workflow_state","required":true,"mutable":true,"archive_policy":"retain"},
+    {"surface_id":"rules","path":".creator/rules.json","schema":"schemas/workspace/rules.schema.json","owner_skill":"creator-rule-router","privacy_class":"repository_contract","required":true,"mutable":true,"archive_policy":"retain"}
+  ]
+}
