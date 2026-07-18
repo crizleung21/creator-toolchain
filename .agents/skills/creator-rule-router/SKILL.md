@@ -17,6 +17,7 @@ Other skills may stage a proposal or request a preflight, but they must not acti
 
 - `creator-rules:list-domains`
 - `creator-rules:get-domain`
+- `creator-rules:preflight`
 - `creator-rules:create-domain`
 - `creator-rules:toggle-domain`
 - `creator-rules:add-rule`
@@ -107,6 +108,8 @@ Advisory conflict types:
 - stale decision.
 
 Blocking conflicts prevent automatic application and proposal approval. Resolve them by changing or rejecting the underlying Rule proposal, then rerun the audit. Do not manually edit a derived Conflict Report to claim resolution.
+
+Workspace Health exposes unresolved blocking conflicts as `RULE_CONFLICT_BLOCKING` (red) and advisory conflicts as `RULE_CONFLICT_ADVISORY` (amber).
 
 ## Guardrails
 
