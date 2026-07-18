@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import json
 import hashlib
+import json
 import unittest
 from pathlib import Path
 
@@ -66,6 +66,7 @@ class SkillContractTests(unittest.TestCase):
         self.assertTrue((ROOT / "docs/qa/skill-contract-tests.md").is_file())
         self.assertTrue((ROOT / "docs/qa/behavior-acceptance-cases.json").is_file())
         self.assertTrue((ROOT / "docs/qa/behavior-acceptance-report.json").is_file())
+        self.assertTrue((ROOT / "docs/qa/behavior-acceptance-status.json").is_file())
 
     def test_capability_matrix_covers_all_creator_capabilities(self) -> None:
         text = (ROOT / "docs/qa/capability-matrix.md").read_text(encoding="utf-8")
@@ -150,9 +151,12 @@ class SkillContractTests(unittest.TestCase):
                 self.assertTrue(case["required_observations"])
                 self.assertTrue(case["prohibited_observations"])
 
-    def test_behavior_acceptance_report_has_34_verified_artifacts(self) -> None:
+    def test_behavior_acceptance_report_has_verified_artifacts_and_freshness_status(self) -> None:
         report_path = ROOT / "docs/qa/behavior-acceptance-report.json"
         report = json.loads(report_path.read_text(encoding="utf-8"))
+        status = json.loads(
+            (ROOT / "docs/qa/behavior-acceptance-status.json").read_text(encoding="utf-8")
+        )
         catalog = json.loads(
             (ROOT / "docs/qa/behavior-acceptance-cases.json").read_text(encoding="utf-8")
         )
@@ -166,9 +170,22 @@ class SkillContractTests(unittest.TestCase):
         self.assertEqual(report["case_count"], 34)
         self.assertEqual(report["passed"], 34)
         self.assertEqual(report["failed"], 0)
-        self.assertEqual(
-            report["package_payload_sha256"], package_report["payload_sha256"]
-        )
+        if report["package_payload_sha256"] == package_report["payload_sha256"]:
+            self.assertIn(status["status"], {"CURRENT", "PASS"})
+        else:
+            self.assertEqual(status["schema_version"], "1.0.0")
+            self.assertEqual(status["status"], "STALE")
+            self.assertTrue(status["rerun_required"])
+            self.assertEqual(status["report_path"], "docs/qa/behavior-acceptance-report.json")
+            self.assertEqual(
+                status["report_package_payload_sha256"], report["package_payload_sha256"]
+            )
+            self.assertEqual(
+                status["current_package_payload_sha256"], package_report["payload_sha256"]
+            )
+            self.assertTrue(status["reason"])
+            self.assertTrue(status["required_action"])
+
         self.assertEqual(len(report["cases"]), 34)
         report_ids = {case["case_id"] for case in report["cases"]}
         self.assertEqual(report_ids, set(catalog_by_id))
