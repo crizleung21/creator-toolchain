@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "audited_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "status": "PASS",
+  "blocking_count": 0,
+  "advisory_count": 0,
+  "conflicts": []
+}
