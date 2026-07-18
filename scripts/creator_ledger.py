@@ -13,7 +13,22 @@ try:
 except ImportError:  # pragma: no cover
     from scripts.creator_transactions import atomic_write_text
 
-ALLOWED_STATUSES = {"DONE", "DONE_WITH_CONCERNS", "NEEDS_CONTEXT", "BLOCKED", "IN_PROGRESS"}
+ALLOWED_STATUSES = {
+    "PLANNED",
+    "APPROVED",
+    "EXECUTING",
+    "VERIFYING",
+    "RECONCILING",
+    "DONE",
+    "DONE_WITH_CONCERNS",
+    "NEEDS_CONTEXT",
+    "BLOCKED",
+    "RECOVERING",
+    "IN_PROGRESS",
+    "EXECUTED",
+    "VERIFIED",
+    "FAILED",
+}
 
 
 class LedgerError(RuntimeError):
