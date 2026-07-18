@@ -8,9 +8,9 @@ import sys
 from pathlib import Path
 
 try:
-    from creator_project_types import load_project_types
+    from creator_project_types import ProjectTypeError, load_project_types
 except ImportError:  # Imported as scripts.materialize_project_type_refs in tests.
-    from scripts.creator_project_types import load_project_types
+    from scripts.creator_project_types import ProjectTypeError, load_project_types
 
 ROOT = Path(__file__).resolve().parents[1]
 TYPE_ROOT_RELATIVE = Path(".agents/skills/creator-intake-planner/references/types")
@@ -171,14 +171,18 @@ def expected_files(root: Path = ROOT) -> dict[Path, str]:
 
 def synchronize(root: Path = ROOT, *, write: bool) -> list[str]:
     findings: list[str] = []
-    for relative, expected in expected_files(root).items():
+    try:
+        expected = expected_files(root)
+    except (ProjectTypeError, OSError, ValueError) as exc:
+        return [f"cannot materialize project-type references: {exc}"]
+    for relative, expected_content in expected.items():
         path = Path(root) / relative
         actual = path.read_text(encoding="utf-8") if path.is_file() else None
-        if actual == expected:
+        if actual == expected_content:
             continue
         if write:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(expected, encoding="utf-8")
+            path.write_text(expected_content, encoding="utf-8")
         else:
             findings.append(f"stale project-type reference: {relative.as_posix()}")
     return findings
