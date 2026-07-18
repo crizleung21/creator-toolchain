@@ -1,80 +1,103 @@
 #!/usr/bin/env python3
-"""Materialize Creator Toolchain project type reference files.
-
-The implementation plan requires each project type to define guide, config, and
-skill loadout references. This script keeps those repetitive files consistent.
-"""
+"""Materialize domain-specific Intake references from config/project-types.json."""
 
 from __future__ import annotations
 
+import argparse
+import sys
 from pathlib import Path
 
+try:
+    from creator_project_types import load_project_types
+except ImportError:  # Imported as scripts.materialize_project_type_refs in tests.
+    from scripts.creator_project_types import load_project_types
 
 ROOT = Path(__file__).resolve().parents[1]
-TYPE_ROOT = ROOT / ".agents/skills/creator-intake-planner/references/types"
-
-PROJECT_TYPES = {
-    "slide-deck": ("standard", "presentation, pitch, or teaching deck", ["creator-intake-planner", "creator-execution-cycle"]),
-    "ai-image-system": ("deep", "image generation workflow", ["creator-intake-planner", "creator-rule-router", "creator-evidence-audit"]),
-    "characterlock-system": ("deep", "identity and viewpoint locked character workflow", ["creator-intake-planner", "creator-rule-router", "creator-evidence-audit"]),
-    "headlock-system": ("standard", "head and face consistency workflow", ["creator-intake-planner", "creator-rule-router"]),
-    "ai-video-system": ("deep", "shot, scene, motion, and continuity workflow", ["creator-intake-planner", "creator-evidence-audit"]),
-    "prompt-pack": ("tight", "reusable prompts and prompt QA", ["creator-intake-planner", "creator-skill-workbench"]),
-    "character-registry": ("deep", "profile IDs, variants, and universe records", ["creator-intake-planner", "creator-workspace-manager"]),
-    "content-campaign": ("creative", "launch, content calendar, and platform publishing plan", ["creator-intake-planner", "creator-execution-cycle"]),
-    "creator-tooling": ("standard", "scripts, validators, workflow tools, and skill suites", ["creator-intake-planner", "creator-execution-cycle", "creator-skill-workbench"]),
-    "application": ("deep", "software, app, UI, API, or service", ["creator-intake-planner", "creator-execution-cycle", "creator-evidence-audit"]),
-    "workflow": ("standard", "repeatable SOP, skill, or automation", ["creator-intake-planner", "creator-execution-cycle"]),
-    "utility": ("tight", "script, checker, converter, or small tool", ["creator-intake-planner", "creator-execution-cycle"]),
-    "research-system": ("standard", "repo, toolchain, or source analysis system", ["creator-intake-planner", "creator-evidence-audit"]),
-}
+TYPE_ROOT_RELATIVE = Path(".agents/skills/creator-intake-planner/references/types")
 
 
-def write_type(type_id: str, rigor: str, purpose: str, skills: list[str]) -> None:
-    path = TYPE_ROOT / type_id
-    path.mkdir(parents=True, exist_ok=True)
-    (path / "guide.md").write_text(
-        f"""# {type_id} Guide
+def _bullets(values: list[str]) -> str:
+    return "\n".join(f"- {value}" for value in values)
+
+
+def _secondary_skills(contract: dict[str, object]) -> list[str]:
+    skills = ["creator-execution-cycle"]
+    rule_domains = contract["rule_domains"]
+    audit_domains = contract["audit_domains"]
+    if isinstance(rule_domains, list) and any(item != "GLOBAL" for item in rule_domains):
+        skills.append("creator-rule-router")
+    if isinstance(audit_domains, list) and audit_domains:
+        skills.append("creator-evidence-audit")
+    if contract["type_id"] in {"creator-tooling", "prompt-pack"}:
+        skills.append("creator-skill-workbench")
+    if contract["type_id"] == "character-registry":
+        skills.append("creator-workspace-manager")
+    return list(dict.fromkeys(skills))
+
+
+def render_reference_set(contract: dict[str, object]) -> dict[str, str]:
+    type_id = str(contract["type_id"])
+    rigor = str(contract["rigor"])
+    purpose = str(contract["purpose"])
+    inputs = list(contract["inputs"])
+    deliverables = list(contract["deliverables"])
+    acceptance = list(contract["acceptance_patterns"])
+    risks = list(contract["risk_checklist"])
+    rule_domains = list(contract["rule_domains"])
+    audit_domains = list(contract["audit_domains"])
+    example = str(contract["example"])
+    secondary = _secondary_skills(contract)
+    guide = f"""# {type_id} Guide
 
 ## Purpose
 
-{purpose}.
+{purpose}
 
-## When To Use
+## Required Inputs
 
-Use this type when the project primarily needs {purpose}.
+{_bullets(inputs)}
+
+## Expected Deliverables
+
+{_bullets(deliverables)}
+
+## Observable Acceptance Patterns
+
+{_bullets(acceptance)}
 
 ## Discovery Questions
 
-- What is the intended output?
-- Who reviews or uses the output?
-- What source materials are available?
-- What acceptance criteria prove the result worked?
+- Which required inputs are already available?
+- Which deliverables are mandatory for the accepted MVP?
+- Which acceptance patterns can be verified deterministically?
+- Which risks require explicit guardrails or rollback?
 - What is explicitly out of scope?
 
-## Anti-Patterns
+## Risk Checklist
 
-- Starting implementation before acceptance criteria exist.
-- Treating non-blocking questions as blockers.
-- Expanding the project beyond the selected type without explicit approval.
+{_bullets(risks)}
 
-## Example Output
+## Example
 
-`PLANNING.md` with typed scope, acceptance criteria, risks, open questions, and handoff target.
-""",
-        encoding="utf-8",
-    )
-    (path / "config.md").write_text(
-        f"""# {type_id} Config
+{example}
+
+## Boundary
+
+Do not implement this project type inside Intake. Produce the canonical planning package, pass the Planning Quality Gate, and require explicit approval.
+"""
+    config = f"""# {type_id} Config
 
 - rigor: `{rigor}`
-- minimum_acceptance_criteria: 3
-- recommended_handoff_target: `creator-execution-cycle`
+- minimum_acceptance_criteria: `3`
+- default_handoff: `creator-execution-cycle`
+- example: `{example}`
 
 ## Required Sections
 
 - Goal
+- Project Type
 - Context
+- Source Assets
 - Scope
 - Out of Scope
 - Acceptance Criteria
@@ -82,52 +105,103 @@ Use this type when the project primarily needs {purpose}.
 - Open Questions
 - Handoff Target
 
-## Optional Sections
+## Inputs
 
-- Source Assets
-- Stakeholders
-- Timeline
-- Rollback
-""",
-        encoding="utf-8",
-    )
-    secondary = "\n".join(f"- `{skill}`" for skill in skills[1:]) or "- none"
-    (path / "skill-loadout.md").write_text(
-        f"""# {type_id} Skill Loadout
+{_bullets(inputs)}
 
-## Primary Skill
+## Deliverables
 
-`{skills[0]}`
+{_bullets(deliverables)}
 
-## Secondary Skills
+## Acceptance Patterns
 
-{secondary}
+{_bullets(acceptance)}
+
+## Risk Checklist
+
+{_bullets(risks)}
 
 ## Rule Domains
 
-- `GLOBAL`
-- `{type_id}`
+{_bullets([f'`{item}`' for item in rule_domains])}
 
 ## Audit Domains
 
-- planning quality
-- source evidence
-- acceptance criteria
+{_bullets(audit_domains)}
+"""
+    loadout = f"""# {type_id} Skill Loadout
+
+## Primary Skill
+
+`creator-intake-planner`
+
+## Secondary Skills
+
+{_bullets([f'`{item}`' for item in secondary])}
+
+## Rule Domains
+
+{_bullets([f'`{item}`' for item in rule_domains])}
+
+## Audit Domains
+
+{_bullets(audit_domains)}
 
 ## State Surfaces
 
-- `.creator/projects.json`
-- `.creator/state.json`
-- `.creator/decisions.json`
-""",
-        encoding="utf-8",
-    )
+- `.creator/plans/{{project_slug}}/`
+- `.creator/state-proposals/{{project_id}}.json`
+- `.creator/projects.json` through a staged proposal owned by `creator-workspace-manager`
+
+## Handoff
+
+After an explicit `handoff-to-execution` approval, generate `.creator/handoffs/{{project_id}}.json` for `creator-execution-cycle`.
+"""
+    return {"guide.md": guide, "config.md": config, "skill-loadout.md": loadout}
 
 
-def main() -> int:
-    for type_id, (rigor, purpose, skills) in PROJECT_TYPES.items():
-        write_type(type_id, rigor, purpose, skills)
-    print(f"Materialized {len(PROJECT_TYPES)} project type reference sets.")
+def expected_files(root: Path = ROOT) -> dict[Path, str]:
+    contracts = load_project_types(root)
+    result: dict[Path, str] = {}
+    for type_id in sorted(contracts):
+        for filename, content in render_reference_set(contracts[type_id]).items():
+            result[TYPE_ROOT_RELATIVE / type_id / filename] = content
+    return result
+
+
+def synchronize(root: Path = ROOT, *, write: bool) -> list[str]:
+    findings: list[str] = []
+    for relative, expected in expected_files(root).items():
+        path = Path(root) / relative
+        actual = path.read_text(encoding="utf-8") if path.is_file() else None
+        if actual == expected:
+            continue
+        if write:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(expected, encoding="utf-8")
+        else:
+            findings.append(f"stale project-type reference: {relative.as_posix()}")
+    return findings
+
+
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=ROOT)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--write", action="store_true")
+    mode.add_argument("--check", action="store_true")
+    return parser.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
+    findings = synchronize(args.root, write=args.write)
+    if findings:
+        for finding in findings:
+            print(f"FAIL: {finding}", file=sys.stderr)
+        return 1
+    action = "Materialized" if args.write else "Validated"
+    print(f"{action} 13 project-type reference sets.")
     return 0
 
 
