@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/rules/conflict-report.schema.json",
+  "title": "Creator Toolchain rule conflict report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audited_at",
+    "status",
+    "blocking_count",
+    "advisory_count",
+    "conflicts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "audited_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T"
+    },
+    "status": {
+      "enum": [
+        "PASS",
+        "PASS_WITH_ADVISORIES",
+        "BLOCKED"
+      ]
+    },
+    "blocking_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "advisory_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "conflict_id",
+          "conflict_type",
+          "severity",
+          "blocking",
+          "status",
+          "domains",
+          "rule_ids",
+          "command_ids",
+          "decision_refs",
+          "message",
+          "evidence"
+        ],
+        "properties": {
+          "conflict_id": {
+            "type": "string",
+            "pattern": "^CONFLICT-[A-F0-9]{8,64}$"
+          },
+          "conflict_type": {
+            "enum": [
+              "duplicate",
+              "contradiction",
+              "scope_overlap",
+              "stale_rule",
+              "overbroad_rule",
+              "unsafe_rule",
+              "duplicate_command",
+              "stale_decision"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "blocking": {
+            "type": "boolean"
+          },
+          "status": {
+            "const": "unresolved"
+          },
+          "domains": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "rule_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "command_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "decision_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
