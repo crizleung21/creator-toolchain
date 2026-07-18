@@ -3,10 +3,10 @@
   "status": "STALE",
   "report_path": "docs/qa/behavior-acceptance-report.json",
   "report_package_payload_sha256": "97038ec39d25cf6a6c3fbc7cd01ecdacd1d0c6e47f3500f45c3b3b115e3ed4c9",
-  "current_package_payload_sha256": "257c612bd1b93c4ce4e7fb9f8b1d35a48f62ad93ab53f3c67f5d2e307f781202",
-  "invalidated_by": "Phase 3 Execution Skill integration and plugin payload change",
-  "reason": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current Execution Skill, closure, recovery, and package bytes.",
+  "current_package_payload_sha256": "a2447d367b0842cb31b69efd4a7d03f6e77675b4dcedb859d89ca51281a2a970",
+  "invalidated_by": "Phase 4 Workspace Manager Skill integration, proposal lifecycle, and archive-governance package change",
+  "reason": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current Workspace Manager modes, proposal lifecycle, maintenance/archive guardrails, and package bytes.",
   "rerun_required": true,
   "required_action": "Rerun all 34 behavior cases with evidence-linked observations during Phase 7 before release.",
-  "recorded_at": "2026-07-18T05:37:12Z"
+  "recorded_at": "2026-07-18T07:20:00Z"
 }

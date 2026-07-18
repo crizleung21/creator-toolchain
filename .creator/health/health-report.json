@@ -1,5 +1,5 @@
 {
-  "calculated_at": "2026-07-18T06:00:00Z",
+  "calculated_at": "2026-07-18T07:20:00Z",
   "counts": {
     "amber": 1,
     "red": 0
@@ -11,7 +11,7 @@
   "signals": [
     {
       "level": "amber",
-      "message": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current Execution Skill, closure, recovery, and package bytes.",
+      "message": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current Workspace Manager modes, proposal lifecycle, maintenance/archive guardrails, and package bytes.",
       "path": "docs/qa/behavior-acceptance-status.json",
       "signal_id": "BEHAVIOR_EVIDENCE_STALE",
       "weight": 20
