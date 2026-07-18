@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/project/project.schema.json",
+  "title": "Creator Toolchain intake project",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "slug", "title", "project_type", "rigor", "stage", "approval_status", "quality_gate_result", "handoff_target", "source_assets", "artifact_paths", "created_at", "updated_at"],
+  "properties": {
+    "schema_version": {"const": "0.4.0"},
+    "project_id": {"type": "string", "pattern": "^PROJECT-[A-F0-9]{8,64}$"},
+    "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "title": {"type": "string", "minLength": 1},
+    "project_type": {"enum": ["slide-deck", "ai-image-system", "characterlock-system", "headlock-system", "ai-video-system", "prompt-pack", "character-registry", "content-campaign", "creator-tooling", "application", "workflow", "utility", "research-system"]},
+    "rigor": {"enum": ["tight", "standard", "deep", "creative"]},
+    "stage": {"enum": ["ideating", "planned", "graduated", "launched", "archived"]},
+    "approval_status": {"enum": ["pending", "approved", "rejected"]},
+    "quality_gate_result": {"enum": ["not_evaluated", "pass", "pass_with_non_blocking_questions", "fail_needs_more_planning"]},
+    "handoff_target": {"const": "creator-execution-cycle"},
+    "source_assets": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "artifact_paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project", "ledger", "intake_state", "planning", "decisions", "open_questions", "handoff"],
+      "properties": {
+        "project": {"const": "project.json"},
+        "ledger": {"const": "activity_ledger.jsonl"},
+        "intake_state": {"const": "INTAKE-STATE.md"},
+        "planning": {"const": "PLANNING.md"},
+        "decisions": {"const": "DECISIONS.md"},
+        "open_questions": {"const": "OPEN-QUESTIONS.md"},
+        "handoff": {"const": "HANDOFF.md"}
+      }
+    },
+    "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "updated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"}
+  }
+}
