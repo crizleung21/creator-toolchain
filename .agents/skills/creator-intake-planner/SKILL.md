@@ -1,6 +1,6 @@
 ---
 name: creator-intake-planner
-description: Turn raw creator, software, workflow, image, video, character, presentation, prompt, campaign, or research ideas into canonical, acceptance-driven Intake packages; explicitly approve scaffold-only or creator-execution-cycle handoff; and stage workspace registration proposals without implementing product work.
+description: Turn raw creator, software, workflow, image, video, character, presentation, prompt, campaign, or research ideas into canonical, acceptance-driven Intake packages; explicitly approve scaffold-only or creator-execution-cycle handoff; and stage state-registration proposals without implementing product work.
 ---
 
 # creator-intake-planner
@@ -25,7 +25,7 @@ raw idea
 → run the Planning Quality Gate
 → record explicit approval
 → scaffold-only OR handoff-to-execution
-→ stage a creator-workspace-manager registration proposal
+→ stage a creator-workspace-manager state-registration proposal
 ```
 
 ## Canonical Artifacts
@@ -75,7 +75,7 @@ A failed gate or unresolved blocking question prohibits approval.
 
 - Scaffold output contains planning documents only and explicitly states that execution is unauthorized.
 - Execution handoff targets only `creator-execution-cycle` and requires prior `handoff-to-execution` approval.
-- Workspace registration is a staged proposal owned by `creator-workspace-manager`; Intake never writes `.creator/projects.json` directly.
+- Workspace registration is a staged state-registration proposal owned by `creator-workspace-manager`; Intake never writes `.creator/projects.json` directly.
 
 ## Mode-to-Resource Map
 
