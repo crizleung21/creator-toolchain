@@ -69,13 +69,24 @@ def render_outputs(root: Path = ROOT) -> dict[Path, str]:
     return {STATE_PATH: _json_text(state), TEMPLATE_PATH: _json_text(template), DOC_PATH: "\n".join(rows)}
 
 
+def _matches(relative: Path, actual: str | None, expected: str) -> bool:
+    if actual is None:
+        return False
+    if relative.suffix == ".json":
+        try:
+            return json.loads(actual) == json.loads(expected)
+        except json.JSONDecodeError:
+            return False
+    return actual == expected
+
+
 def synchronize(root: Path = ROOT, *, write: bool) -> list[str]:
     root = Path(root).resolve()
     findings: list[str] = []
     for relative, expected in render_outputs(root).items():
         path = root / relative
         actual = path.read_text(encoding="utf-8") if path.is_file() else None
-        if actual == expected:
+        if _matches(relative, actual, expected):
             continue
         if write:
             path.parent.mkdir(parents=True, exist_ok=True)
