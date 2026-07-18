@@ -13,7 +13,14 @@ class ProjectSchemaAssetTests(unittest.TestCase):
     def test_required_schemas_exist(self) -> None:
         self.assertEqual(
             {path.name for path in SCHEMA_ROOT.glob("*.schema.json")},
-            {"project.schema.json", "intake-state.schema.json", "handoff.schema.json", "ledger-event.schema.json"},
+            {
+                "project.schema.json",
+                "intake-state.schema.json",
+                "handoff.schema.json",
+                "ledger-event.schema.json",
+                "state-registration-proposal.schema.json",
+                "execution-handoff.schema.json",
+            },
         )
 
     def test_schemas_use_draft_2020_12(self) -> None:
