@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: behavior-runtime-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   full-catalog:
