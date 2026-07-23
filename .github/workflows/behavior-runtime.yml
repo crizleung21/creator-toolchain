@@ -43,8 +43,8 @@ jobs:
           rm -rf "${OUTPUT}"
           python3 scripts/run_behavior_acceptance.py \
             --root . \
-            --response-command "python3 scripts/adapters/github_models_response.py" \
-            --evaluator-command "python3 scripts/adapters/github_models_evaluator.py" \
+            --response-command "python3 -m scripts.adapters.github_models_response" \
+            --evaluator-command "python3 -m scripts.adapters.github_models_evaluator" \
             --run-id "${RUN_ID}" \
             --commit-sha "${{ github.event.pull_request.head.sha || github.sha }}" \
             --output "${OUTPUT}" \
