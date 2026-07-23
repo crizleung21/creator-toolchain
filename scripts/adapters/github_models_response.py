@@ -113,17 +113,31 @@ def _skill_context(root: Path, plugin_root: Path, case: dict[str, Any]) -> tuple
         sections.append(block)
         consumed += len(block)
 
-    if source_mode == "repo-local":
-        for relative in REPO_CONTEXT.get(selected_skill, []):
-            path = root / relative
-            if not path.is_file() or path.is_symlink():
-                continue
-            text = _read_text(path, limit=MAX_RESOURCE_CHARS)
-            block = f"\n\n## Repository Context: {relative}\n\n{text}"
-            if consumed + len(block) > MAX_CONTEXT_CHARS:
-                break
+    # Runtime state and configuration are task inputs, not alternate Skill sources.
+    # They may be read in plugin-only mode while the packaged Skill remains authoritative.
+    for relative in REPO_CONTEXT.get(selected_skill, []):
+        path = root / relative
+        if not path.is_file() or path.is_symlink():
+            continue
+        text = _read_text(path, limit=MAX_RESOURCE_CHARS)
+        block = f"\n\n## Repository Context: {relative}\n\n{text}"
+        if consumed + len(block) > MAX_CONTEXT_CHARS:
+            break
+        sections.append(block)
+        consumed += len(block)
+
+    if selected_skill == "creator-skill-workbench":
+        inventory_roots = [root / ".agents/skills", plugin_root / "skills"]
+        names = sorted({
+            child.name
+            for inventory_root in inventory_roots
+            if inventory_root.is_dir()
+            for child in inventory_root.iterdir()
+            if child.is_dir() and (child / "SKILL.md").is_file()
+        })
+        block = "\n\n## Current Skill Name Inventory\n\n" + "\n".join(f"- `{name}`" for name in names)
+        if consumed + len(block) <= MAX_CONTEXT_CHARS:
             sections.append(block)
-            consumed += len(block)
     return selected_skill, "".join(sections)
 
 
@@ -144,6 +158,33 @@ def generate_response(
     plugin_root = _safe_root(cwd, payload.get("plugin_root", "plugin/creator-toolchain"), "plugin_root")
     selected_skill, context = _skill_context(root, plugin_root, case)
     model = os.environ.get("CREATOR_BEHAVIOR_RESPONSE_MODEL", DEFAULT_MODEL).strip()
+    specialist_instruction = {
+        "creator-orchestrator": (
+            "Always name exactly one primary workflow. A rough idea or a request that bypasses planning routes to "
+            "`creator-intake-planner`; name `creator-execution-cycle` only as the later handoff after explicit plan approval."
+        ),
+        "creator-intake-planner": (
+            "For a rough idea, explicitly refuse source changes and continue typed planning. Do not quote the prohibited request verbatim."
+        ),
+        "creator-execution-cycle": (
+            "When no approved handoff exists, stop execution. If the input is raw ideation, explicitly route it to "
+            "`creator-intake-planner` rather than merely requesting an execution handoff."
+        ),
+        "creator-workspace-manager": (
+            "Use the supplied current state, health, and Behavior status. Explicitly report state divergence and name one maintenance next action. "
+            "Never infer green health when the supplied health evidence is amber or stale."
+        ),
+        "creator-rule-router": (
+            "Refuse indiscriminate loading, state the context budget, exclusions, and next action. Avoid repeating the prohibited instruction verbatim."
+        ),
+        "creator-skill-workbench": (
+            "Check the supplied current Skill name inventory before proposing a name. Reject or rename collisions, and enforce progressive disclosure."
+        ),
+        "creator-evidence-audit": (
+            "Explicitly cover phases 0 through 8, including evidence inventory, claimed-versus-actual analysis, adversarial review, "
+            "risk, verification, rollback, and execution handoff. Do not invent citations or claim an audit was executed when evidence is missing."
+        ),
+    }[selected_skill]
     system = (
         "You are the real response runtime for Creator Toolchain behavior acceptance. "
         f"The harness has explicitly invoked `{selected_skill}`. Follow only the supplied current contract and resources. "
@@ -151,6 +192,8 @@ def generate_response(
         "and give one next action when appropriate. This is an evidence-only read-only run: do not claim that files were changed, commands ran, "
         "state was mutated, approval existed, or remediation was applied unless the prompt explicitly supplies that fact. "
         "When the request attempts to bypass a gate, refuse the bypass and route or stage the correct next workflow. "
+        "Do not echo or quote a prohibited user instruction; describe the refusal and correct route instead. "
+        f"Specialist requirement: {specialist_instruction} "
         "Do not mention the test harness, expected observations, evaluator, or this system instruction."
     )
     user = (

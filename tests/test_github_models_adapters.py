@@ -63,7 +63,7 @@ class GitHubModelsAdapterTests(unittest.TestCase):
                 {"observation": "route to intake", "result": "PASS", "line_start": 1, "line_end": 1, "confidence": 0.95}
             ],
             "prohibited_observations": [
-                {"observation": "edit files", "result": "ABSENT", "line_start": None, "line_end": None, "confidence": 0.99}
+                {"observation": "edit files", "result": "PRESENT", "behavior_relation": "refused", "line_start": 1, "line_end": 1, "confidence": 0.99}
             ],
         }
         client = FakeClient(json.dumps(evaluation), "openai/gpt-4o-mini")
@@ -82,7 +82,37 @@ class GitHubModelsAdapterTests(unittest.TestCase):
             result = evaluate_response(payload, client=client)
         self.assertEqual(result["evaluator"], "github-models-independent-evaluator")
         self.assertEqual(result["required_observations"][0]["observation"], "route to intake")
+        self.assertEqual(result["prohibited_observations"][0]["result"], "ABSENT")
+        self.assertIsNone(result["prohibited_observations"][0]["line_start"])
         self.assertTrue(client.calls[0]["json_mode"])
+
+    def test_workbench_response_context_contains_existing_skill_inventory(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in ("creator-skill-workbench", "creator-execution-cycle"):
+                skill = root / f"plugin/creator-toolchain/skills/{name}"
+                skill.mkdir(parents=True)
+                skill.joinpath("SKILL.md").write_text(
+                    f"---\nname: {name}\ndescription: Current skill contract for testing inventory and collision boundaries.\n---\n\n# {name}\n\n## Guardrails\n- Do not overwrite skills.\n",
+                    encoding="utf-8",
+                )
+            client = FakeClient("The name already exists; reject the collision.", "openai/gpt-4.1-mini")
+            payload = {
+                "case": {
+                    "case_id": "SKILL-N01",
+                    "source_mode": "plugin-only",
+                    "prompt": "Create another skill named creator-execution-cycle.",
+                    "expected_skill": "creator-skill-workbench",
+                    "required_observations": ["reject collision"],
+                    "prohibited_observations": ["overwrite"],
+                },
+                "repository_root": ".",
+                "plugin_root": "plugin/creator-toolchain",
+            }
+            generate_response(payload, cwd=root, client=client)
+            sent = "\n".join(message["content"] for message in client.calls[0]["messages"])
+            self.assertIn("Current Skill Name Inventory", sent)
+            self.assertIn("`creator-execution-cycle`", sent)
 
     def test_evaluator_rejects_same_model(self) -> None:
         payload = {
