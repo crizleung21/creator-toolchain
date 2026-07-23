@@ -4,25 +4,212 @@
   "title": "Creator Toolchain writable golden end-to-end report",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "status", "fixture_id", "source_commit_sha", "package_payload_sha256", "python_version", "started_at", "finished_at", "workspace_root", "project_id", "steps", "utility", "rule_preflight", "audit", "final_health", "final_validation_findings", "artifacts", "recommended_next_action"],
+  "required": [
+    "schema_version",
+    "status",
+    "fixture_id",
+    "source_commit_sha",
+    "package_payload_sha256",
+    "python_version",
+    "started_at",
+    "finished_at",
+    "workspace_root",
+    "project_id",
+    "steps",
+    "utility",
+    "rule_preflight",
+    "audit",
+    "final_health",
+    "final_validation_findings",
+    "artifacts",
+    "recommended_next_action"
+  ],
   "properties": {
-    "schema_version": {"const": "1.0.0"},
-    "status": {"const": "PASS"},
-    "fixture_id": {"const": "creator-asset-naming-checker"},
-    "source_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-    "package_payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "python_version": {"type": "string", "minLength": 1},
-    "started_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
-    "finished_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
-    "workspace_root": {"const": "."},
-    "project_id": {"type": "string", "pattern": "^PROJECT-[A-F0-9]{8,64}$"},
-    "steps": {"type": "array", "minItems": 8, "items": {"type": "object", "additionalProperties": false, "required": ["step", "status", "evidence"], "properties": {"step": {"type": "string", "minLength": 1}, "status": {"const": "PASS"}, "evidence": {"type": "array", "items": {"type": "string"}, "minItems": 1}}},
-    "utility": {"type": "object", "additionalProperties": false, "required": ["report_path", "report_sha256", "duplicate_count", "invalid_count", "deterministic"], "properties": {"report_path": {"type": "string", "minLength": 1}, "report_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "duplicate_count": {"type": "integer", "minimum": 1}, "invalid_count": {"type": "integer", "minimum": 1}, "deterministic": {"const": true}}},
-    "rule_preflight": {"type": "object", "additionalProperties": false, "required": ["matched_domains", "selected_rules"], "properties": {"matched_domains": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}, "selected_rules": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}}},
-    "audit": {"type": "object", "additionalProperties": false, "required": ["audit_id", "finding_id", "task_id", "handoff_id"], "properties": {"audit_id": {"type": "string", "minLength": 1}, "finding_id": {"type": "string", "minLength": 1}, "task_id": {"type": "string", "minLength": 1}, "handoff_id": {"type": "string", "minLength": 1}}},
-    "final_health": {"type": "object", "additionalProperties": false, "required": ["level", "score", "signal_count"], "properties": {"level": {"const": "green"}, "score": {"const": 0}, "signal_count": {"const": 0}}},
-    "final_validation_findings": {"type": "array"},
-    "artifacts": {"type": "array", "items": {"type": "string"}, "minItems": 10, "uniqueItems": true},
-    "recommended_next_action": {"type": "string", "minLength": 1}
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "const": "PASS"
+    },
+    "fixture_id": {
+      "const": "creator-asset-naming-checker"
+    },
+    "source_commit_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "package_payload_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "python_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "started_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T"
+    },
+    "finished_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T"
+    },
+    "workspace_root": {
+      "const": "."
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^PROJECT-[A-F0-9]{8,64}$"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "step",
+          "status",
+          "evidence"
+        ],
+        "properties": {
+          "step": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "const": "PASS"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "utility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "report_path",
+        "report_sha256",
+        "duplicate_count",
+        "invalid_count",
+        "deterministic"
+      ],
+      "properties": {
+        "report_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "report_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "duplicate_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "invalid_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "deterministic": {
+          "const": true
+        }
+      }
+    },
+    "rule_preflight": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "matched_domains",
+        "selected_rules"
+      ],
+      "properties": {
+        "matched_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "selected_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "audit_id",
+        "finding_id",
+        "task_id",
+        "handoff_id"
+      ],
+      "properties": {
+        "audit_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "finding_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "task_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "handoff_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "final_health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "score",
+        "signal_count"
+      ],
+      "properties": {
+        "level": {
+          "const": "green"
+        },
+        "score": {
+          "const": 0
+        },
+        "signal_count": {
+          "const": 0
+        }
+      }
+    },
+    "final_validation_findings": {
+      "type": "array"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 10,
+      "uniqueItems": true
+    },
+    "recommended_next_action": {
+      "type": "string",
+      "minLength": 1
+    }
   }
 }
