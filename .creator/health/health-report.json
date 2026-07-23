@@ -1,17 +1,17 @@
 {
-  "calculated_at": "2026-07-18T09:50:00Z",
+  "calculated_at": "2026-07-23T12:15:00Z",
   "counts": {
     "amber": 1,
     "red": 0
   },
   "level": "amber",
-  "recommended_next_action": "Resolve the first amber health signal before release.",
+  "recommended_next_action": "Rerun all 34 behavior cases against the current Plugin payload during Phase 7.",
   "schema_version": "1.0.0",
   "score": 20,
   "signals": [
     {
       "level": "amber",
-      "message": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current Rule Router modes, real rule domains, proposal approval, conflict audit, Workspace Health integration, and package bytes.",
+      "message": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current deterministic routing, Workbench scoring, immutable Audit finding/correction/handoff runtime, progressive-disclosure resources, and package bytes.",
       "path": "docs/qa/behavior-acceptance-status.json",
       "signal_id": "BEHAVIOR_EVIDENCE_STALE",
       "weight": 20
