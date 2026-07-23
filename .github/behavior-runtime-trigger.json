@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Phase 7 full 34-case current runtime and independent evaluator run",
+  "response_model": "openai/gpt-4.1-mini",
+  "evaluator_model": "openai/gpt-4o-mini",
+  "catalog": "docs/qa/behavior-acceptance-cases.json",
+  "requested_at": "2026-07-23T13:50:00Z"
+}
