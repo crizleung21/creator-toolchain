@@ -1,0 +1,62 @@
+name: behavior-runtime
+
+on:
+  push:
+    branches: [agent/phase-7-behavior-e2e]
+    paths:
+      - .github/behavior-runtime-trigger.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  models: read
+
+concurrency:
+  group: behavior-runtime-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  full-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate behavior catalog and adapters
+        run: |
+          python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
+          python3 -m unittest tests.test_github_models_adapters -v
+      - name: Run complete 34-case catalog with independent models
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CREATOR_BEHAVIOR_RESPONSE_MODEL: openai/gpt-4.1-mini
+          CREATOR_BEHAVIOR_EVALUATOR_MODEL: openai/gpt-4o-mini
+          CREATOR_GITHUB_MODELS_TIMEOUT: "240"
+        run: |
+          set -o pipefail
+          RUN_ID="github-models-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          OUTPUT="/tmp/creator-toolchain-behavior-run"
+          rm -rf "${OUTPUT}"
+          python3 scripts/run_behavior_acceptance.py \
+            --root . \
+            --response-command "python3 scripts/adapters/github_models_response.py" \
+            --evaluator-command "python3 scripts/adapters/github_models_evaluator.py" \
+            --run-id "${RUN_ID}" \
+            --commit-sha "${GITHUB_SHA}" \
+            --output "${OUTPUT}" \
+            --timeout 420 \
+            2>&1 | tee /tmp/creator-toolchain-behavior-runtime.log
+      - name: Upload full behavior evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: behavior-runtime-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            /tmp/creator-toolchain-behavior-run
+            /tmp/creator-toolchain-behavior-runtime.log
+          if-no-files-found: error
+          retention-days: 14
