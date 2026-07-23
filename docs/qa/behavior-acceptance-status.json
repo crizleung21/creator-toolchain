@@ -3,10 +3,10 @@
   "status": "STALE",
   "report_path": "docs/qa/behavior-acceptance-report.json",
   "report_package_payload_sha256": "97038ec39d25cf6a6c3fbc7cd01ecdacd1d0c6e47f3500f45c3b3b115e3ed4c9",
-  "current_package_payload_sha256": "295ae77e5688d4cfa24b9509a4a002ae746d726ec2cc20735dd38b4d31e0e79d",
-  "invalidated_by": "Phase 5 Rule Router Skill integration, conflict-health signals, and Plugin payload change",
-  "reason": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current Rule Router modes, real rule domains, proposal approval, conflict audit, Workspace Health integration, and package bytes.",
+  "current_package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+  "invalidated_by": "Phase 6 Orchestrator, Skill Workbench, Evidence Audit Runtime, and Plugin payload change",
+  "reason": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current deterministic routing, Workbench scoring, immutable Audit finding/correction/handoff runtime, progressive-disclosure resources, and package bytes.",
   "rerun_required": true,
   "required_action": "Rerun all 34 behavior cases with evidence-linked observations during Phase 7 before release.",
-  "recorded_at": "2026-07-18T09:50:00Z"
+  "recorded_at": "2026-07-23T12:15:00Z"
 }
