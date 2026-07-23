@@ -34,6 +34,8 @@ class CreatorWorkflowRouterTests(unittest.TestCase):
     def test_repository_audit_routes_to_evidence_audit(self) -> None:
         result = self.route("Perform an evidence-first repository audit and produce findings.")
         self.assertEqual(result["primary_workflow"], "creator-evidence-audit")
+        self.assertEqual(result["support_script"], "scripts/creator_evidence_audit.py")
+        self.assertTrue(result["support_script_available"])
 
     def test_plugin_release_has_defined_route_and_explicit_gap(self) -> None:
         result = self.route("Prepare a plugin release for the marketplace.")
@@ -46,7 +48,7 @@ class CreatorWorkflowRouterTests(unittest.TestCase):
 
     def test_exactly_one_fallback_and_unique_priorities(self) -> None:
         config = load_routing_config(ROOT)
-        self.assertEqual(sum(item["fallback"] is True for item in config["routes"]), 1)
+        self.assertEqual(sum(item["fallback"] is True for item in config["routes"), 1)
         self.assertEqual(len({item["priority"] for item in config["routes"]}), len(config["routes"]))
 
 

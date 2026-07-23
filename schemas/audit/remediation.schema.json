@@ -1,24 +1,31 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/crizleung21/creator-toolchain/schemas/audit/remediation.schema.json",
-  "title": "Creator Toolchain remediation task",
+  "title": "Creator Toolchain audit remediation task",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "task_id", "source_finding", "remediation_type", "intervention_level", "blast_radius", "coupling_risk", "regression_risk", "risk_score", "confidence", "evidence_sources", "verification_gate", "rollback_criteria", "handoff"],
+  "required": ["schema_version", "audit_id", "task_id", "source_finding", "remediation_type", "intervention_level", "blast_radius", "coupling_risk", "regression_risk", "risk_score", "risk_level", "risk_formula", "confidence", "confidence_band", "evidence_sources", "verification_gate", "rollback_criteria", "handoff", "recommended_action", "created_by", "created_at"],
   "properties": {
     "schema_version": {"const": "1.0.0"},
-    "task_id": {"type": "string", "pattern": "^REM-[A-Z0-9-]+$"},
-    "source_finding": {"type": "string", "pattern": "^FIND-[A-Z0-9-]+$"},
+    "audit_id": {"type": "string", "pattern": "^AUDIT-[A-Z0-9-]+$"},
+    "task_id": {"type": "string", "pattern": "^REM-[A-F0-9]{8,64}$"},
+    "source_finding": {"type": "string", "pattern": "^FIND-[A-F0-9]{8,64}$"},
     "remediation_type": {"enum": ["planning", "workflow", "state", "rule", "skill", "code", "plugin"]},
-    "intervention_level": {"enum": ["suggesting", "planning", "authorizing", "executing"]},
+    "intervention_level": {"enum": ["suggesting", "planning", "authorizing"]},
     "blast_radius": {"enum": ["low", "medium", "high"]},
     "coupling_risk": {"enum": ["low", "medium", "high"]},
     "regression_risk": {"enum": ["low", "medium", "high"]},
     "risk_score": {"type": "integer", "minimum": 0},
+    "risk_level": {"enum": ["low", "medium", "high"]},
+    "risk_formula": {"type": "string", "minLength": 1},
     "confidence": {"type": "number", "minimum": 0},
-    "evidence_sources": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "confidence_band": {"enum": ["low", "medium", "high", "very_high"]},
+    "evidence_sources": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^.+#L[0-9]+-L[0-9]+@sha256:[a-f0-9]{64}$"}},
     "verification_gate": {"type": "string", "minLength": 1},
     "rollback_criteria": {"type": "string", "minLength": 1},
-    "handoff": {"const": "creator-execution-cycle"}
+    "handoff": {"const": "creator-execution-cycle"},
+    "recommended_action": {"type": "string", "minLength": 1},
+    "created_by": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"}
   }
 }

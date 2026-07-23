@@ -83,7 +83,7 @@
       "required_sources": ["audit target and evidence scope"],
       "expected_artifact": "immutable findings, remediation guidance, and execution handoff",
       "boundary": "Audit and plan remediation only; do not mutate the audit target.",
-      "support_script": null
+      "support_script": "scripts/creator_evidence_audit.py"
     },
     {
       "route_id": "raw-idea",

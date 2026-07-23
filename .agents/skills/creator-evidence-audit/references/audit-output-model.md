@@ -2,12 +2,20 @@
 
 ## Findings
 
-Immutable findings with evidence, confidence, disagreements, and limitations.
+Immutable JSON records containing observation, interpretation, judgment, severity, confidence band, evidence quality, citations, disagreements, limitations, actor, and timestamp.
 
-## Remediation Guidance
+## Remediation Tasks
 
-Playbooks, examples, guardrails, and recommended patterns.
+Bounded actions linked to one Finding. Risk score is deterministic and every task has a verification gate, rollback criterion, and `creator-execution-cycle` handoff.
+
+## Correction Addenda
+
+New evidence never rewrites the original Finding. An addendum records the original SHA-256, correction type, updated judgment, resulting effective status, reason, actor, and timestamp.
 
 ## Execution Handoff
 
-Dependency graph, risk score, verification gates, rollback criteria, and `creator-execution-cycle` handoff.
+Contains selected Findings, remediation tasks, dependency graph, risks, verification gates, rollback criteria, and explicit authorization status.
+
+## Status
+
+Effective Finding status is derived from immutable Findings plus ordered addenda.
