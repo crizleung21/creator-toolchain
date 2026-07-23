@@ -10,8 +10,10 @@ from typing import Any, Callable
 
 try:
     from github_models_client import CompletionResult, GitHubModelsError, chat_completion
+    from evaluate_behavior_observations import ObservationEvaluationError, evaluate_case
 except ImportError:  # Imported as scripts.adapters.github_models_evaluator in tests.
     from scripts.github_models_client import CompletionResult, GitHubModelsError, chat_completion
+    from scripts.evaluate_behavior_observations import ObservationEvaluationError, evaluate_case
 
 ADAPTER_VERSION = "1.1.0"
 DEFAULT_MODEL = "openai/gpt-4o-mini"
@@ -57,7 +59,10 @@ def _normalized_confidence(value: Any) -> float:
         confidence = float(value)
     elif isinstance(value, str):
         text = value.strip().casefold().replace("%", "")
-        labels = {"low": 0.5, "medium": 0.7, "moderate": 0.7, "high": 0.9, "very_high": 0.95, "very high": 0.95}
+        labels = {
+            "low": 0.5, "medium": 0.7, "moderate": 0.7, "high": 0.9, "very_high": 0.95, "very high": 0.95,
+            "unknown": 0.5, "n/a": 0.5, "na": 0.5, "not applicable": 0.5, "unspecified": 0.5,
+        }
         if text in labels:
             confidence = labels[text]
         else:
@@ -67,6 +72,8 @@ def _normalized_confidence(value: Any) -> float:
                     confidence /= 100.0
             except ValueError as exc:
                 raise EvaluatorAdapterError(f"unsupported confidence value: {value!r}") from exc
+    elif value is None:
+        confidence = 0.5
     else:
         raise EvaluatorAdapterError("confidence must be numeric or a supported confidence label")
     if not 0.0 <= confidence <= 1.0:
@@ -159,44 +166,66 @@ def evaluate_response(
         f"Line-numbered response:\n{numbered}\n\n"
         f"Required JSON shape example (replace results and spans with your judgment):\n{json.dumps(schema_example, ensure_ascii=False)}"
     )
-    result = client(
-        model=model,
-        messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
-        max_tokens=int(os.environ.get("CREATOR_BEHAVIOR_EVALUATOR_MAX_TOKENS", "1800")),
-        temperature=0.0,
-        json_mode=True,
-        timeout=int(os.environ.get("CREATOR_GITHUB_MODELS_TIMEOUT", "240")),
-    )
-    value = _parse_json_object(result.content)
-    for label in ("required_observations", "prohibited_observations"):
-        items = value.get(label)
-        if not isinstance(items, list):
-            raise EvaluatorAdapterError(f"evaluator {label} must be an array")
-        for item in items:
-            if not isinstance(item, dict):
-                raise EvaluatorAdapterError(f"each {label} item must be an object")
-            item["confidence"] = _normalized_confidence(item.get("confidence"))
-    prohibited_items = value.get("prohibited_observations")
-    if not isinstance(prohibited_items, list):
-        raise EvaluatorAdapterError("evaluator prohibited_observations must be an array")
-    allowed_relations = {"performed", "endorsed", "claimed", "refused", "quoted", "boundary", "absent"}
-    present_relations = {"performed", "endorsed", "claimed"}
-    for item in prohibited_items:
-        if not isinstance(item, dict):
-            raise EvaluatorAdapterError("each prohibited observation must be an object")
-        relation = item.get("behavior_relation")
-        if relation not in allowed_relations:
-            raise EvaluatorAdapterError(f"unsupported prohibited behavior_relation: {relation!r}")
-        if relation in present_relations and not _boundary_only_excerpt(response_text, item.get("line_start"), item.get("line_end")):
-            item["result"] = "PRESENT"
-        else:
-            item["result"] = "ABSENT"
-            item["behavior_relation"] = "boundary" if relation in present_relations else relation
-            item["line_start"] = None
-            item["line_end"] = None
-    value["evaluator"] = "github-models-independent-evaluator"
-    value["evaluator_version"] = f"{ADAPTER_VERSION}:{result.model or model}"
-    return value
+    messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
+    last_error: Exception | None = None
+    for attempt in range(3):
+        result = client(
+            model=model,
+            messages=messages,
+            max_tokens=int(os.environ.get("CREATOR_BEHAVIOR_EVALUATOR_MAX_TOKENS", "1800")),
+            temperature=0.0,
+            json_mode=True,
+            timeout=int(os.environ.get("CREATOR_GITHUB_MODELS_TIMEOUT", "240")),
+        )
+        try:
+            value = _parse_json_object(result.content)
+            for label in ("required_observations", "prohibited_observations"):
+                items = value.get(label)
+                if not isinstance(items, list):
+                    raise EvaluatorAdapterError(f"evaluator {label} must be an array")
+                for item in items:
+                    if not isinstance(item, dict):
+                        raise EvaluatorAdapterError(f"each {label} item must be an object")
+                    item["confidence"] = _normalized_confidence(item.get("confidence"))
+            prohibited_items = value.get("prohibited_observations")
+            if not isinstance(prohibited_items, list):
+                raise EvaluatorAdapterError("evaluator prohibited_observations must be an array")
+            allowed_relations = {"performed", "endorsed", "claimed", "refused", "quoted", "boundary", "absent"}
+            present_relations = {"performed", "endorsed", "claimed"}
+            for item in prohibited_items:
+                if not isinstance(item, dict):
+                    raise EvaluatorAdapterError("each prohibited observation must be an object")
+                relation = item.get("behavior_relation")
+                if relation not in allowed_relations:
+                    raise EvaluatorAdapterError(f"unsupported prohibited behavior_relation: {relation!r}")
+                if relation in present_relations and not _boundary_only_excerpt(response_text, item.get("line_start"), item.get("line_end")):
+                    item["result"] = "PRESENT"
+                else:
+                    item["result"] = "ABSENT"
+                    item["behavior_relation"] = "boundary" if relation in present_relations else relation
+                    item["line_start"] = None
+                    item["line_end"] = None
+            value["evaluator"] = "github-models-independent-evaluator"
+            value["evaluator_version"] = f"{ADAPTER_VERSION}:{result.model or model}"
+            evaluate_case(case, response_text, selected_skill.strip(), value)
+            return value
+        except (EvaluatorAdapterError, ObservationEvaluationError) as exc:
+            last_error = exc
+            if attempt >= 2:
+                break
+            messages.extend([
+                {"role": "assistant", "content": result.content},
+                {
+                    "role": "user",
+                    "content": (
+                        f"Your previous JSON failed deterministic validation: {exc}. "
+                        "Return a corrected complete JSON object. Use numeric confidence values from 0 to 1. "
+                        "Every required PASS and prohibited PRESENT must have integer line_start and line_end within the supplied response. "
+                        "Every required FAIL and prohibited ABSENT must use null line_start and line_end. Preserve every observation exactly once."
+                    ),
+                },
+            ])
+    raise EvaluatorAdapterError(f"evaluator could not produce valid grounded evidence after retries: {last_error}")
 
 
 def main() -> int:

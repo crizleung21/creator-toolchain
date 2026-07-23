@@ -30,7 +30,7 @@ jobs:
         run: |
           python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
           python3 -m unittest tests.test_github_models_adapters -v
-      - name: Run complete 34-case catalog with independent models
+      - name: Run selected or complete behavior catalog with independent models
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CREATOR_BEHAVIOR_RESPONSE_MODEL: openai/gpt-4.1-mini
@@ -41,6 +41,17 @@ jobs:
           RUN_ID="github-models-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           OUTPUT=".creator/qa/behavior-runs/${RUN_ID}"
           rm -rf "${OUTPUT}"
+          CASE_ARGS=()
+          while IFS= read -r CASE_ID; do
+            if [[ -n "${CASE_ID}" ]]; then CASE_ARGS+=(--case-id "${CASE_ID}"); fi
+          done < <(python3 - <<'PY'
+          import json
+          from pathlib import Path
+          trigger = json.loads(Path('.github/behavior-runtime-trigger.json').read_text(encoding='utf-8'))
+          for case_id in trigger.get('case_ids', []):
+              print(case_id)
+          PY
+          )
           python3 scripts/run_behavior_acceptance.py \
             --root . \
             --response-command "python3 -m scripts.adapters.github_models_response" \
@@ -49,6 +60,7 @@ jobs:
             --commit-sha "${{ github.event.pull_request.head.sha || github.sha }}" \
             --output "${OUTPUT}" \
             --timeout 420 \
+            "${CASE_ARGS[@]}" \
             2>&1 | tee /tmp/creator-toolchain-behavior-runtime.log
       - name: Upload full behavior evidence
         if: always()

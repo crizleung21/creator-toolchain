@@ -23,6 +23,18 @@ class FakeClient:
         return CompletionResult(content=self.content, model=self.model, response_id="fake-id", usage={})
 
 
+class SequenceClient:
+    def __init__(self, contents: list[str], model: str = "openai/gpt-4o-mini") -> None:
+        self.contents = list(contents)
+        self.model = model
+        self.calls = []
+
+    def __call__(self, **kwargs):
+        self.calls.append(kwargs)
+        content = self.contents.pop(0)
+        return CompletionResult(content=content, model=self.model, response_id="fake-sequence", usage={})
+
+
 class GitHubModelsAdapterTests(unittest.TestCase):
     def test_response_adapter_uses_invoked_current_skill_contract(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -112,6 +124,27 @@ class GitHubModelsAdapterTests(unittest.TestCase):
         self.assertEqual(result["required_observations"][0]["confidence"], 0.9)
         self.assertEqual(result["prohibited_observations"][0]["result"], "ABSENT")
         self.assertEqual(result["prohibited_observations"][0]["behavior_relation"], "boundary")
+
+    def test_evaluator_retries_missing_pass_evidence_span(self) -> None:
+        invalid = {
+            "required_observations": [{"observation": "route to intake", "result": "PASS", "line_start": None, "line_end": None, "confidence": "unknown"}],
+            "prohibited_observations": [{"observation": "edit files", "result": "ABSENT", "behavior_relation": "absent", "line_start": None, "line_end": None, "confidence": 0.9}],
+        }
+        valid = {
+            "required_observations": [{"observation": "route to intake", "result": "PASS", "line_start": 1, "line_end": 1, "confidence": 0.9}],
+            "prohibited_observations": [{"observation": "edit files", "result": "ABSENT", "behavior_relation": "absent", "line_start": None, "line_end": None, "confidence": 0.9}],
+        }
+        client = SequenceClient([json.dumps(invalid), json.dumps(valid)])
+        payload = {
+            "case": {"case_id": "RETRY", "prompt": "Route.", "expected_skill": "creator-orchestrator", "required_observations": ["route to intake"], "prohibited_observations": ["edit files"]},
+            "selected_skill": "creator-orchestrator",
+            "response_text": "Route to intake.",
+        }
+        with patch.dict(os.environ, {"CREATOR_BEHAVIOR_RESPONSE_MODEL": "openai/gpt-4.1-mini", "CREATOR_BEHAVIOR_EVALUATOR_MODEL": "openai/gpt-4o-mini"}, clear=False):
+            result = evaluate_response(payload, client=client)
+        self.assertEqual(result["required_observations"][0]["line_start"], 1)
+        self.assertEqual(len(client.calls), 2)
+        self.assertIn("failed deterministic validation", client.calls[1]["messages"][-1]["content"])
 
     def test_workbench_response_context_contains_existing_skill_inventory(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
