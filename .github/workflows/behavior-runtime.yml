@@ -39,7 +39,7 @@ jobs:
         run: |
           set -o pipefail
           RUN_ID="github-models-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          OUTPUT="/tmp/creator-toolchain-behavior-run"
+          OUTPUT=".creator/qa/behavior-runs/${RUN_ID}"
           rm -rf "${OUTPUT}"
           python3 scripts/run_behavior_acceptance.py \
             --root . \
@@ -56,7 +56,7 @@ jobs:
         with:
           name: behavior-runtime-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            /tmp/creator-toolchain-behavior-run
+            .creator/qa/behavior-runs
             /tmp/creator-toolchain-behavior-runtime.log
           if-no-files-found: error
           retention-days: 14
