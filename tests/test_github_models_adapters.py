@@ -60,7 +60,7 @@ class GitHubModelsAdapterTests(unittest.TestCase):
     def test_evaluator_adapter_uses_distinct_model_and_exact_observations(self) -> None:
         evaluation = {
             "required_observations": [
-                {"observation": "route to intake", "result": "PASS", "line_start": 1, "line_end": 1, "confidence": 0.95}
+                {"observation": "route to intake", "result": "PASS", "line_start": 1, "line_end": 1, "confidence": "high"}
             ],
             "prohibited_observations": [
                 {"observation": "edit files", "result": "PRESENT", "behavior_relation": "refused", "line_start": 1, "line_end": 1, "confidence": 0.99}
@@ -85,6 +85,33 @@ class GitHubModelsAdapterTests(unittest.TestCase):
         self.assertEqual(result["prohibited_observations"][0]["result"], "ABSENT")
         self.assertIsNone(result["prohibited_observations"][0]["line_start"])
         self.assertTrue(client.calls[0]["json_mode"])
+
+    def test_evaluator_overrides_prohibited_false_positive_for_explicit_refusal(self) -> None:
+        evaluation = {
+            "required_observations": [
+                {"observation": "refuse execution", "result": "PASS", "line_start": 1, "line_end": 1, "confidence": "90%"}
+            ],
+            "prohibited_observations": [
+                {"observation": "change files", "result": "PRESENT", "behavior_relation": "performed", "line_start": 1, "line_end": 1, "confidence": "very_high"}
+            ],
+        }
+        client = FakeClient(json.dumps(evaluation), "openai/gpt-4o-mini")
+        payload = {
+            "case": {
+                "case_id": "NEGATION",
+                "prompt": "Change files now.",
+                "expected_skill": "creator-intake-planner",
+                "required_observations": ["refuse execution"],
+                "prohibited_observations": ["change files"],
+            },
+            "selected_skill": "creator-intake-planner",
+            "response_text": "I cannot change files during Intake; the request is not permitted.",
+        }
+        with patch.dict(os.environ, {"CREATOR_BEHAVIOR_RESPONSE_MODEL": "openai/gpt-4.1-mini", "CREATOR_BEHAVIOR_EVALUATOR_MODEL": "openai/gpt-4o-mini"}, clear=False):
+            result = evaluate_response(payload, client=client)
+        self.assertEqual(result["required_observations"][0]["confidence"], 0.9)
+        self.assertEqual(result["prohibited_observations"][0]["result"], "ABSENT")
+        self.assertEqual(result["prohibited_observations"][0]["behavior_relation"], "boundary")
 
     def test_workbench_response_context_contains_existing_skill_inventory(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

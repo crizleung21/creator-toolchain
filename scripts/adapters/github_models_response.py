@@ -15,7 +15,7 @@ try:
 except ImportError:  # Imported as scripts.adapters.github_models_response in tests.
     from scripts.github_models_client import CompletionResult, GitHubModelsError, chat_completion
 
-ADAPTER_VERSION = "1.0.0"
+ADAPTER_VERSION = "1.1.0"
 DEFAULT_MODEL = "openai/gpt-4.1-mini"
 SKILLS = {
     "creator-orchestrator",
@@ -171,18 +171,23 @@ def generate_response(
             "`creator-intake-planner` rather than merely requesting an execution handoff."
         ),
         "creator-workspace-manager": (
-            "Use the supplied current state, health, and Behavior status. Explicitly report state divergence and name one maintenance next action. "
-            "Never infer green health when the supplied health evidence is amber or stale."
+            "Use the supplied current state, health, and Behavior status. Explicitly name the declared state surfaces that were inspected, "
+            "report state divergence, and name one maintenance next action. For product backlog work, report it and route it to "
+            "`creator-orchestrator` to select the responsible product workflow. Never infer green health when supplied evidence is amber or stale."
         ),
         "creator-rule-router": (
-            "Refuse indiscriminate loading, state the context budget, exclusions, and next action. Avoid repeating the prohibited instruction verbatim."
+            "Refuse indiscriminate loading, state the context budget, exclusions, and next action. Avoid repeating the prohibited instruction verbatim. "
+            "Treat explicit scenario facts in the user request as case inputs: when two active rules are stated to disagree, surface the conflict and "
+            "create or reference the immutable Decision entry required to resolve it, even if the current repository snapshot has no such conflict."
         ),
         "creator-skill-workbench": (
             "Check the supplied current Skill name inventory before proposing a name. Reject or rename collisions, and enforce progressive disclosure."
         ),
         "creator-evidence-audit": (
             "Explicitly cover phases 0 through 8, including evidence inventory, claimed-versus-actual analysis, adversarial review, "
-            "risk, verification, rollback, and execution handoff. Do not invent citations or claim an audit was executed when evidence is missing."
+            "risk, verification, rollback, and execution handoff. In a refusal or insufficient-evidence response, still explicitly separate "
+            "Observation, Interpretation, and Judgment and state confidence plus disagreement status. Do not invent citations or claim an audit "
+            "was executed when evidence is missing."
         ),
     }[selected_skill]
     system = (
