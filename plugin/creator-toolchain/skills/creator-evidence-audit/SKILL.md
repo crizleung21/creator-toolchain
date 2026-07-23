@@ -5,7 +5,7 @@ description: Audit Creator Toolchain repositories, systems, packages, workflows,
 
 # creator-evidence-audit
 
-Use this skill for evidence-first repository, system, package, or multi-surface audit. A single-skill build or score belongs to `creator-skill-workbench`.
+Use this skill for evidence-first repository, system, package, or multi-surface audit. A single-skill build or score belongs to `creator-skill-workbench`. Evidence Audit does not directly mutate the audit target.
 
 ## Modes
 
@@ -21,15 +21,15 @@ Use this skill for evidence-first repository, system, package, or multi-surface 
 ## Phase Pipeline
 
 ```text
-0 Context and threat model
-→ 1 Evidence inventory
-→ 2 Specialized review
-→ 3 Claimed-versus-actual reality check
-→ 4 Adversarial review
-→ 5 Findings synthesis
-→ 6 Remediation knowledge
-→ 7 Risk, verification, and rollback
-→ 8 creator-execution-cycle handoff
+Phase 0 — Context and threat model
+→ Phase 1 — Evidence inventory
+→ Phase 2 — Specialized review
+→ Phase 3 — Claimed-versus-actual reality check
+→ Phase 4 — Adversarial review
+→ Phase 5 — Findings synthesis
+→ Phase 6 — Remediation knowledge
+→ Phase 7 — Risk, verification, and rollback
+→ Phase 8 — creator-execution-cycle handoff
 ```
 
 ## Deterministic Runtime
@@ -71,7 +71,7 @@ blast_radius*4 + coupling_risk*3 + regression_risk*3
 ## Output Model
 
 - Findings: immutable diagnosis with citations and calibrated judgment.
-- Remediation: suggested, planned, or authorized work with risk, verification, and rollback.
+- Remediation Guidance: suggested, planned, or authorized work with risk, verification, and rollback.
 - Correction Addenda: clarify, correct, or supersede without rewriting history.
 - Execution Handoff: dependency graph and authorized boundary for `creator-execution-cycle`.
 
