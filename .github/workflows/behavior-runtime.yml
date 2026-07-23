@@ -1,10 +1,10 @@
 name: behavior-runtime
 
 on:
-  push:
-    branches: [agent/phase-7-behavior-e2e]
+  pull_request:
     paths:
       - .github/behavior-runtime-trigger.json
+      - .github/workflows/behavior-runtime.yml
   workflow_dispatch:
 
 permissions:
@@ -46,7 +46,7 @@ jobs:
             --response-command "python3 scripts/adapters/github_models_response.py" \
             --evaluator-command "python3 scripts/adapters/github_models_evaluator.py" \
             --run-id "${RUN_ID}" \
-            --commit-sha "${GITHUB_SHA}" \
+            --commit-sha "${{ github.event.pull_request.head.sha || github.sha }}" \
             --output "${OUTPUT}" \
             --timeout 420 \
             2>&1 | tee /tmp/creator-toolchain-behavior-runtime.log
