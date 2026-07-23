@@ -48,7 +48,7 @@ class CreatorWorkflowRouterTests(unittest.TestCase):
 
     def test_exactly_one_fallback_and_unique_priorities(self) -> None:
         config = load_routing_config(ROOT)
-        self.assertEqual(sum(item["fallback"] is True for item in config["routes"), 1)
+        self.assertEqual(sum(item["fallback"] is True for item in config["routes"]), 1)
         self.assertEqual(len({item["priority"] for item in config["routes"]}), len(config["routes"]))
 
 
