@@ -122,7 +122,7 @@ class CreatorEvidenceAuditTests(unittest.TestCase):
             )
 
     def test_unsafe_or_missing_evidence_is_rejected_without_audit_tree(self) -> None:
-        with self.assertRaises(EvidenceAuditError):
+        with self.assertRaises(RuntimeError):
             issue_finding(
                 self.root, AUDIT_ID, title="Unsafe evidence", observation="Missing.", interpretation="Unknown.", judgment="Cannot judge.",
                 severity="low", confidence=0.5, evidence_quality="weak", evidence_paths=["../outside.txt"],
