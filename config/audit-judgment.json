@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "severity": {
+    "informational": {"rank": 0, "definition": "Useful context with no required corrective action."},
+    "low": {"rank": 1, "definition": "Limited defect or maintainability concern with small local impact."},
+    "medium": {"rank": 2, "definition": "Material defect that can impair a workflow but has a bounded blast radius."},
+    "high": {"rank": 3, "definition": "Serious defect that blocks a core workflow or creates substantial regression risk."},
+    "critical": {"rank": 4, "definition": "Integrity, safety, data-loss, or release-blocking defect requiring immediate containment."}
+  },
+  "confidence_bands": [
+    {"minimum": 0.90, "band": "very_high"},
+    {"minimum": 0.75, "band": "high"},
+    {"minimum": 0.50, "band": "medium"},
+    {"minimum": 0.00, "band": "low"}
+  ],
+  "evidence_quality": {
+    "weak": "Indirect, incomplete, or uncorroborated evidence.",
+    "moderate": "Relevant evidence with one meaningful limitation or missing corroboration.",
+    "strong": "Multiple consistent sources or one highly reliable source with limited ambiguity.",
+    "direct": "Direct inspection, executable verification, or byte-level evidence of the claimed condition."
+  },
+  "disagreement_states": ["none", "noted", "material", "unresolved"],
+  "risk_formula": {
+    "values": {"low": 1, "medium": 2, "high": 3},
+    "weights": {"blast_radius": 4, "coupling_risk": 3, "regression_risk": 3},
+    "thresholds": [
+      {"maximum": 14, "level": "low"},
+      {"maximum": 22, "level": "medium"},
+      {"maximum": 30, "level": "high"}
+    ],
+    "expression": "blast_radius*4 + coupling_risk*3 + regression_risk*3"
+  },
+  "citation_format": "repository/path#Lstart-Lend@sha256:<hex>",
+  "supersession_policy": "Never rewrite an issued Finding. Add a correction addendum and derive the effective status from the newest addendum."
+}

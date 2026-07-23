@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "",
+  "addendum_id": "",
+  "source_finding": "",
+  "correction_type": "clarify",
+  "new_evidence": [],
+  "preserves_original": true,
+  "original_sha256": "",
+  "previous_judgment": "",
+  "updated_judgment": "",
+  "resulting_status": "active",
+  "reason": "",
+  "issued_by": "",
+  "issued_at": ""
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/routing/route-decision.schema.json",
+  "title": "Creator Toolchain route decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request", "route_id", "primary_workflow", "secondary_workflow", "required_sources", "expected_artifact", "missing_inputs", "boundary", "handoff_prompt", "support_script", "support_script_available", "matched_signals", "considered_routes"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "request": {"type": "string", "minLength": 1},
+    "route_id": {"type": "string", "minLength": 1},
+    "primary_workflow": {"type": "string", "minLength": 1},
+    "secondary_workflow": {"type": ["string", "null"]},
+    "required_sources": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "expected_artifact": {"type": "string", "minLength": 1},
+    "missing_inputs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "boundary": {"type": "string", "minLength": 1},
+    "handoff_prompt": {"type": "string", "minLength": 1},
+    "support_script": {"type": ["string", "null"]},
+    "support_script_available": {"type": "boolean"},
+    "matched_signals": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "considered_routes": {"type": "array", "items": {"type": "object"}}
+  }
+}

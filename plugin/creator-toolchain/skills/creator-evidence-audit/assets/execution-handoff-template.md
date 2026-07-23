@@ -1,11 +1,12 @@
-# LAYER-C-EXECUTION-PLAN
+# Audit Execution Handoff
 
-## Dependency Graph
-
-## Risk Metadata
-
-## Verification Gates
-
-## Rollback Criteria
-
-## Execution Handoff
+- Audit ID:
+- Target skill: `creator-execution-cycle`
+- Authorization status: planned|approved
+- Authorized by:
+- Source Findings:
+- Remediation Tasks:
+- Dependency graph:
+- Risks:
+- Verification gates:
+- Rollback criteria:

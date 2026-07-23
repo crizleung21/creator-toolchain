@@ -2,36 +2,36 @@
 
 ## Phase 0 — Context and Threat Model
 
-Define target, scope, risks, and required evidence.
+Define target, decision use, scope, exclusions, risks, expected evidence, and prohibited mutations.
 
-## Phase 1 — Automated Signal Gathering
+## Phase 1 — Evidence Inventory
 
-Collect file, schema, test, and source-reference signals.
+Collect repository-relative files, Schemas, test output, hashes, source references, and known limitations. Record missing evidence rather than inventing it.
 
-## Phase 2 — Deep Domain Audits
+## Phase 2 — Specialized Review
 
-Audit by domain with evidence references.
+Review each relevant domain using the same observation, interpretation, judgment, severity, confidence, and evidence-quality contract.
 
-## Phase 3 — Reality Gap Analysis
+## Phase 3 — Reality Gap
 
-Compare claimed design to actual artifact behavior.
+Compare claimed behavior with executable or byte-level evidence.
 
 ## Phase 4 — Adversarial Review
 
-Challenge assumptions and identify failure modes.
+Challenge assumptions, seek counterevidence, and record disagreement states.
 
 ## Phase 5 — Synthesis
 
-Merge findings, disagreements, confidence, and limitations.
+Issue immutable Findings with evidence citations and limitations.
 
 ## Phase 6 — Remediation Knowledge
 
-Convert findings into actionable remediation patterns.
+Create bounded remediation tasks without changing the target.
 
-## Phase 7 — Change Risk Validation and Guardrails
+## Phase 7 — Risk and Guardrails
 
-Validate blast radius, coupling, regression risk, verification gates, and rollback criteria.
+Calculate blast radius, coupling risk, regression risk, verification gates, and rollback criteria.
 
-## Phase 8 — Execution Planning and Execution Handoff
+## Phase 8 — Execution Handoff
 
-Create an execution-ready remediation plan.
+Create a planned or explicitly approved handoff to `creator-execution-cycle`. Audit itself does not execute remediation.

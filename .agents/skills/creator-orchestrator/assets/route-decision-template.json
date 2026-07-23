@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "request": "",
+  "route_id": "",
+  "primary_workflow": "",
+  "secondary_workflow": null,
+  "required_sources": [],
+  "expected_artifact": "",
+  "missing_inputs": [],
+  "boundary": "",
+  "handoff_prompt": "",
+  "support_script": null,
+  "support_script_available": false,
+  "matched_signals": [],
+  "considered_routes": []
+}
