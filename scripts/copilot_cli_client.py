@@ -94,6 +94,9 @@ def run_copilot(
         child_environment["NO_COLOR"] = "1"
         child_environment["COPILOT_OTEL_ENABLED"] = "false"
 
+        # Keep the invocation compatible with the released CLI while denying every
+        # tool class the behavior adapter does not need. All source context is
+        # embedded in the prompt and the process runs in an empty temporary root.
         argv: Sequence[str] = (
             binary,
             "-p",
@@ -101,14 +104,8 @@ def run_copilot(
             "-s",
             f"--model={model.strip()}",
             "--no-ask-user",
-            "--no-auto-update",
-            "--no-color",
-            "--no-banner",
             "--no-custom-instructions",
             "--disable-builtin-mcps",
-            "--no-remote",
-            "--no-remote-export",
-            "--no-experimental",
             "--deny-tool=shell,write,read,url,memory",
             "-C",
             str(workdir),
