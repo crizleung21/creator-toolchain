@@ -1,11 +1,10 @@
 {
   "schema_version": "1.0.0",
-  "purpose": "Phase 7 focused eight-case regression using Copilot Auto plus the complementary rubber-duck evaluator profile",
+  "purpose": "Phase 7 focused eight-case regression using separate isolated Copilot Auto response and evaluator sessions",
   "response_model": "auto",
-  "response_agent": null,
   "evaluator_model": "auto",
-  "evaluator_agent": "rubber-duck",
-  "independence_basis": "GitHub documents the rubber-duck built-in agent as using a complementary model",
+  "independence_basis": "Response is rubric-blind; evaluator runs in a new isolated CLI session; local deterministic validation binds every claim to raw-response spans",
+  "model_level_independence": "not-guaranteed-by-auto-selection",
   "catalog": "docs/qa/behavior-acceptance-cases.json",
   "case_ids": [
     "INTAKE-P02",
@@ -17,5 +16,5 @@
     "LOCAL-STATE-P01",
     "LOCAL-AUDIT-P01"
   ],
-  "requested_at": "2026-08-30T14:42:00Z"
+  "requested_at": "2026-08-30T14:47:00Z"
 }

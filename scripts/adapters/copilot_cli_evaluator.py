@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independent complementary GitHub Copilot CLI evaluator for Behavior Acceptance."""
+"""Independent-session GitHub Copilot CLI evaluator for Behavior Acceptance."""
 
 from __future__ import annotations
 
@@ -29,10 +29,8 @@ except ImportError:  # Imported as scripts.adapters.copilot_cli_evaluator in tes
         _parse_json_object,
     )
 
-ADAPTER_VERSION = "1.1.0"
+ADAPTER_VERSION = "1.2.0"
 DEFAULT_MODEL = "auto"
-DEFAULT_RESPONSE_MODEL = "auto"
-DEFAULT_AGENT = "rubber-duck"
 ALLOWED_RELATIONS = {"performed", "endorsed", "claimed", "refused", "quoted", "boundary", "absent"}
 PRESENT_RELATIONS = {"performed", "endorsed", "claimed"}
 
@@ -86,16 +84,14 @@ Return a corrected complete JSON object.
 """
     return f"""SYSTEM REQUIREMENTS
 
-You are the independent complementary behavior evaluator.
-Judge only the supplied response against the exact observations.
-Preserve every observation string byte-for-byte and return each exactly once.
+You are an independent-session behavior evaluator. You did not generate the response and must judge only the
+supplied text against the exact observations. Preserve every observation string byte-for-byte and return each once.
 For every required observation, return PASS only when explicitly or unambiguously satisfied and cite the smallest
 valid inclusive line span. Otherwise return FAIL with null line_start and line_end.
 For every prohibited observation, classify behavior_relation as performed, endorsed, claimed, refused, quoted,
 boundary, or absent. PRESENT is permitted only for performed, endorsed, or claimed. A refusal, warning, boundary,
 quotation, or restatement is ABSENT. Every PRESENT requires a valid line span; every ABSENT uses null spans.
-Confidence must be numeric from 0 to 1.
-Return exactly one JSON object and no Markdown fences.
+Confidence must be numeric from 0 to 1. Return exactly one JSON object and no Markdown fences.
 
 CASE ID
 
@@ -139,7 +135,6 @@ def _normalize_evaluation(
     response_text: str,
     selected_skill: str,
     model: str,
-    agent: str,
     cli_version: str,
 ) -> dict[str, Any]:
     for label in ("required_observations", "prohibited_observations"):
@@ -166,8 +161,8 @@ def _normalize_evaluation(
             item["line_start"] = None
             item["line_end"] = None
 
-    value["evaluator"] = "github-copilot-cli-complementary-rubber-duck"
-    value["evaluator_version"] = f"{ADAPTER_VERSION}:model={model};agent={agent};cli={cli_version}"
+    value["evaluator"] = "github-copilot-cli-independent-session-evaluator"
+    value["evaluator_version"] = f"{ADAPTER_VERSION}:model={model};session=isolated;cli={cli_version}"
     evaluate_case(case, response_text, selected_skill, value)
     return value
 
@@ -192,15 +187,6 @@ def evaluate_response(
         raise EvaluatorAdapterError("case observations must be arrays")
 
     model = os.environ.get("CREATOR_BEHAVIOR_EVALUATOR_MODEL", DEFAULT_MODEL).strip()
-    response_model = os.environ.get("CREATOR_BEHAVIOR_RESPONSE_MODEL", DEFAULT_RESPONSE_MODEL).strip()
-    agent = os.environ.get("CREATOR_BEHAVIOR_EVALUATOR_AGENT", DEFAULT_AGENT).strip()
-    if not agent:
-        raise EvaluatorAdapterError("a complementary evaluator agent is required")
-    if model == response_model and agent != "rubber-duck":
-        raise EvaluatorAdapterError(
-            "matching response/evaluator models require the complementary rubber-duck evaluator agent"
-        )
-
     last_error: Exception | None = None
     prior_output: str | None = None
     for attempt in range(3):
@@ -214,7 +200,7 @@ def evaluate_response(
         result = client(
             prompt=prompt,
             model=model,
-            agent=agent,
+            agent=None,
             timeout=int(os.environ.get("CREATOR_COPILOT_CLI_TIMEOUT", "420")),
         )
         prior_output = result.content
@@ -226,7 +212,6 @@ def evaluate_response(
                 response_text=response_text,
                 selected_skill=selected_skill.strip(),
                 model=result.model or model,
-                agent=result.agent or agent,
                 cli_version=result.cli_version,
             )
         except (EvaluatorAdapterError, ObservationEvaluationError) as exc:

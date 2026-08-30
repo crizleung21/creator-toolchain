@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from scripts.adapters.copilot_cli_evaluator import EvaluatorAdapterError, evaluate_response
+from scripts.adapters.copilot_cli_evaluator import evaluate_response
 from scripts.adapters.copilot_cli_response import generate_response
 from scripts.copilot_cli_client import CopilotCLIError, CopilotResult, run_copilot
 from scripts.probe_copilot_models import ModelProbeError, select_available_profiles
@@ -41,15 +41,15 @@ class FakeRunner:
         return subprocess.CompletedProcess(argv, 0, stdout="Read-only response.\n", stderr="")
 
 
-class ProfileClient:
-    def __init__(self, unavailable_agents: set[str | None] | None = None) -> None:
-        self.unavailable_agents = unavailable_agents or set()
+class SessionClient:
+    def __init__(self, fail_call: int | None = None) -> None:
+        self.fail_call = fail_call
         self.calls: list[tuple[str, str | None]] = []
 
     def __call__(self, *, prompt: str, model: str, agent: str | None, timeout: int) -> CopilotResult:
         self.calls.append((model, agent))
-        if agent in self.unavailable_agents:
-            raise CopilotCLIError(f"profile unavailable: {model}/{agent}")
+        if self.fail_call == len(self.calls):
+            raise CopilotCLIError("isolated session unavailable")
         return CopilotResult(content="OK", model=model, cli_version="1.2.3", agent=agent)
 
 
@@ -76,7 +76,7 @@ class CopilotCLIAdapterTests(unittest.TestCase):
         self.assertNotIn("--yolo", argv)
         self.assertNotIn("--no-banner", argv)
 
-    def test_client_can_select_complementary_rubber_duck_agent(self) -> None:
+    def test_client_can_select_an_agent_when_platform_supports_it(self) -> None:
         runner = FakeRunner()
         result = run_copilot(
             prompt="Evaluate independently.",
@@ -88,19 +88,18 @@ class CopilotCLIAdapterTests(unittest.TestCase):
         self.assertIn("--agent=rubber-duck", runner.calls[0][0])
         self.assertEqual(result.agent, "rubber-duck")
 
-    def test_profile_probe_selects_auto_and_complementary_evaluator(self) -> None:
-        client = ProfileClient()
+    def test_profile_probe_verifies_two_isolated_auto_sessions(self) -> None:
+        client = SessionClient()
         report = select_available_profiles(client=client)
         self.assertEqual(report["response_model"], "auto")
-        self.assertIsNone(report["response_agent"])
         self.assertEqual(report["evaluator_model"], "auto")
-        self.assertEqual(report["evaluator_agent"], "rubber-duck")
-        self.assertTrue(report["distinct_execution_profiles"])
-        self.assertTrue(report["complementary_evaluator"])
-        self.assertEqual(client.calls, [("auto", None), ("auto", "rubber-duck")])
+        self.assertTrue(report["independent_sessions"])
+        self.assertTrue(report["rubric_blind_response"])
+        self.assertEqual(report["model_level_independence"], "not-guaranteed-by-auto-selection")
+        self.assertEqual(client.calls, [("auto", None), ("auto", None)])
 
-    def test_profile_probe_fails_when_complementary_profile_is_unavailable(self) -> None:
-        client = ProfileClient({"rubber-duck"})
+    def test_profile_probe_fails_when_second_session_is_unavailable(self) -> None:
+        client = SessionClient(fail_call=2)
         with self.assertRaises(ModelProbeError) as captured:
             select_available_profiles(client=client)
         self.assertEqual(len(captured.exception.probes), 2)
@@ -136,7 +135,7 @@ class CopilotCLIAdapterTests(unittest.TestCase):
             self.assertIn("### Non-Blocking Questions", result["response_text"])
             self.assertIn("fail_needs_more_planning", result["response_text"])
 
-    def test_evaluator_uses_complementary_profile_and_exact_observations(self) -> None:
+    def test_evaluator_runs_in_a_separate_session_and_preserves_observations(self) -> None:
         evaluation = {
             "required_observations": [
                 {
@@ -158,9 +157,7 @@ class CopilotCLIAdapterTests(unittest.TestCase):
                 }
             ],
         }
-        client = FakeCopilotClient(
-            json.dumps(evaluation), model="auto", cli_version="1.2.3", agent="rubber-duck"
-        )
+        client = FakeCopilotClient(json.dumps(evaluation), model="auto", cli_version="1.2.3")
         payload = {
             "case": {
                 "case_id": "ORCH-P01",
@@ -172,45 +169,13 @@ class CopilotCLIAdapterTests(unittest.TestCase):
             "selected_skill": "creator-orchestrator",
             "response_text": "Route to intake; do not edit files.",
         }
-        with patch.dict(
-            os.environ,
-            {
-                "CREATOR_BEHAVIOR_RESPONSE_MODEL": "auto",
-                "CREATOR_BEHAVIOR_EVALUATOR_MODEL": "auto",
-                "CREATOR_BEHAVIOR_EVALUATOR_AGENT": "rubber-duck",
-            },
-            clear=False,
-        ):
+        with patch.dict(os.environ, {"CREATOR_BEHAVIOR_EVALUATOR_MODEL": "auto"}, clear=False):
             result = evaluate_response(payload, client=client)
         self.assertEqual(result["required_observations"][0]["observation"], "route to intake")
         self.assertEqual(result["prohibited_observations"][0]["result"], "ABSENT")
         self.assertIsNone(result["prohibited_observations"][0]["line_start"])
-        self.assertIn("rubber-duck", result["evaluator"])
-        self.assertEqual(client.calls[0]["agent"], "rubber-duck")
-
-    def test_evaluator_rejects_matching_profile_without_complementary_agent(self) -> None:
-        payload = {
-            "case": {
-                "case_id": "X",
-                "prompt": "x",
-                "expected_skill": "creator-orchestrator",
-                "required_observations": ["x"],
-                "prohibited_observations": ["y"],
-            },
-            "selected_skill": "creator-orchestrator",
-            "response_text": "x",
-        }
-        with patch.dict(
-            os.environ,
-            {
-                "CREATOR_BEHAVIOR_RESPONSE_MODEL": "auto",
-                "CREATOR_BEHAVIOR_EVALUATOR_MODEL": "auto",
-                "CREATOR_BEHAVIOR_EVALUATOR_AGENT": "general-purpose",
-            },
-            clear=False,
-        ):
-            with self.assertRaises(EvaluatorAdapterError):
-                evaluate_response(payload, client=FakeCopilotClient("{}"))
+        self.assertIn("independent-session", result["evaluator"])
+        self.assertIsNone(client.calls[0]["agent"])
 
 
 if __name__ == "__main__":
