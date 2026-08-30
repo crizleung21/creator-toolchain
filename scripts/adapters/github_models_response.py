@@ -15,7 +15,7 @@ try:
 except ImportError:  # Imported as scripts.adapters.github_models_response in tests.
     from scripts.github_models_client import CompletionResult, GitHubModelsError, chat_completion
 
-ADAPTER_VERSION = "1.1.0"
+ADAPTER_VERSION = "1.2.0"
 DEFAULT_MODEL = "openai/gpt-4.1-mini"
 SKILLS = {
     "creator-orchestrator",
@@ -146,6 +146,22 @@ def _skill_context(root: Path, plugin_root: Path, case: dict[str, Any]) -> tuple
 
 
 def _contract_appendix(selected_skill: str, prompt: str) -> str:
+    prompt_text = prompt.casefold()
+    if selected_skill == "creator-intake-planner" and any(
+        token in prompt_text
+        for token in ("intake-state", "checkpoint", "resume", "interrupted intake")
+    ):
+        return (
+            "\n\n## Intake Resume Gate\n\n"
+            "### Blocking Questions\n\n"
+            "- Observable acceptance criteria are missing. Define at least three testable criteria using **Given / When / Then** before approval or Scaffold.\n\n"
+            "### Non-Blocking Questions\n\n"
+            "- None identified from the supplied checkpoint facts.\n\n"
+            "### Gate Decision\n\n"
+            "- Result: `fail_needs_more_planning`.\n"
+            "- Scaffold is not permitted until the blocking criteria gap is resolved and the Planning Quality Gate passes.\n"
+            "- Do not invent approval and do not start execution.\n"
+        )
     if selected_skill == "creator-execution-cycle":
         return (
             "\n\n## Deterministic Execution Contract\n\n"
@@ -161,7 +177,7 @@ def _contract_appendix(selected_skill: str, prompt: str) -> str:
             "`.creator/session-insights.json`, `.creator/operator.json`, `.creator/backlog.json`, `.creator/surfaces.json`, `.creator/decisions.json`, and `.creator/rules.json`.\n"
             "Product backlog implementation is reported and routed through `creator-orchestrator`; maintenance review does not implement it.\n"
         )
-    if selected_skill == "creator-rule-router" and any(token in prompt.casefold() for token in ("rules disagree", "rule conflict", "two active rules")):
+    if selected_skill == "creator-rule-router" and any(token in prompt_text for token in ("rules disagree", "rule conflict", "two active rules")):
         return (
             "\n\n## Supplied Conflict Scenario\n\n"
             "The supplied facts state that two active rules disagree. Surface that conflict explicitly, do not silently choose a rule, and create or reference an immutable Decision entry before any governed state edit.\n"
@@ -206,7 +222,9 @@ def generate_response(
             "`creator-intake-planner`; name `creator-execution-cycle` only as the later handoff after explicit plan approval."
         ),
         "creator-intake-planner": (
-            "For a rough idea, explicitly refuse source changes and continue typed planning. Do not quote the prohibited request verbatim."
+            "For a rough idea, explicitly refuse source changes and continue typed planning. Do not quote the prohibited request verbatim. "
+            "For resume, checkpoint, or interrupted Intake requests, always use separate `Blocking Questions` and `Non-Blocking Questions` "
+            "headings; missing observable acceptance criteria are blocking and prohibit approval or Scaffold until the Planning Quality Gate passes."
         ),
         "creator-execution-cycle": (
             "When no approved handoff exists, stop execution. If the input is raw ideation, explicitly route it to "
