@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "purpose": "Phase 7 focused regression run for the eight cases that did not pass the previous full catalog",
+  "purpose": "Phase 7 focused regression rerun after making Intake resume blocking and non-blocking questions explicit",
   "response_model": "openai/gpt-4.1-mini",
   "evaluator_model": "openai/gpt-4o-mini",
   "catalog": "docs/qa/behavior-acceptance-cases.json",
@@ -14,5 +14,5 @@
     "LOCAL-STATE-P01",
     "LOCAL-AUDIT-P01"
   ],
-  "requested_at": "2026-07-23T14:45:00Z"
+  "requested_at": "2026-08-30T14:24:26Z"
 }
