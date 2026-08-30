@@ -1,15 +1,20 @@
 name: behavior-runtime
 
 on:
-  pull_request:
+  push:
+    branches: [agent/phase-7-behavior-e2e]
     paths:
       - .github/behavior-runtime-trigger.json
       - .github/workflows/behavior-runtime.yml
+      - scripts/copilot_cli_client.py
+      - scripts/adapters/copilot_cli_response.py
+      - scripts/adapters/copilot_cli_evaluator.py
+      - tests/test_copilot_cli_adapters.py
   workflow_dispatch:
 
 permissions:
   contents: read
-  models: read
+  copilot-requests: write
 
 concurrency:
   group: behavior-runtime-${{ github.ref }}
@@ -20,25 +25,32 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install current GitHub Copilot CLI
+        run: |
+          npm install -g @github/copilot
+          copilot version
       - name: Validate behavior catalog and adapters
         run: |
           python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
-          python3 -m unittest tests.test_github_models_adapters -v
-      - name: Run selected or complete behavior catalog with independent models
+          python3 -m unittest tests.test_copilot_cli_adapters -v
+      - name: Run selected or complete behavior catalog with independent Copilot models
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CREATOR_BEHAVIOR_RESPONSE_MODEL: openai/gpt-4.1-mini
-          CREATOR_BEHAVIOR_EVALUATOR_MODEL: openai/gpt-4o-mini
-          CREATOR_GITHUB_MODELS_TIMEOUT: "240"
+          GITHUB_TOKEN: ${{ github.token }}
+          CREATOR_BEHAVIOR_RESPONSE_MODEL: gpt-5.4
+          CREATOR_BEHAVIOR_EVALUATOR_MODEL: claude-haiku-4.5
+          CREATOR_COPILOT_CLI_TIMEOUT: "420"
         run: |
           set -o pipefail
-          RUN_ID="github-models-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          RUN_ID="copilot-cli-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           OUTPUT=".creator/qa/behavior-runs/${RUN_ID}"
           rm -rf "${OUTPUT}"
           CASE_ARGS=()
@@ -54,12 +66,12 @@ jobs:
           )
           python3 scripts/run_behavior_acceptance.py \
             --root . \
-            --response-command "python3 -m scripts.adapters.github_models_response" \
-            --evaluator-command "python3 -m scripts.adapters.github_models_evaluator" \
+            --response-command "python3 -m scripts.adapters.copilot_cli_response" \
+            --evaluator-command "python3 -m scripts.adapters.copilot_cli_evaluator" \
             --run-id "${RUN_ID}" \
-            --commit-sha "${{ github.event.pull_request.head.sha || github.sha }}" \
+            --commit-sha "${GITHUB_SHA}" \
             --output "${OUTPUT}" \
-            --timeout 420 \
+            --timeout 480 \
             "${CASE_ARGS[@]}" \
             2>&1 | tee /tmp/creator-toolchain-behavior-runtime.log
       - name: Upload full behavior evidence

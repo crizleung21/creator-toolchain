@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "purpose": "Phase 7 focused regression rerun after making Intake resume blocking and non-blocking questions explicit",
-  "response_model": "openai/gpt-4.1-mini",
-  "evaluator_model": "openai/gpt-4o-mini",
+  "purpose": "Phase 7 focused eight-case regression after migrating the retired GitHub Models API to GitHub Copilot CLI",
+  "response_model": "gpt-5.4",
+  "evaluator_model": "claude-haiku-4.5",
   "catalog": "docs/qa/behavior-acceptance-cases.json",
   "case_ids": [
     "INTAKE-P02",
@@ -14,5 +14,5 @@
     "LOCAL-STATE-P01",
     "LOCAL-AUDIT-P01"
   ],
-  "requested_at": "2026-08-30T14:24:26Z"
+  "requested_at": "2026-08-30T14:27:00Z"
 }
