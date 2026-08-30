@@ -28,8 +28,8 @@ except ImportError:  # Imported as scripts.adapters.copilot_cli_response in test
         _skill_context,
     )
 
-ADAPTER_VERSION = "1.0.0"
-DEFAULT_MODEL = "gpt-5.4"
+ADAPTER_VERSION = "1.1.0"
+DEFAULT_MODEL = "auto"
 
 
 def _specialist_instruction(selected_skill: str) -> str:
@@ -113,13 +113,14 @@ CURRENT CONTRACT AND BOUNDED CONTEXT
     result = client(
         prompt=combined_prompt,
         model=model,
+        agent=None,
         timeout=int(os.environ.get("CREATOR_COPILOT_CLI_TIMEOUT", "420")),
     )
     response_text = result.content.rstrip() + _contract_appendix(selected_skill, prompt.strip())
     return {
         "selected_skill": selected_skill,
         "response_text": response_text,
-        "codex_version": f"github-copilot-cli/{result.cli_version};adapter={ADAPTER_VERSION}",
+        "codex_version": f"github-copilot-cli/{result.cli_version};adapter={ADAPTER_VERSION};profile=auto",
         "model_version": result.model,
     }
 

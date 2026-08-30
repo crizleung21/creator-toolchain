@@ -14,6 +14,7 @@ from typing import Callable, Mapping, Sequence
 
 TOKEN_ENVIRONMENTS = ("COPILOT_GITHUB_TOKEN", "GH_TOKEN", "GITHUB_TOKEN")
 SAFE_MODEL_RE = re.compile(r"^[A-Za-z0-9._-]+$")
+SAFE_AGENT_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 
 
 class CopilotCLIError(RuntimeError):
@@ -25,6 +26,7 @@ class CopilotResult:
     content: str
     model: str
     cli_version: str
+    agent: str | None = None
 
 
 def _token_available(environment: Mapping[str, str]) -> bool:
@@ -62,6 +64,7 @@ def run_copilot(
     *,
     prompt: str,
     model: str,
+    agent: str | None = None,
     timeout: int = 420,
     binary: str = "copilot",
     runner: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
@@ -73,6 +76,9 @@ def run_copilot(
         raise CopilotCLIError("prompt must be non-empty")
     if not isinstance(model, str) or not SAFE_MODEL_RE.fullmatch(model.strip()):
         raise CopilotCLIError("model contains unsupported characters")
+    normalized_agent = agent.strip() if isinstance(agent, str) and agent.strip() else None
+    if normalized_agent is not None and not SAFE_AGENT_RE.fullmatch(normalized_agent):
+        raise CopilotCLIError("agent contains unsupported characters")
     if timeout < 1:
         raise CopilotCLIError("timeout must be positive")
 
@@ -94,10 +100,7 @@ def run_copilot(
         child_environment["NO_COLOR"] = "1"
         child_environment["COPILOT_OTEL_ENABLED"] = "false"
 
-        # Keep the invocation compatible with the released CLI while denying every
-        # tool class the behavior adapter does not need. All source context is
-        # embedded in the prompt and the process runs in an empty temporary root.
-        argv: Sequence[str] = (
+        argv: list[str] = [
             binary,
             "-p",
             prompt.strip(),
@@ -109,7 +112,9 @@ def run_copilot(
             "--deny-tool=shell,write,read,url,memory",
             "-C",
             str(workdir),
-        )
+        ]
+        if normalized_agent is not None:
+            argv.insert(5, f"--agent={normalized_agent}")
         try:
             process = runner(
                 list(argv),
@@ -137,4 +142,9 @@ def run_copilot(
             timeout=timeout,
             runner=runner,
         )
-        return CopilotResult(content=content, model=model.strip(), cli_version=cli_version)
+        return CopilotResult(
+            content=content,
+            model=model.strip(),
+            cli_version=cli_version,
+            agent=normalized_agent,
+        )

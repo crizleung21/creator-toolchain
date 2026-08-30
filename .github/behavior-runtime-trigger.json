@@ -1,18 +1,11 @@
 {
   "schema_version": "1.0.0",
-  "purpose": "Phase 7 focused eight-case regression using two distinct account-available Copilot CLI models selected by capability probe",
-  "response_model": "auto-probed-first-available",
-  "evaluator_model": "auto-probed-second-distinct-available",
-  "model_candidates": [
-    "claude-sonnet-4.6",
-    "claude-haiku-4.5",
-    "gpt-5.3-codex",
-    "gpt-5.2",
-    "gpt-5.1",
-    "claude-sonnet-4.5",
-    "gemini-3.1-pro-preview",
-    "gemini-3.5-flash"
-  ],
+  "purpose": "Phase 7 focused eight-case regression using Copilot Auto plus the complementary rubber-duck evaluator profile",
+  "response_model": "auto",
+  "response_agent": null,
+  "evaluator_model": "auto",
+  "evaluator_agent": "rubber-duck",
+  "independence_basis": "GitHub documents the rubber-duck built-in agent as using a complementary model",
   "catalog": "docs/qa/behavior-acceptance-cases.json",
   "case_ids": [
     "INTAKE-P02",
@@ -24,5 +17,5 @@
     "LOCAL-STATE-P01",
     "LOCAL-AUDIT-P01"
   ],
-  "requested_at": "2026-08-30T14:38:00Z"
+  "requested_at": "2026-08-30T14:42:00Z"
 }

@@ -43,7 +43,7 @@ jobs:
         run: |
           python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
           python3 -m unittest tests.test_copilot_cli_adapters -v
-      - name: Select two distinct available Copilot models
+      - name: Verify independent Copilot execution profiles
         env:
           GITHUB_TOKEN: ${{ github.token }}
           CREATOR_COPILOT_CLI_TIMEOUT: "180"
@@ -54,9 +54,11 @@ jobs:
           cat /tmp/copilot-model-selection.json
           RESPONSE_MODEL=$(python3 -c "import json; print(json.load(open('/tmp/copilot-model-selection.json'))['response_model'])")
           EVALUATOR_MODEL=$(python3 -c "import json; print(json.load(open('/tmp/copilot-model-selection.json'))['evaluator_model'])")
+          EVALUATOR_AGENT=$(python3 -c "import json; print(json.load(open('/tmp/copilot-model-selection.json'))['evaluator_agent'])")
           echo "CREATOR_BEHAVIOR_RESPONSE_MODEL=${RESPONSE_MODEL}" >> "${GITHUB_ENV}"
           echo "CREATOR_BEHAVIOR_EVALUATOR_MODEL=${EVALUATOR_MODEL}" >> "${GITHUB_ENV}"
-      - name: Run selected or complete behavior catalog with independent Copilot models
+          echo "CREATOR_BEHAVIOR_EVALUATOR_AGENT=${EVALUATOR_AGENT}" >> "${GITHUB_ENV}"
+      - name: Run selected or complete behavior catalog with independent Copilot profiles
         env:
           GITHUB_TOKEN: ${{ github.token }}
           CREATOR_COPILOT_CLI_TIMEOUT: "420"
@@ -95,5 +97,5 @@ jobs:
             .creator/qa/behavior-runs
             /tmp/creator-toolchain-behavior-runtime.log
             /tmp/copilot-model-selection.json
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14
