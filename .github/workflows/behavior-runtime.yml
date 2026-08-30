@@ -7,6 +7,7 @@ on:
       - .github/behavior-runtime-trigger.json
       - .github/workflows/behavior-runtime.yml
       - scripts/copilot_cli_client.py
+      - scripts/probe_copilot_models.py
       - scripts/adapters/copilot_cli_response.py
       - scripts/adapters/copilot_cli_evaluator.py
       - tests/test_copilot_cli_adapters.py
@@ -42,11 +43,22 @@ jobs:
         run: |
           python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
           python3 -m unittest tests.test_copilot_cli_adapters -v
+      - name: Select two distinct available Copilot models
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CREATOR_COPILOT_CLI_TIMEOUT: "180"
+        run: |
+          python3 scripts/probe_copilot_models.py \
+            --timeout 180 \
+            --output /tmp/copilot-model-selection.json
+          cat /tmp/copilot-model-selection.json
+          RESPONSE_MODEL=$(python3 -c "import json; print(json.load(open('/tmp/copilot-model-selection.json'))['response_model'])")
+          EVALUATOR_MODEL=$(python3 -c "import json; print(json.load(open('/tmp/copilot-model-selection.json'))['evaluator_model'])")
+          echo "CREATOR_BEHAVIOR_RESPONSE_MODEL=${RESPONSE_MODEL}" >> "${GITHUB_ENV}"
+          echo "CREATOR_BEHAVIOR_EVALUATOR_MODEL=${EVALUATOR_MODEL}" >> "${GITHUB_ENV}"
       - name: Run selected or complete behavior catalog with independent Copilot models
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          CREATOR_BEHAVIOR_RESPONSE_MODEL: gpt-5.4
-          CREATOR_BEHAVIOR_EVALUATOR_MODEL: claude-haiku-4.5
           CREATOR_COPILOT_CLI_TIMEOUT: "420"
         run: |
           set -o pipefail
@@ -82,5 +94,6 @@ jobs:
           path: |
             .creator/qa/behavior-runs
             /tmp/creator-toolchain-behavior-runtime.log
+            /tmp/copilot-model-selection.json
           if-no-files-found: error
           retention-days: 14

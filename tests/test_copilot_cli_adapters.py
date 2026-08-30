@@ -11,6 +11,7 @@ from unittest.mock import patch
 from scripts.adapters.copilot_cli_evaluator import EvaluatorAdapterError, evaluate_response
 from scripts.adapters.copilot_cli_response import generate_response
 from scripts.copilot_cli_client import CopilotCLIError, CopilotResult, run_copilot
+from scripts.probe_copilot_models import ModelProbeError, select_available_models
 
 
 class FakeCopilotClient:
@@ -34,6 +35,18 @@ class FakeRunner:
         return subprocess.CompletedProcess(argv, 0, stdout="Read-only response.\n", stderr="")
 
 
+class ProbeClient:
+    def __init__(self, available: set[str]) -> None:
+        self.available = available
+        self.calls: list[str] = []
+
+    def __call__(self, *, prompt: str, model: str, timeout: int) -> CopilotResult:
+        self.calls.append(model)
+        if model not in self.available:
+            raise CopilotCLIError(f"model unavailable: {model}")
+        return CopilotResult(content="OK", model=model, cli_version="1.2.3")
+
+
 class CopilotCLIAdapterTests(unittest.TestCase):
     def test_client_requires_token_before_execution(self) -> None:
         with self.assertRaises(CopilotCLIError):
@@ -55,6 +68,23 @@ class CopilotCLIAdapterTests(unittest.TestCase):
         self.assertIn("--deny-tool=shell,write,read,url,memory", argv)
         self.assertIn("--model=gpt-5.4", argv)
         self.assertNotIn("--yolo", argv)
+        self.assertNotIn("--no-banner", argv)
+
+    def test_model_probe_selects_first_two_distinct_successes(self) -> None:
+        client = ProbeClient({"model-b", "model-d"})
+        report = select_available_models(
+            ["model-a", "model-b", "model-b", "model-c", "model-d", "model-e"],
+            client=client,
+        )
+        self.assertEqual(report["response_model"], "model-b")
+        self.assertEqual(report["evaluator_model"], "model-d")
+        self.assertTrue(report["distinct_models"])
+        self.assertEqual(client.calls, ["model-a", "model-b", "model-c", "model-d"])
+
+    def test_model_probe_fails_when_only_one_model_is_available(self) -> None:
+        client = ProbeClient({"model-b"})
+        with self.assertRaises(ModelProbeError):
+            select_available_models(["model-a", "model-b", "model-c"], client=client)
 
     def test_response_adapter_is_rubric_blind_and_adds_intake_gate(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
