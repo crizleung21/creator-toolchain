@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Final complete 34-case promotion, conditionally authorized by focused run 30017660530",
+  "focused_run_id": 30017660530,
+  "expected_focused_case_ids": [
+    "INTAKE-P02",
+    "EXEC-P01",
+    "STATE-P01",
+    "RULE-P02",
+    "AUDIT-P01",
+    "LOCAL-EXEC-P01",
+    "LOCAL-STATE-P01",
+    "LOCAL-AUDIT-P01"
+  ],
+  "case_ids": [],
+  "promotion": true,
+  "response_model": "openai/gpt-4.1-mini",
+  "evaluator_model": "openai/gpt-4o-mini",
+  "catalog": "docs/qa/behavior-acceptance-cases.json",
+  "requested_at": "2026-07-23T15:00:00Z"
+}
