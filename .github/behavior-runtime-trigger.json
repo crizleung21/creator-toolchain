@@ -1,20 +1,18 @@
 {
   "schema_version": "1.0.0",
-  "purpose": "Phase 7 focused eight-case regression using separate isolated Copilot Auto response and evaluator sessions",
+  "purpose": "Phase 7 final complete 34-case Promotion Run after the focused eight-case regression passed 8 of 8",
   "response_model": "auto",
   "evaluator_model": "auto",
   "independence_basis": "Response is rubric-blind; evaluator runs in a new isolated CLI session; local deterministic validation binds every claim to raw-response spans",
   "model_level_independence": "not-guaranteed-by-auto-selection",
   "catalog": "docs/qa/behavior-acceptance-cases.json",
-  "case_ids": [
-    "INTAKE-P02",
-    "EXEC-P01",
-    "STATE-P01",
-    "RULE-P02",
-    "AUDIT-P01",
-    "LOCAL-EXEC-P01",
-    "LOCAL-STATE-P01",
-    "LOCAL-AUDIT-P01"
-  ],
-  "requested_at": "2026-08-30T14:47:00Z"
+  "focused_gate_run_id": "33317818968",
+  "focused_gate_result": {
+    "case_count": 8,
+    "passed": 8,
+    "failed": 0,
+    "errored": 0
+  },
+  "promotion_requested": true,
+  "requested_at": "2026-08-30T14:57:00Z"
 }

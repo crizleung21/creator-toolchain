@@ -95,5 +95,6 @@ jobs:
             .creator/qa/behavior-runs
             /tmp/creator-toolchain-behavior-runtime.log
             /tmp/copilot-model-selection.json
+          include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14
