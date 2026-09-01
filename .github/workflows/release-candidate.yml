@@ -8,6 +8,7 @@ on:
       - plugin/creator-toolchain/.codex-plugin/plugin.json
       - scripts/versioning.py
       - scripts/sync_plugin_skills.py
+      - scripts/build_plugin_package.py
       - scripts/release_creator_toolchain.py
       - scripts/mark_behavior_stale.py
       - scripts/creator_schema_validation.py
