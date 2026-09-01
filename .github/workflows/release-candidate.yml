@@ -59,23 +59,23 @@ jobs:
             --commit-sha "${GITHUB_SHA}" --report /tmp/phase8-golden-report.json
       - name: Run complete provider-neutral behavior catalog
         run: |
-          rm -rf /tmp/phase8-behavior
+          rm -rf behavior-runtime-output
           python3 scripts/run_behavior_acceptance.py \
             --root . \
             --response-command "python3 -m scripts.adapters.deterministic_contract_response" \
             --evaluator-command "python3 -m scripts.adapters.deterministic_contract_evaluator" \
             --run-id "phase8-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
             --commit-sha "${GITHUB_SHA}" \
-            --output /tmp/phase8-behavior \
+            --output behavior-runtime-output/phase8 \
             --timeout 60
-          python3 scripts/validate_behavior_report.py /tmp/phase8-behavior/report.json --expected-count 34 --require-all-catalog
+          python3 scripts/validate_behavior_report.py behavior-runtime-output/phase8/report.json --expected-count 34 --require-all-catalog
       - name: Promote behavior evidence and recalculate Health
         run: |
           RECORDED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           python3 scripts/promote_behavior_evidence.py \
             --root . \
-            --report /tmp/phase8-behavior/report.json \
-            --evidence-root /tmp/phase8-behavior \
+            --report behavior-runtime-output/phase8/report.json \
+            --evidence-root behavior-runtime-output \
             --tested-commit "${GITHUB_SHA}" \
             --promotion-run-id "${GITHUB_RUN_ID}" \
             --recorded-at "${RECORDED_AT}"
@@ -121,7 +121,7 @@ jobs:
           name: phase8-release-candidate-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             /tmp/phase8-release
-            /tmp/phase8-behavior
+            behavior-runtime-output
             /tmp/phase8-golden-report.json
             /tmp/phase8-prepromotion-tests.log
           include-hidden-files: true
