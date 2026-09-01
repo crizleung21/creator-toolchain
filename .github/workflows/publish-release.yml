@@ -90,7 +90,10 @@ jobs:
           if any(item["status"] != "PASS" for item in status["gates"]):
               raise SystemExit("one or more final release gates are not PASS")
           PY
-          sha256sum -c "dist/creator-toolchain-v${VERSION}.zip.sha256"
+          (
+            cd dist
+            sha256sum -c "creator-toolchain-v${VERSION}.zip.sha256"
+          )
 
       - name: Create immutable tag and GitHub Release
         run: |
