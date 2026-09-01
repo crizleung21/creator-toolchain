@@ -2,22 +2,55 @@
 
 ## Runtime Scope
 
-The plugin package contains its manifest, README, changelog, MIT license, and the exact generated skill mirror. No other top-level entry is allowed.
+The Plugin package contains only:
+
+```text
+.codex-plugin/plugin.json
+README.md
+CHANGELOG.md
+LICENSE
+skills/<seven generated Skills>/**
+```
+
+No other top-level entry is allowed.
 
 ## Safety Rules
 
-The package rejects symbolic links, non-regular files, private state, environment files, caches, local overrides, nested archives, unknown skill files, and unknown top-level paths.
+The package rejects symbolic links, non-regular files, private state, environment files, caches, local overrides, editor metadata, nested archives, unknown Skill files, and unknown paths.
 
 ## Deterministic Inventory
 
-`scripts/package_integrity.py` sorts package-relative POSIX paths, records every file SHA-256, and computes one combined payload SHA-256 from each relative path and file body.
+`scripts/package_integrity.py`:
 
-The committed report has no timestamp or commit identifier. `--check` recomputes the complete report and fails on any difference.
+1. derives the expected Skill files from `.agents/skills/`;
+2. compares the generated Plugin mirror;
+3. records every package-relative path and file SHA-256;
+4. computes one payload SHA-256 from path bytes and file bytes;
+5. emits a deterministic report without timestamps.
+
+Validate the committed inventory:
+
+```bash
+python3 scripts/package_integrity.py \
+  --root . \
+  --package-root plugin/creator-toolchain \
+  --check docs/qa/package-integrity-report.json
+```
 
 ## Reproducible Archive
 
-`scripts/build_plugin_package.py` uses the validated inventory, sorted paths, fixed ZIP timestamps, and normalized file modes. Two builds from one tree must be byte-identical.
+`scripts/build_plugin_package.py` uses sorted paths, fixed ZIP timestamps, normalized file modes, and deterministic compression. Two builds from the same tree must be byte-identical and produce a matching `.sha256` sidecar.
 
 ## Release Gate
 
-Release requires a passing report, mirror parity, reproducible archive output, repository validation, current behavior acceptance, and CI validation.
+Release requires:
+
+- mirror parity;
+- exact package inventory;
+- current 34/34 Behavior Acceptance for the package payload;
+- repository and schema validation;
+- byte-identical ZIP builds;
+- clean installation;
+- discovery of exactly seven Skills;
+- green Health;
+- successful final CI.

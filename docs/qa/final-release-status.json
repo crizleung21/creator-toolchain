@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PENDING_EVIDENCE",
+  "version": "1.1.0",
+  "tested_commit_sha": null,
+  "workflow_run_id": null,
+  "package_payload_sha256": null,
+  "archive_sha256": null,
+  "behavior": {
+    "case_count": 34,
+    "passed": null,
+    "failed": null,
+    "errored": null,
+    "status": "PENDING"
+  },
+  "health": {
+    "level": "pending",
+    "score": null,
+    "signal_count": null
+  },
+  "gates": [
+    {"gate_id": "GATE-01", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-02", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-03", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-04", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-05", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-06", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-07", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-08", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-09", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-10", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-11", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-12", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-13", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-14", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-15", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-16", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-17", "status": "PENDING", "evidence": []},
+    {"gate_id": "GATE-18", "status": "PENDING", "evidence": []}
+  ],
+  "recorded_at": null,
+  "publication_boundary": "Requires final Phase 9 Head validation and post-merge main validation before tag or GitHub Release."
+}
