@@ -1,0 +1,33 @@
+{
+  "archive_path": "dist/creator-toolchain-v1.1.0.zip",
+  "archive_sha256": "c77acd7c24c559862e7a236a3ba3914cacee0d448691876606010f32ada935eb",
+  "archive_size": 88852,
+  "gates": {
+    "behavior": "PASS",
+    "clean_install": "PASS",
+    "golden_e2e": "PASS",
+    "mirror": "PASS",
+    "package": "PASS",
+    "reproducible_zip": "PASS",
+    "skill_discovery": "PASS",
+    "unit_tests": "PASS",
+    "validator": "PASS",
+    "version": "PASS"
+  },
+  "generated_at": "2026-09-01T02:55:59Z",
+  "installed_skills": [
+    "creator-evidence-audit",
+    "creator-execution-cycle",
+    "creator-intake-planner",
+    "creator-orchestrator",
+    "creator-rule-router",
+    "creator-skill-workbench",
+    "creator-workspace-manager"
+  ],
+  "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
+  "recommended_next_action": "Complete Phase 9 documentation and final reconciliation before publishing v1.1.0.",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "tested_commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
+  "version": "1.1.0"
+}

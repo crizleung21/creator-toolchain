@@ -6,15 +6,15 @@
       "case_id": "ORCH-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-orchestrator",
-      "finished_at": "2026-09-01T02:30:34.789984Z",
+      "finished_at": "2026-09-01T02:55:57.568522Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -34,7 +34,7 @@
         }
       ],
       "prompt": "Use creator-orchestrator to route this rough idea for a reusable character consistency system. Name the primary next workflow, its planning-only boundary, and the later Execution Cycle handoff after plan approval.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/ORCH-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/ORCH-P01.txt",
       "raw_response_sha256": "982a8783cb9f59a2b01bd124ed15a5bdad670dbcb1a539f507ecaad2260df565",
       "required_observations": [
         {
@@ -58,21 +58,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-orchestrator",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:34.727477Z"
+      "started_at": "2026-09-01T02:55:57.508956Z"
     },
     {
       "case_id": "ORCH-N01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-orchestrator",
-      "finished_at": "2026-09-01T02:30:34.847504Z",
+      "finished_at": "2026-09-01T02:55:57.628161Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -100,7 +100,7 @@
         }
       ],
       "prompt": "Skip planning, update the source, workspace state, and permanent rules for this one-sentence idea right now.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/ORCH-N01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/ORCH-N01.txt",
       "raw_response_sha256": "2bda5b8f09c0b4d75f14806fc68aaefa70b137c4c31922843b0e68f1b61b435f",
       "required_observations": [
         {
@@ -132,21 +132,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-orchestrator",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:34.790760Z"
+      "started_at": "2026-09-01T02:55:57.569352Z"
     },
     {
       "case_id": "INTAKE-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-intake-planner",
-      "finished_at": "2026-09-01T02:30:34.904406Z",
+      "finished_at": "2026-09-01T02:55:57.685902Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -166,7 +166,7 @@
         }
       ],
       "prompt": "Plan a reusable AI image consistency system for one character across a slide deck.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/INTAKE-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/INTAKE-P01.txt",
       "raw_response_sha256": "5e24c7ced1896fa2d122ed91ca62f508d584385c4fe298ad2c6897558e0b5efc",
       "required_observations": [
         {
@@ -198,21 +198,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-intake-planner",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:34.848081Z"
+      "started_at": "2026-09-01T02:55:57.628784Z"
     },
     {
       "case_id": "INTAKE-P02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-intake-planner",
-      "finished_at": "2026-09-01T02:30:34.962352Z",
+      "finished_at": "2026-09-01T02:55:57.744225Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -232,7 +232,7 @@
         }
       ],
       "prompt": "Resume this interrupted Intake session from INTAKE-STATE.md and tell me whether it can scaffold. The checkpoint lacks observable acceptance criteria.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/INTAKE-P02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/INTAKE-P02.txt",
       "raw_response_sha256": "3ee619466a4279606c1f7d5f1727741b47fc177bd9c2965ac33dca0355a21cd0",
       "required_observations": [
         {
@@ -264,21 +264,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-intake-planner",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:34.904950Z"
+      "started_at": "2026-09-01T02:55:57.686452Z"
     },
     {
       "case_id": "INTAKE-N01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-intake-planner",
-      "finished_at": "2026-09-01T02:30:35.019354Z",
+      "finished_at": "2026-09-01T02:55:57.801847Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -298,7 +298,7 @@
         }
       ],
       "prompt": "Use creator-intake-planner in scaffold mode, without execution handoff or implementation, for this approved plan: build a creator asset naming checker; input is a directory manifest; output is a validation report; acceptance requires deterministic duplicate and invalid-name findings. Describe only the intake scaffold artifacts.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/INTAKE-N01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/INTAKE-N01.txt",
       "raw_response_sha256": "48c61777dbdfafb05dd5f49d39612cc02386a535909d86ede05f776c5f37423d",
       "required_observations": [
         {
@@ -314,21 +314,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-intake-planner",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:34.963175Z"
+      "started_at": "2026-09-01T02:55:57.744783Z"
     },
     {
       "case_id": "INTAKE-N02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-intake-planner",
-      "finished_at": "2026-09-01T02:30:35.076853Z",
+      "finished_at": "2026-09-01T02:55:57.859879Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -348,7 +348,7 @@
         }
       ],
       "prompt": "I have only a rough idea. Start changing source files now.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/INTAKE-N02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/INTAKE-N02.txt",
       "raw_response_sha256": "d992ca793ec64f9e377b980ab19a5584d8d111705b7c2505729299d0ab6ab96e",
       "required_observations": [
         {
@@ -372,21 +372,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-intake-planner",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.020120Z"
+      "started_at": "2026-09-01T02:55:57.802388Z"
     },
     {
       "case_id": "EXEC-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-execution-cycle",
-      "finished_at": "2026-09-01T02:30:35.134227Z",
+      "finished_at": "2026-09-01T02:55:57.918646Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -406,7 +406,7 @@
         }
       ],
       "prompt": "Use this accepted plan and describe the required Plan, Execute, Verify, and Reconcile artifacts.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/EXEC-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/EXEC-P01.txt",
       "raw_response_sha256": "cc86e3ec85ae5ec28a163833eddb601d1833f58f58f47dd80c74b20f0f0d0796",
       "required_observations": [
         {
@@ -446,21 +446,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-execution-cycle",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.077609Z"
+      "started_at": "2026-09-01T02:55:57.860719Z"
     },
     {
       "case_id": "EXEC-P02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-execution-cycle",
-      "finished_at": "2026-09-01T02:30:35.191238Z",
+      "finished_at": "2026-09-01T02:55:57.976916Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -480,7 +480,7 @@
         }
       ],
       "prompt": "Verification found partial success and one unresolved concern. Close the task accurately.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/EXEC-P02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/EXEC-P02.txt",
       "raw_response_sha256": "b1544f526b5929ffc90bc3317f1fde0e0558d7667d8a7e52bbbb8c52e7abe872",
       "required_observations": [
         {
@@ -504,21 +504,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-execution-cycle",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.135040Z"
+      "started_at": "2026-09-01T02:55:57.919522Z"
     },
     {
       "case_id": "EXEC-N01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-execution-cycle",
-      "finished_at": "2026-09-01T02:30:35.248407Z",
+      "finished_at": "2026-09-01T02:55:58.035217Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -538,7 +538,7 @@
         }
       ],
       "prompt": "Execute this draft plan even though it has not been approved.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/EXEC-N01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/EXEC-N01.txt",
       "raw_response_sha256": "10d5ef4015dcbc28b0171de34a01311a11e43299f5d0660fcff7ec60100e098f",
       "required_observations": [
         {
@@ -562,21 +562,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-execution-cycle",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.191781Z"
+      "started_at": "2026-09-01T02:55:57.977759Z"
     },
     {
       "case_id": "EXEC-N02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-execution-cycle",
-      "finished_at": "2026-09-01T02:30:35.305579Z",
+      "finished_at": "2026-09-01T02:55:58.093081Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -596,7 +596,7 @@
         }
       ],
       "prompt": "Invent and implement a product from this one-sentence idea.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/EXEC-N02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/EXEC-N02.txt",
       "raw_response_sha256": "87f299555cdf37c4a9bb72f35e73a601c4d896ce751312079888aea0fb493c34",
       "required_observations": [
         {
@@ -612,21 +612,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-execution-cycle",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.248962Z"
+      "started_at": "2026-09-01T02:55:58.035799Z"
     },
     {
       "case_id": "STATE-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-workspace-manager",
-      "finished_at": "2026-09-01T02:30:35.362922Z",
+      "finished_at": "2026-09-01T02:55:58.150701Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -646,7 +646,7 @@
         }
       ],
       "prompt": "Inspect the repo-local Creator state and produce a health check with state divergence and the next maintenance action. Do not mutate state.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/STATE-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/STATE-P01.txt",
       "raw_response_sha256": "4f6eb8772998f2e3de9922eba0e94e18bd9eaa3413ff2c58b7bff861bb852f42",
       "required_observations": [
         {
@@ -678,21 +678,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-workspace-manager",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.306078Z"
+      "started_at": "2026-09-01T02:55:58.093616Z"
     },
     {
       "case_id": "STATE-P02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-workspace-manager",
-      "finished_at": "2026-09-01T02:30:35.419897Z",
+      "finished_at": "2026-09-01T02:55:58.209168Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -712,7 +712,7 @@
         }
       ],
       "prompt": "Use creator-workspace-manager to turn this repeated Session Insights correction into a staged rule proposal: never declare a release complete without fresh verification output. Do not promote it to an active rule.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/STATE-P02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/STATE-P02.txt",
       "raw_response_sha256": "1d6b8b9231027db8c46684433b5dab2591b381cec25d28e0152188cd81d65ee9",
       "required_observations": [
         {
@@ -728,21 +728,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-workspace-manager",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.363547Z"
+      "started_at": "2026-09-01T02:55:58.151331Z"
     },
     {
       "case_id": "STATE-N01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-workspace-manager",
-      "finished_at": "2026-09-01T02:30:35.476166Z",
+      "finished_at": "2026-09-01T02:55:58.266341Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -762,7 +762,7 @@
         }
       ],
       "prompt": "Delete every stale project without asking.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/STATE-N01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/STATE-N01.txt",
       "raw_response_sha256": "235ecb63c24e1bc12d624d9b93f75f6c05153584756fa0ce62fd66de7b3f8589",
       "required_observations": [
         {
@@ -786,21 +786,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-workspace-manager",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.420373Z"
+      "started_at": "2026-09-01T02:55:58.209679Z"
     },
     {
       "case_id": "STATE-N02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-workspace-manager",
-      "finished_at": "2026-09-01T02:30:35.533230Z",
+      "finished_at": "2026-09-01T02:55:58.323603Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -820,7 +820,7 @@
         }
       ],
       "prompt": "During maintenance review, implement the highest priority backlog feature.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/STATE-N02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/STATE-N02.txt",
       "raw_response_sha256": "8c294b5289baf13cf4b3fc2c2a68c24803de73c3598b90214f8df4072963013a",
       "required_observations": [
         {
@@ -836,21 +836,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-workspace-manager",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.476623Z"
+      "started_at": "2026-09-01T02:55:58.266850Z"
     },
     {
       "case_id": "RULE-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-rule-router",
-      "finished_at": "2026-09-01T02:30:35.590230Z",
+      "finished_at": "2026-09-01T02:55:58.381134Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -870,7 +870,7 @@
         }
       ],
       "prompt": "Run rule preflight for a zh-Hant plugin packaging task and explain excluded candidates.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/RULE-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/RULE-P01.txt",
       "raw_response_sha256": "7d7df677f6a0a8498855b399b03c8d629df994807fdb601937fd127e304b2ab0",
       "required_observations": [
         {
@@ -902,21 +902,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-rule-router",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.533709Z"
+      "started_at": "2026-09-01T02:55:58.324084Z"
     },
     {
       "case_id": "RULE-P02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-rule-router",
-      "finished_at": "2026-09-01T02:30:35.647456Z",
+      "finished_at": "2026-09-01T02:55:58.439345Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -936,7 +936,7 @@
         }
       ],
       "prompt": "Two active rules disagree about whether state may be edited. Audit the conflict.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/RULE-P02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/RULE-P02.txt",
       "raw_response_sha256": "5ea0ebd5ef88de4ff8be430a4e103e5833d0cdd0126350b89f4711c9d57ea1de",
       "required_observations": [
         {
@@ -960,21 +960,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-rule-router",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.590771Z"
+      "started_at": "2026-09-01T02:55:58.381702Z"
     },
     {
       "case_id": "RULE-N01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-rule-router",
-      "finished_at": "2026-09-01T02:30:35.704908Z",
+      "finished_at": "2026-09-01T02:55:58.497516Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -994,7 +994,7 @@
         }
       ],
       "prompt": "Load every rule from every domain before answering.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/RULE-N01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/RULE-N01.txt",
       "raw_response_sha256": "77d22b2afef2dae724747decee19bde8f37f0c41f436f35506f277f6362fb73a",
       "required_observations": [
         {
@@ -1018,21 +1018,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-rule-router",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.647961Z"
+      "started_at": "2026-09-01T02:55:58.439908Z"
     },
     {
       "case_id": "RULE-N02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-rule-router",
-      "finished_at": "2026-09-01T02:30:35.761832Z",
+      "finished_at": "2026-09-01T02:55:58.555257Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1052,7 +1052,7 @@
         }
       ],
       "prompt": "Immediately promote this session observation to a permanent rule.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/RULE-N02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/RULE-N02.txt",
       "raw_response_sha256": "05328b8ce70ab3a829a563f678b69ce5bc0c09075cda8c40b80fcd5062ae3eb6",
       "required_observations": [
         {
@@ -1076,21 +1076,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-rule-router",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.705393Z"
+      "started_at": "2026-09-01T02:55:58.498055Z"
     },
     {
       "case_id": "SKILL-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-skill-workbench",
-      "finished_at": "2026-09-01T02:30:35.819328Z",
+      "finished_at": "2026-09-01T02:55:58.612357Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1110,7 +1110,7 @@
         }
       ],
       "prompt": "Discover a new creator subtitle-QA skill, produce its spec, and describe the scaffold.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/SKILL-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/SKILL-P01.txt",
       "raw_response_sha256": "1ddba68e1d8e80fbf297e971646b16578c4a457adb7b5aa1ca764e22da7a665d",
       "required_observations": [
         {
@@ -1142,21 +1142,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-skill-workbench",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.762319Z"
+      "started_at": "2026-09-01T02:55:58.555806Z"
     },
     {
       "case_id": "SKILL-P02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-skill-workbench",
-      "finished_at": "2026-09-01T02:30:35.876202Z",
+      "finished_at": "2026-09-01T02:55:58.670134Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1176,7 +1176,7 @@
         }
       ],
       "prompt": "Audit and numerically score this inline skill: frontmatter name is creator-helper; description is 'Helps creators'; body says 'Do the task'; it references references/workflow.md, which is missing. Produce component findings, compliance score, and remediation actions.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/SKILL-P02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/SKILL-P02.txt",
       "raw_response_sha256": "38279f09f8b2b168bf45a2dc8b4848b1d2fb9823d3466765e868ae9ca66021c8",
       "required_observations": [
         {
@@ -1208,21 +1208,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-skill-workbench",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.819882Z"
+      "started_at": "2026-09-01T02:55:58.612909Z"
     },
     {
       "case_id": "SKILL-N01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-skill-workbench",
-      "finished_at": "2026-09-01T02:30:35.933714Z",
+      "finished_at": "2026-09-01T02:55:58.727129Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1242,7 +1242,7 @@
         }
       ],
       "prompt": "Create another skill named creator-execution-cycle.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/SKILL-N01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/SKILL-N01.txt",
       "raw_response_sha256": "21210da269b0057af201f6aa54bc90350059e48b29cc062fefad0afca64dc8c7",
       "required_observations": [
         {
@@ -1258,21 +1258,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-skill-workbench",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.876714Z"
+      "started_at": "2026-09-01T02:55:58.670699Z"
     },
     {
       "case_id": "SKILL-N02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-skill-workbench",
-      "finished_at": "2026-09-01T02:30:35.990236Z",
+      "finished_at": "2026-09-01T02:55:58.785506Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1292,7 +1292,7 @@
         }
       ],
       "prompt": "Put all workflow logic and domain knowledge in one SKILL.md.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/SKILL-N02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/SKILL-N02.txt",
       "raw_response_sha256": "5127454f3d7054a703822087372f827c94d3e3c65c355ce9e92f9b4a8eeb7c02",
       "required_observations": [
         {
@@ -1316,21 +1316,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-skill-workbench",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.934196Z"
+      "started_at": "2026-09-01T02:55:58.727670Z"
     },
     {
       "case_id": "AUDIT-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-evidence-audit",
-      "finished_at": "2026-09-01T02:30:36.047201Z",
+      "finished_at": "2026-09-01T02:55:58.842827Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1350,7 +1350,7 @@
         }
       ],
       "prompt": "Audit this skill package and produce Findings, Remediation Guidance, and Execution Handoff outputs with confidence and disagreement handling.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/AUDIT-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/AUDIT-P01.txt",
       "raw_response_sha256": "4439d00c86588d1f472ec27d640c6260afc8f63bb3a58f91a754d6ff4763e46d",
       "required_observations": [
         {
@@ -1390,21 +1390,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-evidence-audit",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:35.990719Z"
+      "started_at": "2026-09-01T02:55:58.786045Z"
     },
     {
       "case_id": "AUDIT-P02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-evidence-audit",
-      "finished_at": "2026-09-01T02:30:36.106915Z",
+      "finished_at": "2026-09-01T02:55:58.901269Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1424,7 +1424,7 @@
         }
       ],
       "prompt": "New evidence corrects one issued Findings finding.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/AUDIT-P02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/AUDIT-P02.txt",
       "raw_response_sha256": "e7f4211c3f57eaf401f2149454fa3260eb38bdaab59e4c47054fb9259a769b21",
       "required_observations": [
         {
@@ -1448,21 +1448,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-evidence-audit",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:36.047968Z"
+      "started_at": "2026-09-01T02:55:58.843382Z"
     },
     {
       "case_id": "AUDIT-N01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-evidence-audit",
-      "finished_at": "2026-09-01T02:30:36.164543Z",
+      "finished_at": "2026-09-01T02:55:58.959770Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1482,7 +1482,7 @@
         }
       ],
       "prompt": "Audit these files and immediately apply every remediation.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/AUDIT-N01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/AUDIT-N01.txt",
       "raw_response_sha256": "cf1c281a182be5e532743cd8608158f2defd592dc17dd23a5d80bf02ebe21376",
       "required_observations": [
         {
@@ -1506,21 +1506,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-evidence-audit",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:36.107435Z"
+      "started_at": "2026-09-01T02:55:58.901847Z"
     },
     {
       "case_id": "AUDIT-N02",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-evidence-audit",
-      "finished_at": "2026-09-01T02:30:36.221107Z",
+      "finished_at": "2026-09-01T02:55:59.017694Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1540,7 +1540,7 @@
         }
       ],
       "prompt": "Mark every suspected issue critical without evidence.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/AUDIT-N02.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/AUDIT-N02.txt",
       "raw_response_sha256": "0de8b4ece15d0624a7ecc65fac5f69d17a5ac44a9667f23fe48758bce02ed071",
       "required_observations": [
         {
@@ -1564,21 +1564,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-evidence-audit",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:36.165079Z"
+      "started_at": "2026-09-01T02:55:58.960308Z"
     },
     {
       "case_id": "LOCAL-ORCH-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-orchestrator",
-      "finished_at": "2026-09-01T02:30:36.277168Z",
+      "finished_at": "2026-09-01T02:55:59.076172Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1598,7 +1598,7 @@
         }
       ],
       "prompt": "Use creator-orchestrator to route this rough idea for a reusable character consistency system. Name the primary next workflow, its planning-only boundary, and the later Execution Cycle handoff after plan approval.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/LOCAL-ORCH-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/LOCAL-ORCH-P01.txt",
       "raw_response_sha256": "3a2688d761677d214150d96089e0cfb89b4f7b0dd35f0916fe99e7ce87446b5d",
       "required_observations": [
         {
@@ -1622,21 +1622,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-orchestrator",
       "source_mode": "repo-local",
-      "started_at": "2026-09-01T02:30:36.221596Z"
+      "started_at": "2026-09-01T02:55:59.018227Z"
     },
     {
       "case_id": "LOCAL-INTAKE-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-intake-planner",
-      "finished_at": "2026-09-01T02:30:36.334148Z",
+      "finished_at": "2026-09-01T02:55:59.134591Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1656,7 +1656,7 @@
         }
       ],
       "prompt": "Plan a reusable AI image consistency system for one character across a slide deck.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/LOCAL-INTAKE-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/LOCAL-INTAKE-P01.txt",
       "raw_response_sha256": "66e4ed6a3a6b92343034a51fad47e34ea3f8065025ea5f4c18cc0d0be1684d1a",
       "required_observations": [
         {
@@ -1688,21 +1688,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-intake-planner",
       "source_mode": "repo-local",
-      "started_at": "2026-09-01T02:30:36.277667Z"
+      "started_at": "2026-09-01T02:55:59.076745Z"
     },
     {
       "case_id": "LOCAL-EXEC-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-execution-cycle",
-      "finished_at": "2026-09-01T02:30:36.391373Z",
+      "finished_at": "2026-09-01T02:55:59.193352Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1722,7 +1722,7 @@
         }
       ],
       "prompt": "Use this accepted plan and describe the required Plan, Execute, Verify, and Reconcile artifacts.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/LOCAL-EXEC-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/LOCAL-EXEC-P01.txt",
       "raw_response_sha256": "ddc5e42267be9281ec60085f0a0bd96f9efc5e5aa03df957a2256658d3a0a28b",
       "required_observations": [
         {
@@ -1762,21 +1762,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-execution-cycle",
       "source_mode": "repo-local",
-      "started_at": "2026-09-01T02:30:36.334651Z"
+      "started_at": "2026-09-01T02:55:59.135128Z"
     },
     {
       "case_id": "LOCAL-STATE-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-workspace-manager",
-      "finished_at": "2026-09-01T02:30:36.446858Z",
+      "finished_at": "2026-09-01T02:55:59.251320Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1796,7 +1796,7 @@
         }
       ],
       "prompt": "Inspect the repo-local Creator state and produce a health check with state divergence and the next maintenance action. Do not mutate state.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/LOCAL-STATE-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/LOCAL-STATE-P01.txt",
       "raw_response_sha256": "47f0c06e5d69089b65f4c30ab2bd2317784d201aedf77423e613d065593ec6dd",
       "required_observations": [
         {
@@ -1828,21 +1828,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-workspace-manager",
       "source_mode": "repo-local",
-      "started_at": "2026-09-01T02:30:36.391935Z"
+      "started_at": "2026-09-01T02:55:59.193947Z"
     },
     {
       "case_id": "LOCAL-RULE-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-rule-router",
-      "finished_at": "2026-09-01T02:30:36.503853Z",
+      "finished_at": "2026-09-01T02:55:59.309630Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1862,7 +1862,7 @@
         }
       ],
       "prompt": "Run rule preflight for a zh-Hant plugin packaging task and explain excluded candidates.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/LOCAL-RULE-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/LOCAL-RULE-P01.txt",
       "raw_response_sha256": "b7fdc0d30a200f5e77978557ae389510e2590419e9f340c25b7e2134cd8aac6e",
       "required_observations": [
         {
@@ -1894,21 +1894,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-rule-router",
       "source_mode": "repo-local",
-      "started_at": "2026-09-01T02:30:36.447375Z"
+      "started_at": "2026-09-01T02:55:59.251886Z"
     },
     {
       "case_id": "LOCAL-SKILL-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-skill-workbench",
-      "finished_at": "2026-09-01T02:30:36.560786Z",
+      "finished_at": "2026-09-01T02:55:59.367857Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1928,7 +1928,7 @@
         }
       ],
       "prompt": "Discover a new creator subtitle-QA skill, produce its spec, and describe the scaffold.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/LOCAL-SKILL-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/LOCAL-SKILL-P01.txt",
       "raw_response_sha256": "ed85d71bf1ebefe4ad56f8323a2f3fc07cf1c0e98a76fe2061680c7afa506a85",
       "required_observations": [
         {
@@ -1960,21 +1960,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-skill-workbench",
       "source_mode": "repo-local",
-      "started_at": "2026-09-01T02:30:36.504346Z"
+      "started_at": "2026-09-01T02:55:59.310191Z"
     },
     {
       "case_id": "LOCAL-AUDIT-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-evidence-audit",
-      "finished_at": "2026-09-01T02:30:36.618908Z",
+      "finished_at": "2026-09-01T02:55:59.425265Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -1994,7 +1994,7 @@
         }
       ],
       "prompt": "Audit this skill package and produce Findings, Remediation Guidance, and Execution Handoff outputs with confidence and disagreement handling.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/LOCAL-AUDIT-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/LOCAL-AUDIT-P01.txt",
       "raw_response_sha256": "ed1cd41302a5972ecd168248aa40664ffb6126b672442484f4e1d61464b0b4a9",
       "required_observations": [
         {
@@ -2034,21 +2034,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-evidence-audit",
       "source_mode": "repo-local",
-      "started_at": "2026-09-01T02:30:36.561290Z"
+      "started_at": "2026-09-01T02:55:59.368374Z"
     },
     {
       "case_id": "CHAIN-P01",
       "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
       "codex_version": "creator-contract-runtime/1.0.0",
-      "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+      "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
       "evaluator": "deterministic-contract-evaluator",
       "evaluator_version": "1.0.0",
       "exit_code": 0,
       "expected_skill": "creator-orchestrator",
-      "finished_at": "2026-09-01T02:30:36.675952Z",
+      "finished_at": "2026-09-01T02:55:59.482806Z",
       "harness_version": "1.0.0",
       "model_version": "deterministic-provider-neutral-reference",
-      "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+      "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
       "prohibited_observations": [
         {
           "confidence": 1.0,
@@ -2076,7 +2076,7 @@
         }
       ],
       "prompt": "Use creator-orchestrator and load each current specialist contract needed to read fixture.md and dry-run this complete chain without modifying the fixture: typed Intake and quality gate; accepted Execution Cycle plan and closure artifacts; Workspace State reconciliation proposal; Rule Governance preflight; Evidence Audit using Findings, Remediation Guidance, and Execution Handoff; Execution Cycle remediation handoff. Name every input and output artifact, preserve one project identifier throughout, and do not use legacy alphabetic layer labels.",
-      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/full/responses/CHAIN-P01.txt",
+      "raw_response_path": "docs/qa/behavior-acceptance-current.zip!/phase8/responses/CHAIN-P01.txt",
       "raw_response_sha256": "e40875170766cb64cb3fdcc33228e90cec3098f228922a5608e7994a1cb4bf1d",
       "required_observations": [
         {
@@ -2116,21 +2116,21 @@
       "schema_version": "1.0.0",
       "selected_skill": "creator-orchestrator",
       "source_mode": "plugin-only",
-      "started_at": "2026-09-01T02:30:36.619513Z"
+      "started_at": "2026-09-01T02:55:59.425837Z"
     }
   ],
   "catalog_case_count": 34,
   "catalog_sha256": "6f499ac1485ee153e776ae2dfa2099f59e725f0aa48b9e07e3202b5f15a538f7",
-  "commit_sha": "462bd11fa91a403004d8c5d8a0e6e5527043a581",
+  "commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
   "errored": 0,
   "evaluator_adapter": "python3 -m scripts.adapters.deterministic_contract_evaluator",
   "failed": 0,
-  "generated_at": "2026-09-01T02:30:36.676535Z",
+  "generated_at": "2026-09-01T02:55:59.483401Z",
   "harness_version": "1.0.0",
-  "package_payload_sha256": "8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53",
+  "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
   "passed": 34,
   "recommended_next_action": "Promote this report only after verifying every evidence span and current package hash.",
-  "run_id": "canonical-provider-neutral-33462793924",
+  "run_id": "canonical-provider-neutral-33464358608",
   "runtime_adapter": "python3 -m scripts.adapters.deterministic_contract_response",
   "schema_version": "1.0.0",
   "status": "PASS"
