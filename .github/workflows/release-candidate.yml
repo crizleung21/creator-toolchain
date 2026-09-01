@@ -18,6 +18,7 @@ on:
       - tests/test_release_creator_toolchain.py
       - tests/test_skill_contracts.py
       - tests/test_validate_creator_toolchain.py
+      - tests/test_creator_workflow_router.py
       - .github/workflows/release-candidate.yml
   workflow_dispatch:
 
