@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/qa/release-evidence.schema.json",
+  "title": "Creator Toolchain Release Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "version", "tested_commit_sha", "package_payload_sha256",
+    "archive_path", "archive_sha256", "archive_size", "installed_skills", "gates",
+    "generated_at", "recommended_next_action"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"const": "PASS"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"},
+    "tested_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "package_payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "archive_path": {"type": "string", "minLength": 1},
+    "archive_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "archive_size": {"type": "integer", "minimum": 1},
+    "installed_skills": {
+      "type": "array", "minItems": 7, "maxItems": 7, "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "gates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["version", "unit_tests", "golden_e2e", "behavior", "mirror", "package", "validator", "reproducible_zip", "clean_install", "skill_discovery"],
+      "properties": {
+        "version": {"const": "PASS"}, "unit_tests": {"const": "PASS"},
+        "golden_e2e": {"const": "PASS"}, "behavior": {"const": "PASS"},
+        "mirror": {"const": "PASS"}, "package": {"const": "PASS"},
+        "validator": {"const": "PASS"}, "reproducible_zip": {"const": "PASS"},
+        "clean_install": {"const": "PASS"}, "skill_discovery": {"const": "PASS"}
+      }
+    },
+    "generated_at": {"type": "string", "minLength": 1},
+    "recommended_next_action": {"type": "string", "minLength": 1}
+  }
+}
