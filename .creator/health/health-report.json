@@ -1,21 +1,13 @@
 {
-  "calculated_at": "2026-07-23T12:15:00Z",
+  "calculated_at": "2026-09-01T02:30:36Z",
   "counts": {
-    "amber": 1,
+    "amber": 0,
     "red": 0
   },
-  "level": "amber",
-  "recommended_next_action": "Rerun all 34 behavior cases against the current Plugin payload during Phase 7.",
+  "level": "green",
+  "recommended_next_action": "No corrective action is required.",
   "schema_version": "1.0.0",
-  "score": 20,
-  "signals": [
-    {
-      "level": "amber",
-      "message": "The 34 stored behavior artifacts remain internally verified for the earlier package payload, but they have not been rerun against the current deterministic routing, Workbench scoring, immutable Audit finding/correction/handoff runtime, progressive-disclosure resources, and package bytes.",
-      "path": "docs/qa/behavior-acceptance-status.json",
-      "signal_id": "BEHAVIOR_EVIDENCE_STALE",
-      "weight": 20
-    }
-  ],
-  "summary": "Derived 0 red and 1 amber signal(s); score=20."
+  "score": 0,
+  "signals": [],
+  "summary": "Derived 0 red and 0 amber signal(s); score=0."
 }
