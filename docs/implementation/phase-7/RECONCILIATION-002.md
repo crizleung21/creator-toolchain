@@ -10,11 +10,11 @@
 - Complete catalog: `34/34 PASS`
 - Failed: `0`
 - Errored: `0`
-- Tested commit: `462bd11fa91a403004d8c5d8a0e6e5527043a581`
-- Package payload: `8dc71f68173e96e8e367893675f7bfd800ab7026e53c9053d287c881100e1f53`
-- Promotion workflow run: `33462793924`
+- Tested commit: `fa535da0d98926fc816f9be0298eb617389054e1`
+- Package payload: `40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d`
+- Promotion workflow run: `33464358608`
 - Durable evidence archive: `docs/qa/behavior-acceptance-current.zip`
-- Archive SHA-256: `ff3759751fb6806f9ce164e4b6e855acae1406953d2cbcfb8f980f5f32dcdb73`
+- Archive SHA-256: `ab147190bd09ce4ce5ba247b49012a024ac5dd6ffaa791a5a80c1643a3c8ddd1`
 
 ## Provider-Neutrality
 

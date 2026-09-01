@@ -37,14 +37,14 @@ class CreatorWorkflowRouterTests(unittest.TestCase):
         self.assertEqual(result["support_script"], "scripts/creator_evidence_audit.py")
         self.assertTrue(result["support_script_available"])
 
-    def test_plugin_release_has_defined_route_and_explicit_gap(self) -> None:
+    def test_plugin_release_has_defined_available_route(self) -> None:
         result = self.route("Prepare a plugin release for the marketplace.")
         self.assertEqual(result["route_id"], "plugin-release")
         self.assertEqual(result["primary_workflow"], "creator-orchestrator")
         self.assertEqual(result["support_script"], "scripts/release_creator_toolchain.py")
-        self.assertFalse(result["support_script_available"])
+        self.assertTrue(result["support_script_available"])
         self.assertNotIn("Phase 5 plugin workflow", result["handoff_prompt"])
-        self.assertTrue(any("release_creator_toolchain.py" in item for item in result["missing_inputs"]))
+        self.assertFalse(any("release_creator_toolchain.py" in item for item in result["missing_inputs"]))
 
     def test_exactly_one_fallback_and_unique_priorities(self) -> None:
         config = load_routing_config(ROOT)
