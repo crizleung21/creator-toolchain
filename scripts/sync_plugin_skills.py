@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
-"""Synchronize authoritative repo-local skills into the plugin package."""
+"""Atomically synchronize authoritative repo-local skills into the Plugin mirror."""
 
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import sys
+import tempfile
 from pathlib import Path
-
+from typing import Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = ROOT / ".agents/skills"
@@ -24,71 +26,69 @@ SKILLS = (
 )
 
 EXCLUDED_NAMES = {
-    ".DS_Store",
-    ".Spotlight-V100",
-    ".cache",
-    ".gitkeep",
-    ".idea",
-    ".mypy_cache",
-    ".pytest_cache",
-    ".ruff_cache",
-    ".vscode",
-    "Thumbs.db",
-    "__pycache__",
-    "desktop.ini",
+    ".DS_Store", ".Spotlight-V100", ".cache", ".gitkeep", ".idea",
+    ".mypy_cache", ".pytest_cache", ".ruff_cache", ".vscode",
+    "Thumbs.db", "__pycache__", "desktop.ini",
 }
 EXCLUDED_SUFFIXES = {".7z", ".bz2", ".gz", ".pyc", ".rar", ".tar", ".tgz", ".xz", ".zip"}
 
 
 class SyncError(ValueError):
-    """Raised when skill synchronization would cross a safety boundary."""
+    """Raised when synchronization would violate a safety or parity invariant."""
 
 
 def _is_excluded(path: Path) -> bool:
     return bool(set(path.parts) & EXCLUDED_NAMES) or path.suffix in EXCLUDED_SUFFIXES
 
 
+def _reject_symlinks(root: Path, label: str) -> None:
+    if root.is_symlink():
+        raise SyncError(f"{label} root must not be a symlink: {root}")
+    for path in root.rglob("*"):
+        if path.is_symlink():
+            raise SyncError(f"{label} contains a symlink: {path}")
+
+
 def _validate_source(source_root: Path) -> None:
     if not source_root.is_dir():
         raise SyncError(f"source skill root does not exist: {source_root}")
-
+    _reject_symlinks(source_root, "source")
     source_skills = {
-        path.name
-        for path in source_root.iterdir()
+        path.name for path in source_root.iterdir()
         if path.is_dir() and path.name not in EXCLUDED_NAMES
     }
     unknown = sorted(source_skills - set(SKILLS))
+    missing = sorted(set(SKILLS) - source_skills)
     if unknown:
         raise SyncError(f"unknown source skill: {', '.join(unknown)}")
-
-    missing = sorted(set(SKILLS) - source_skills)
     if missing:
         raise SyncError(f"missing source skill: {', '.join(missing)}")
 
-    resolved_root = source_root.resolve()
-    for path in source_root.rglob("*"):
-        if not path.is_symlink():
-            continue
-        resolved = path.resolve()
-        try:
-            resolved.relative_to(resolved_root)
-        except ValueError as exc:
-            raise SyncError(f"symlink escapes source root: {path}") from exc
+
+def _validate_roots(source_root: Path, destination_root: Path) -> None:
+    if (
+        source_root == destination_root
+        or source_root.is_relative_to(destination_root)
+        or destination_root.is_relative_to(source_root)
+    ):
+        raise SyncError("source and destination roots must not overlap")
+    if destination_root.exists() and destination_root.is_symlink():
+        raise SyncError(f"destination skill root must not be a symlink: {destination_root}")
 
 
 def _files(root: Path, skill: str) -> dict[Path, bytes]:
     skill_root = root / skill
     if not skill_root.is_dir():
         return {}
-
     result: dict[Path, bytes] = {}
     for path in sorted(skill_root.rglob("*")):
+        if path.is_symlink():
+            raise SyncError(f"skill mirror contains a symlink: {path}")
         if not path.is_file():
             continue
         relative = path.relative_to(skill_root)
-        if _is_excluded(relative):
-            continue
-        result[relative] = path.read_bytes()
+        if not _is_excluded(relative):
+            result[relative] = path.read_bytes()
     return result
 
 
@@ -104,16 +104,35 @@ def _compare(source_root: Path, destination_root: Path) -> list[str]:
         for relative in sorted(source_files.keys() & destination_files.keys()):
             if source_files[relative] != destination_files[relative]:
                 findings.append(f"different: {skill}/{relative.as_posix()}")
-
     if destination_root.is_dir():
         destination_skills = {
-            path.name
-            for path in destination_root.iterdir()
+            path.name for path in destination_root.iterdir()
             if path.is_dir() and path.name not in EXCLUDED_NAMES
         }
-        for skill in sorted(destination_skills - set(SKILLS)):
-            findings.append(f"extra-skill: {skill}")
+        findings.extend(
+            f"extra-skill: {skill}" for skill in sorted(destination_skills - set(SKILLS))
+        )
     return findings
+
+
+def _copy_to_stage(source_root: Path, stage: Path) -> None:
+    stage.mkdir(parents=True, exist_ok=False)
+    for skill in SKILLS:
+        source_skill = source_root / skill
+        destination_skill = stage / skill
+        destination_skill.mkdir()
+        for source in sorted(source_skill.rglob("*")):
+            relative = source.relative_to(source_skill)
+            if _is_excluded(relative):
+                continue
+            if source.is_symlink():
+                raise SyncError(f"source contains a symlink: {source}")
+            target = destination_skill / relative
+            if source.is_dir():
+                target.mkdir(parents=True, exist_ok=True)
+            elif source.is_file():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source, target)
 
 
 def synchronize(
@@ -121,41 +140,66 @@ def synchronize(
     destination_root: Path,
     *,
     write: bool,
+    failure_injector: Callable[[str], None] | None = None,
 ) -> list[str]:
-    """Write or compare the plugin mirror and return deterministic findings."""
+    """Compare or atomically replace the Plugin mirror.
+
+    The old mirror remains available as a sibling backup until the staged mirror
+    has been installed and parity-checked. Any exception restores the old bytes.
+    """
 
     source_root = source_root.resolve()
     destination_root = destination_root.resolve()
     _validate_source(source_root)
+    _validate_roots(source_root, destination_root)
+    if not write:
+        return _compare(source_root, destination_root)
 
-    if write:
-        if (
-            source_root == destination_root
-            or source_root.is_relative_to(destination_root)
-            or destination_root.is_relative_to(source_root)
-        ):
-            raise SyncError("source and destination roots must not overlap")
-        if destination_root.exists():
-            if destination_root.is_symlink():
-                raise SyncError(f"destination skill root must not be a symlink: {destination_root}")
-            shutil.rmtree(destination_root)
-        destination_root.mkdir(parents=True, exist_ok=True)
-        ignore = shutil.ignore_patterns(
-            *sorted(EXCLUDED_NAMES),
-            *(f"*{suffix}" for suffix in sorted(EXCLUDED_SUFFIXES)),
-        )
-        for skill in SKILLS:
-            destination = destination_root / skill
-            shutil.copytree(source_root / skill, destination, ignore=ignore)
-
-    return _compare(source_root, destination_root)
+    destination_root.parent.mkdir(parents=True, exist_ok=True)
+    temporary_parent = Path(tempfile.mkdtemp(prefix=f".{destination_root.name}.sync-", dir=destination_root.parent))
+    stage = temporary_parent / "staged"
+    backup = temporary_parent / "backup"
+    old_existed = destination_root.exists()
+    installed = False
+    try:
+        _copy_to_stage(source_root, stage)
+        staged_findings = _compare(source_root, stage)
+        if staged_findings:
+            raise SyncError("staged mirror failed parity: " + "; ".join(staged_findings))
+        if old_existed:
+            os.replace(destination_root, backup)
+        if failure_injector is not None:
+            failure_injector("after_backup")
+        os.replace(stage, destination_root)
+        installed = True
+        if failure_injector is not None:
+            failure_injector("after_install")
+        findings = _compare(source_root, destination_root)
+        if findings:
+            raise SyncError("installed mirror failed parity: " + "; ".join(findings))
+        if backup.exists():
+            shutil.rmtree(backup)
+        return []
+    except Exception as exc:
+        try:
+            if installed and destination_root.exists():
+                shutil.rmtree(destination_root)
+            if old_existed and backup.exists():
+                os.replace(backup, destination_root)
+        except Exception as rollback_exc:  # pragma: no cover
+            raise SyncError(f"synchronization failed and rollback failed: {rollback_exc}") from exc
+        if isinstance(exc, SyncError):
+            raise
+        raise SyncError(str(exc)) from exc
+    finally:
+        shutil.rmtree(temporary_parent, ignore_errors=True)
 
 
 def _parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
-    mode.add_argument("--write", action="store_true", help="replace the plugin skill mirror")
-    mode.add_argument("--check", action="store_true", help="check mirror parity without writing")
+    mode.add_argument("--write", action="store_true")
+    mode.add_argument("--check", action="store_true")
     return parser.parse_args(argv)
 
 
@@ -166,17 +210,15 @@ def main(argv: list[str] | None = None) -> int:
     except SyncError as exc:
         print(f"Skill sync failed: {exc}", file=sys.stderr)
         return 1
-
     if findings:
         print("Plugin skill mirror differs from the authoritative source:")
         for finding in findings:
             print(f"- {finding}")
         return 1
-
     action = "synchronized" if args.write else "matches"
     print(f"Plugin skill mirror {action} authoritative source ({len(SKILLS)} skills).")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

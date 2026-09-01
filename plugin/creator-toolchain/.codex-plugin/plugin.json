@@ -1,6 +1,6 @@
 {
   "name": "creator-toolchain",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Codex-native creator workflow system for ideation, execution, state, rules, skill creation, and audit.",
   "author": {
     "name": "crizleung21",
