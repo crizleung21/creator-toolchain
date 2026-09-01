@@ -30,6 +30,16 @@ class PublishReleaseWorkflowTests(unittest.TestCase):
         self.assertIn('--notes-file "docs/releases/${TAG}.md"', text)
         self.assertIn("--latest", text)
 
+    def test_release_metadata_uses_tested_script_not_nested_heredoc(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertEqual(text.count("scripts/verify_github_release.py"), 3)
+        self.assertNotIn(
+            'python3 - "${TAG}" "${VERSION}" <<\'PY\'',
+            text,
+        )
+        self.assertIn("--metadata /tmp/github-release.json", text)
+
 
 if __name__ == "__main__":
     unittest.main()
