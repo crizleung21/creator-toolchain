@@ -30,6 +30,14 @@ class PublishReleaseWorkflowTests(unittest.TestCase):
         self.assertIn('--notes-file "docs/releases/${TAG}.md"', text)
         self.assertIn("--latest", text)
 
+    def test_release_metadata_uses_standalone_verifier_without_nested_heredoc(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertGreaterEqual(text.count("scripts/verify_github_release.py"), 2)
+        self.assertNotIn('python3 - "${TAG}" "${VERSION}" <<', text)
+        self.assertIn('git rev-list -n 1 "${TAG}"', text)
+        self.assertIn('test "${TAG_COMMIT}" = "${GITHUB_SHA}"', text)
+
 
 if __name__ == "__main__":
     unittest.main()
