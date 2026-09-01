@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import re
+import sys
 import zipfile
 from pathlib import Path
 from typing import Any
@@ -28,19 +29,31 @@ def _load(path: Path) -> dict[str, Any]:
 
 def _write_json(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _archive_evidence(root: Path, evidence_root: Path, destination: Path) -> str:
-    files = sorted(path for path in evidence_root.rglob("*") if path.is_file() and not path.is_symlink())
+def _archive_evidence(evidence_root: Path, destination: Path) -> str:
+    files = sorted(
+        path
+        for path in evidence_root.rglob("*")
+        if path.is_file() and not path.is_symlink()
+    )
     if not files:
         raise PromotionError("evidence root contains no files")
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+    with zipfile.ZipFile(
+        destination,
+        "w",
+        compression=zipfile.ZIP_DEFLATED,
+        compresslevel=9,
+    ) as archive:
         for path in files:
             relative = path.relative_to(evidence_root).as_posix()
             info = zipfile.ZipInfo(relative, date_time=(1980, 1, 1, 0, 0, 0))
@@ -48,6 +61,33 @@ def _archive_evidence(root: Path, evidence_root: Path, destination: Path) -> str
             info.external_attr = 0o100644 << 16
             archive.writestr(info, path.read_bytes())
     return _sha256(destination)
+
+
+def _evidence_relative_path(
+    root: Path,
+    evidence_root: Path,
+    raw_value: str,
+) -> str:
+    """Return a verified path relative to evidence_root.
+
+    Behavior runs record repository-relative paths because their output directory is
+    repository-relative. Promotion accepts any safe run directory, not one hard-coded
+    marker, but requires every raw response to resolve inside the declared evidence root.
+    """
+
+    raw_path = Path(raw_value)
+    if raw_path.is_absolute() or ".." in raw_path.parts:
+        raise PromotionError(f"unexpected raw response path: {raw_value}")
+    candidate = (root / raw_path).resolve()
+    try:
+        inner = candidate.relative_to(evidence_root)
+    except ValueError as exc:
+        raise PromotionError(
+            f"raw response path is outside evidence root: {raw_value}"
+        ) from exc
+    if not candidate.is_file() or candidate.is_symlink():
+        raise PromotionError(f"raw response evidence is missing or unsafe: {raw_value}")
+    return inner.as_posix()
 
 
 def promote(
@@ -65,7 +105,11 @@ def promote(
     report = _load(report_path)
     if report.get("status") != "PASS" or report.get("case_count") != 34:
         raise PromotionError("only a complete 34-case PASS report may be promoted")
-    if report.get("passed") != 34 or report.get("failed") != 0 or report.get("errored") != 0:
+    if (
+        report.get("passed") != 34
+        or report.get("failed") != 0
+        or report.get("errored") != 0
+    ):
         raise PromotionError("aggregate behavior counts are not release-ready")
     if report.get("all_catalog_cases_run") is not True:
         raise PromotionError("all_catalog_cases_run must be true")
@@ -77,20 +121,19 @@ def promote(
     package = _load(root / "docs/qa/package-integrity-report.json")
     payload = package.get("payload_sha256")
     if report.get("package_payload_sha256") != payload:
-        raise PromotionError("report package payload does not match the current package report")
+        raise PromotionError(
+            "report package payload does not match the current package report"
+        )
 
     archive_relative = Path("docs/qa/behavior-acceptance-current.zip")
     archive_path = root / archive_relative
-    archive_sha = _archive_evidence(root, evidence_root, archive_path)
+    archive_sha = _archive_evidence(evidence_root, archive_path)
 
     canonical = json.loads(json.dumps(report))
     canonical["run_id"] = f"canonical-provider-neutral-{promotion_run_id}"
     for case in canonical["cases"]:
-        raw_path = str(case["raw_response_path"])
-        marker = "behavior-runtime-output/"
-        if marker not in raw_path:
-            raise PromotionError(f"unexpected raw response path: {raw_path}")
-        inner = raw_path.split(marker, 1)[1]
+        raw_value = str(case["raw_response_path"])
+        inner = _evidence_relative_path(root, evidence_root, raw_value)
         case["raw_response_path"] = f"{archive_relative.as_posix()}!/{inner}"
     _write_json(root / "docs/qa/behavior-acceptance-report.json", canonical)
 
@@ -113,8 +156,15 @@ def promote(
         "errored": 0,
         "promotion_run_id": promotion_run_id,
         "rerun_required": False,
-        "evidence_promotion_policy": "The tested commit is the functional source commit. The following evidence-only commit may add only canonical QA, health, state freshness, and Phase 7 reconciliation files.",
-        "required_action": "Proceed to Phase 8. Any later functional or package change makes this evidence stale and requires a new complete run.",
+        "evidence_promotion_policy": (
+            "The tested commit is the functional source commit. The following "
+            "evidence-only commit may add only canonical QA, health, state freshness, "
+            "and Phase 7 reconciliation files."
+        ),
+        "required_action": (
+            "Proceed to Phase 8. Any later functional or package change makes this "
+            "evidence stale and requires a new complete run."
+        ),
         "recorded_at": recorded_at,
     }
     _write_json(root / "docs/qa/behavior-acceptance-status.json", status)
@@ -165,10 +215,14 @@ Payload: {payload}
 
 The canonical report and complete evidence archive are durable and current. The next phase is Phase 8 — Versioning, Release Automation, Clean Install, and CI hardening.
 """
-    (root / "docs/implementation/phase-7/RECONCILIATION-002.md").write_text(reconciliation, encoding="utf-8")
-    (root / "docs/implementation/phase-7/SUMMARY-002.md").write_text(summary, encoding="utf-8")
-    ledger_path = root / "docs/implementation/phase-7/activity_ledger.jsonl"
-    ledger = ledger_path.read_text(encoding="utf-8")
+    implementation_root = root / "docs/implementation/phase-7"
+    implementation_root.mkdir(parents=True, exist_ok=True)
+    (implementation_root / "RECONCILIATION-002.md").write_text(
+        reconciliation, encoding="utf-8"
+    )
+    (implementation_root / "SUMMARY-002.md").write_text(summary, encoding="utf-8")
+    ledger_path = implementation_root / "activity_ledger.jsonl"
+    ledger = ledger_path.read_text(encoding="utf-8") if ledger_path.exists() else ""
     event_id = "EVENT-PHASE7-003"
     if event_id not in ledger:
         event = {
@@ -180,9 +234,15 @@ The canonical report and complete evidence archive are durable and current. The 
             "artifact": "docs/implementation/phase-7/RECONCILIATION-002.md",
             "status": "DONE",
             "evidence_path": "docs/implementation/phase-7/SUMMARY-002.md",
-            "notes": f"Focused 8/8 and full 34/34 passed in workflow run {promotion_run_id}; canonical evidence was promoted.",
+            "notes": (
+                f"Focused 8/8 and full 34/34 passed in workflow run "
+                f"{promotion_run_id}; canonical evidence was promoted."
+            ),
         }
-        ledger_path.write_text(ledger + json.dumps(event, separators=(",", ":")) + "\n", encoding="utf-8")
+        ledger_path.write_text(
+            ledger + json.dumps(event, separators=(",", ":")) + "\n",
+            encoding="utf-8",
+        )
     return status
 
 
