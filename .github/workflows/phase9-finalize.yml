@@ -17,7 +17,9 @@ on:
       - docs/implementation/phase-9/**
       - docs/implementation/FINAL-RECONCILIATION.md
       - scripts/finalize_phase9.py
+      - scripts/promote_behavior_evidence.py
       - tests/test_documentation_contracts.py
+      - tests/test_promote_behavior_evidence.py
       - .github/workflows/phase9-finalize.yml
       - .github/workflows/publish-release.yml
   workflow_dispatch:
