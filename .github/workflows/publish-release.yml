@@ -1,0 +1,144 @@
+name: publish-release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - VERSION
+      - plugin/creator-toolchain/**
+      - docs/qa/release-evidence.json
+      - docs/qa/final-release-status.json
+      - docs/implementation/phase-9/**
+      - docs/implementation/FINAL-RECONCILIATION.md
+      - docs/releases/**
+      - .github/workflows/publish-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify final main commit
+        run: |
+          set -o pipefail
+          python3 -m unittest discover -s tests -p 'test_*.py' -v \
+            2>&1 | tee /tmp/publish-unit-tests.log
+          python3 scripts/materialize_surface_registry.py --root . --check
+          python3 scripts/materialize_project_type_refs.py --root . --check
+          python3 scripts/sync_plugin_skills.py --check
+          python3 scripts/package_integrity.py \
+            --root . \
+            --package-root plugin/creator-toolchain \
+            --check docs/qa/package-integrity-report.json
+          python3 scripts/validate_creator_toolchain.py --scope all
+          rm -rf /tmp/publish-golden
+          python3 scripts/run_golden_e2e.py \
+            --root /tmp/publish-golden \
+            --source-root . \
+            --commit-sha "${GITHUB_SHA}" \
+            --report /tmp/publish-golden-report.json
+          python3 scripts/release_creator_toolchain.py \
+            --root . \
+            --check \
+            --commit-sha "${GITHUB_SHA}" \
+            --skip-unit-tests \
+            --skip-golden
+
+      - name: Build and verify release assets
+        run: |
+          rm -rf dist
+          python3 scripts/release_creator_toolchain.py \
+            --root . \
+            --build \
+            --output-dir dist \
+            --commit-sha "${GITHUB_SHA}" \
+            --skip-unit-tests \
+            --skip-golden
+          VERSION=$(cat VERSION)
+          python3 - "${VERSION}" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          version = sys.argv[1]
+          canonical = json.loads(Path("docs/qa/release-evidence.json").read_text())
+          built = json.loads(Path("dist/release-evidence.json").read_text())
+          for key in ("version", "package_payload_sha256", "archive_sha256"):
+              if canonical[key] != built[key]:
+                  raise SystemExit(f"release evidence mismatch for {key}")
+          if built["version"] != version or any(v != "PASS" for v in built["gates"].values()):
+              raise SystemExit("built release evidence is not publication-ready")
+          status = json.loads(Path("docs/qa/final-release-status.json").read_text())
+          if status["status"] != "READY_FOR_PUBLICATION":
+              raise SystemExit("final release status is not READY_FOR_PUBLICATION")
+          if any(item["status"] != "PASS" for item in status["gates"]):
+              raise SystemExit("one or more final release gates are not PASS")
+          PY
+          sha256sum -c "dist/creator-toolchain-v${VERSION}.zip.sha256"
+
+      - name: Create immutable tag and GitHub Release
+        run: |
+          VERSION=$(cat VERSION)
+          TAG="v${VERSION}"
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            echo "Release ${TAG} already exists; verifying assets."
+            gh release view "${TAG}" \
+              --json tagName,isDraft,isPrerelease,assets,url,targetCommitish \
+              > /tmp/github-release.json
+            python3 - "${TAG}" "${VERSION}" <<'PY'
+            import json
+            import sys
+            from pathlib import Path
+            tag, version = sys.argv[1:3]
+            release = json.loads(Path("/tmp/github-release.json").read_text())
+            names = {item["name"] for item in release["assets"]}
+            expected = {
+                f"creator-toolchain-v{version}.zip",
+                f"creator-toolchain-v{version}.zip.sha256",
+            }
+            if release["tagName"] != tag or release["isDraft"] or release["isPrerelease"]:
+                raise SystemExit("existing release metadata is not stable-release compliant")
+            if not expected.issubset(names):
+                raise SystemExit(f"existing release assets are incomplete: {sorted(names)}")
+            PY
+            exit 0
+          fi
+          gh release create "${TAG}" \
+            "dist/creator-toolchain-v${VERSION}.zip#Creator Toolchain v${VERSION} Plugin ZIP" \
+            "dist/creator-toolchain-v${VERSION}.zip.sha256#SHA-256 checksum" \
+            --target "${GITHUB_SHA}" \
+            --title "Creator Toolchain ${TAG}" \
+            --notes-file "docs/releases/${TAG}.md" \
+            --latest
+          gh release view "${TAG}" \
+            --json tagName,isDraft,isPrerelease,assets,url,targetCommitish \
+            > /tmp/github-release.json
+
+      - name: Upload publication evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publication-evidence-${{ github.run_id }}
+          path: |
+            dist
+            /tmp/publish-unit-tests.log
+            /tmp/publish-golden-report.json
+            /tmp/github-release.json
+          if-no-files-found: warn
+          retention-days: 90
