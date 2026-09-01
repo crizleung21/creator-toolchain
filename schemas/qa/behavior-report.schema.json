@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/crizleung21/creator-toolchain/schemas/qa/behavior-report.schema.json",
+  "title": "Creator Toolchain behavior acceptance report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "run_id", "catalog_case_count", "case_count", "passed", "failed", "errored", "all_catalog_cases_run", "commit_sha", "package_payload_sha256", "catalog_sha256", "harness_version", "runtime_adapter", "evaluator_adapter", "generated_at", "recommended_next_action", "cases"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "status": {"enum": ["PASS", "FAIL", "ERROR", "INCOMPLETE"]},
+    "run_id": {"type": "string", "minLength": 1},
+    "catalog_case_count": {"type": "integer", "minimum": 1},
+    "case_count": {"type": "integer", "minimum": 1},
+    "passed": {"type": "integer", "minimum": 0},
+    "failed": {"type": "integer", "minimum": 0},
+    "errored": {"type": "integer", "minimum": 0},
+    "all_catalog_cases_run": {"type": "boolean"},
+    "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "package_payload_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "catalog_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "harness_version": {"type": "string", "minLength": 1},
+    "runtime_adapter": {"type": "string", "minLength": 1},
+    "evaluator_adapter": {"type": "string", "minLength": 1},
+    "generated_at": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T"},
+    "recommended_next_action": {"type": "string", "minLength": 1},
+    "cases": {"type": "array", "minItems": 1, "items": {"type": "object"}}
+  }
+}

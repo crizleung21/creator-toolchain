@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Phase 7 final complete 34-case Promotion Run after the focused eight-case regression passed 8 of 8",
+  "response_model": "auto",
+  "evaluator_model": "auto",
+  "independence_basis": "Response is rubric-blind; evaluator runs in a new isolated CLI session; local deterministic validation binds every claim to raw-response spans",
+  "model_level_independence": "not-guaranteed-by-auto-selection",
+  "catalog": "docs/qa/behavior-acceptance-cases.json",
+  "focused_gate_run_id": "33317818968",
+  "focused_gate_result": {
+    "case_count": 8,
+    "passed": 8,
+    "failed": 0,
+    "errored": 0
+  },
+  "promotion_requested": true,
+  "requested_at": "2026-08-30T14:57:00Z"
+}

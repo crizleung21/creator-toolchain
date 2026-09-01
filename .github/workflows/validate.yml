@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -23,6 +26,24 @@ jobs:
         with:
           name: unit-test-log-${{ github.run_id }}
           path: /tmp/creator-toolchain-unit-tests.log
+          if-no-files-found: error
+          retention-days: 7
+      - name: Validate behavior catalog
+        run: python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
+      - name: Run writable golden E2E
+        run: |
+          rm -rf /tmp/creator-toolchain-golden-e2e
+          python3 scripts/run_golden_e2e.py \
+            --root /tmp/creator-toolchain-golden-e2e \
+            --source-root . \
+            --commit-sha "${GITHUB_SHA}" \
+            --report /tmp/creator-toolchain-golden-e2e-report.json
+      - name: Upload writable golden E2E report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-e2e-report-${{ github.run_id }}
+          path: /tmp/creator-toolchain-golden-e2e-report.json
           if-no-files-found: error
           retention-days: 7
       - name: Validate canonical surface registry

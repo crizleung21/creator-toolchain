@@ -1,0 +1,100 @@
+name: behavior-runtime
+
+on:
+  push:
+    branches: [agent/phase-7-behavior-e2e]
+    paths:
+      - .github/behavior-runtime-trigger.json
+      - .github/workflows/behavior-runtime.yml
+      - scripts/copilot_cli_client.py
+      - scripts/probe_copilot_models.py
+      - scripts/adapters/copilot_cli_response.py
+      - scripts/adapters/copilot_cli_evaluator.py
+      - tests/test_copilot_cli_adapters.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  copilot-requests: write
+
+concurrency:
+  group: behavior-runtime-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  full-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install current GitHub Copilot CLI
+        run: |
+          npm install -g @github/copilot
+          copilot version
+      - name: Validate behavior catalog and adapters
+        run: |
+          python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
+          python3 -m unittest tests.test_copilot_cli_adapters -v
+      - name: Verify isolated Copilot response and evaluator sessions
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CREATOR_COPILOT_CLI_TIMEOUT: "180"
+        run: |
+          python3 scripts/probe_copilot_models.py \
+            --timeout 180 \
+            --output /tmp/copilot-model-selection.json
+          cat /tmp/copilot-model-selection.json
+          RESPONSE_MODEL=$(python3 -c "import json; print(json.load(open('/tmp/copilot-model-selection.json'))['response_model'])")
+          EVALUATOR_MODEL=$(python3 -c "import json; print(json.load(open('/tmp/copilot-model-selection.json'))['evaluator_model'])")
+          echo "CREATOR_BEHAVIOR_RESPONSE_MODEL=${RESPONSE_MODEL}" >> "${GITHUB_ENV}"
+          echo "CREATOR_BEHAVIOR_EVALUATOR_MODEL=${EVALUATOR_MODEL}" >> "${GITHUB_ENV}"
+      - name: Run selected or complete behavior catalog with isolated Copilot sessions
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CREATOR_COPILOT_CLI_TIMEOUT: "420"
+        run: |
+          set -o pipefail
+          RUN_ID="copilot-cli-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          OUTPUT=".creator/qa/behavior-runs/${RUN_ID}"
+          rm -rf "${OUTPUT}"
+          CASE_ARGS=()
+          while IFS= read -r CASE_ID; do
+            if [[ -n "${CASE_ID}" ]]; then CASE_ARGS+=(--case-id "${CASE_ID}"); fi
+          done < <(python3 - <<'PY'
+          import json
+          from pathlib import Path
+          trigger = json.loads(Path('.github/behavior-runtime-trigger.json').read_text(encoding='utf-8'))
+          for case_id in trigger.get('case_ids', []):
+              print(case_id)
+          PY
+          )
+          python3 scripts/run_behavior_acceptance.py \
+            --root . \
+            --response-command "python3 -m scripts.adapters.copilot_cli_response" \
+            --evaluator-command "python3 -m scripts.adapters.copilot_cli_evaluator" \
+            --run-id "${RUN_ID}" \
+            --commit-sha "${GITHUB_SHA}" \
+            --output "${OUTPUT}" \
+            --timeout 480 \
+            "${CASE_ARGS[@]}" \
+            2>&1 | tee /tmp/creator-toolchain-behavior-runtime.log
+      - name: Upload full behavior evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: behavior-runtime-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .creator/qa/behavior-runs
+            /tmp/creator-toolchain-behavior-runtime.log
+            /tmp/copilot-model-selection.json
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14

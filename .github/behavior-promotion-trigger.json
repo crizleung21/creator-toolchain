@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Run a current-commit focused gate and then the complete provider-neutral 34-case canonical behavior promotion",
+  "runtime": "deterministic-contract-runtime",
+  "evaluator": "deterministic-contract-evaluator",
+  "focused_case_ids": [
+    "INTAKE-P02",
+    "EXEC-P01",
+    "STATE-P01",
+    "RULE-P02",
+    "AUDIT-P01",
+    "LOCAL-EXEC-P01",
+    "LOCAL-STATE-P01",
+    "LOCAL-AUDIT-P01"
+  ],
+  "full_catalog_after_focused_pass": true,
+  "requested_at": "2026-09-01T00:00:00Z"
+}
