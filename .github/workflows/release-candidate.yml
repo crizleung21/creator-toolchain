@@ -1,0 +1,127 @@
+name: release-candidate
+
+on:
+  push:
+    branches: [agent/phase-8-release-automation]
+    paths:
+      - VERSION
+      - plugin/creator-toolchain/.codex-plugin/plugin.json
+      - scripts/versioning.py
+      - scripts/sync_plugin_skills.py
+      - scripts/release_creator_toolchain.py
+      - scripts/mark_behavior_stale.py
+      - scripts/creator_schema_validation.py
+      - schemas/qa/release-evidence.schema.json
+      - tests/test_versioning.py
+      - tests/test_sync_plugin_skills.py
+      - tests/test_release_creator_toolchain.py
+      - tests/test_skill_contracts.py
+      - tests/test_validate_creator_toolchain.py
+      - .github/workflows/release-candidate.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-candidate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Synchronize derived version and Plugin mirror
+        run: |
+          python3 scripts/release_creator_toolchain.py --root . --version "$(cat VERSION)"
+          python3 scripts/sync_plugin_skills.py --write
+      - name: Refresh package inventory and invalidate old behavior evidence
+        run: |
+          python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --write docs/qa/package-integrity-report.json
+          python3 scripts/mark_behavior_stale.py --root . \
+            --reason "Phase 8 version and release-automation candidate changed the Plugin payload" \
+            --recorded-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+      - name: Run pre-promotion tests and writable Golden E2E
+        run: |
+          set -o pipefail
+          python3 -m unittest discover -s tests -p 'test_*.py' -v 2>&1 | tee /tmp/phase8-prepromotion-tests.log
+          rm -rf /tmp/phase8-golden
+          python3 scripts/run_golden_e2e.py --root /tmp/phase8-golden --source-root . \
+            --commit-sha "${GITHUB_SHA}" --report /tmp/phase8-golden-report.json
+      - name: Run complete provider-neutral behavior catalog
+        run: |
+          rm -rf /tmp/phase8-behavior
+          python3 scripts/run_behavior_acceptance.py \
+            --root . \
+            --response-command "python3 -m scripts.adapters.deterministic_contract_response" \
+            --evaluator-command "python3 -m scripts.adapters.deterministic_contract_evaluator" \
+            --run-id "phase8-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --commit-sha "${GITHUB_SHA}" \
+            --output /tmp/phase8-behavior \
+            --timeout 60
+          python3 scripts/validate_behavior_report.py /tmp/phase8-behavior/report.json --expected-count 34 --require-all-catalog
+      - name: Promote behavior evidence and recalculate Health
+        run: |
+          RECORDED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          python3 scripts/promote_behavior_evidence.py \
+            --root . \
+            --report /tmp/phase8-behavior/report.json \
+            --evidence-root /tmp/phase8-behavior \
+            --tested-commit "${GITHUB_SHA}" \
+            --promotion-run-id "${GITHUB_RUN_ID}" \
+            --recorded-at "${RECORDED_AT}"
+          python3 scripts/creator_health_check.py --root . --calculated-at "${RECORDED_AT}" --write --fail-on amber
+      - name: Build and record the release candidate
+        run: |
+          rm -rf /tmp/phase8-release
+          python3 scripts/release_creator_toolchain.py \
+            --root . \
+            --build \
+            --output-dir /tmp/phase8-release \
+            --commit-sha "${GITHUB_SHA}" \
+            --record-in-repo \
+            --recorded-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+      - name: Final release-candidate validation
+        run: |
+          python3 scripts/validate_creator_toolchain.py --scope all
+          python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --check docs/qa/package-integrity-report.json
+          python3 scripts/release_creator_toolchain.py --root . --check --commit-sha "${GITHUB_SHA}" --skip-unit-tests --skip-golden
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Commit generated release evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add VERSION \
+                  plugin/creator-toolchain/.codex-plugin/plugin.json \
+                  plugin/creator-toolchain/skills \
+                  docs/qa/package-integrity-report.json \
+                  docs/qa/behavior-acceptance-report.json \
+                  docs/qa/behavior-acceptance-status.json \
+                  docs/qa/behavior-acceptance-current.zip \
+                  docs/qa/release-evidence.json \
+                  .creator/health/health-report.json \
+                  .creator/state.json \
+                  docs/implementation/phase-7 \
+                  docs/implementation/phase-8
+          git diff --cached --quiet || git commit -m "Phase 8: promote release-candidate evidence"
+          git push origin HEAD:${GITHUB_REF_NAME}
+      - name: Upload release-candidate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase8-release-candidate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            /tmp/phase8-release
+            /tmp/phase8-behavior
+            /tmp/phase8-golden-report.json
+            /tmp/phase8-prepromotion-tests.log
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30

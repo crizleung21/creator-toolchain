@@ -8,11 +8,18 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -20,51 +27,46 @@ jobs:
         run: |
           set -o pipefail
           python3 -m unittest discover -s tests -p 'test_*.py' -v 2>&1 | tee /tmp/creator-toolchain-unit-tests.log
-      - name: Upload unit-test log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: unit-test-log-${{ github.run_id }}
-          path: /tmp/creator-toolchain-unit-tests.log
-          if-no-files-found: error
-          retention-days: 7
-      - name: Validate behavior catalog
-        run: python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
-      - name: Run writable golden E2E
+      - name: Validate version, behavior catalog, and canonical evidence
+        run: |
+          python3 -c "from pathlib import Path; from scripts.versioning import check_version_bindings; findings=check_version_bindings(Path('.')); assert not findings, findings"
+          python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
+      - name: Run writable Golden E2E
         run: |
           rm -rf /tmp/creator-toolchain-golden-e2e
-          python3 scripts/run_golden_e2e.py \
-            --root /tmp/creator-toolchain-golden-e2e \
-            --source-root . \
-            --commit-sha "${GITHUB_SHA}" \
+          python3 scripts/run_golden_e2e.py --root /tmp/creator-toolchain-golden-e2e --source-root . \
+            --commit-sha "${{ github.event.pull_request.head.sha || github.sha }}" \
             --report /tmp/creator-toolchain-golden-e2e-report.json
-      - name: Upload writable golden E2E report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: golden-e2e-report-${{ github.run_id }}
-          path: /tmp/creator-toolchain-golden-e2e-report.json
-          if-no-files-found: error
-          retention-days: 7
-      - name: Validate canonical surface registry
-        run: python3 scripts/materialize_surface_registry.py --root . --check
-      - name: Validate materialized project-type references
-        run: python3 scripts/materialize_project_type_refs.py --root . --check
-      - run: python3 scripts/sync_plugin_skills.py --check
-      - name: Generate package-integrity candidate
-        run: python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --write /tmp/package-integrity-report.json
-      - name: Upload package-integrity candidate
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: package-integrity-candidate-${{ github.run_id }}
-          path: /tmp/package-integrity-report.json
-          if-no-files-found: error
-          retention-days: 7
-      - run: python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --check docs/qa/package-integrity-report.json
-      - run: python3 scripts/validate_creator_toolchain.py --scope all
-      - run: |
+      - name: Validate generated contracts and Plugin mirror
+        run: |
+          python3 scripts/materialize_surface_registry.py --root . --check
+          python3 scripts/materialize_project_type_refs.py --root . --check
+          python3 scripts/sync_plugin_skills.py --check
+      - name: Validate package, repository, and release dry-run
+        run: |
+          python3 scripts/package_integrity.py --root . --package-root plugin/creator-toolchain --write /tmp/package-integrity-report.json
+          cmp /tmp/package-integrity-report.json docs/qa/package-integrity-report.json
+          python3 scripts/validate_creator_toolchain.py --scope all
+          python3 scripts/release_creator_toolchain.py --root . --check \
+            --commit-sha "${{ github.event.pull_request.head.sha || github.sha }}" \
+            --skip-unit-tests --skip-golden 2>&1 | tee /tmp/creator-toolchain-release-check.log
+      - name: Verify reproducible release ZIP directly
+        run: |
           python3 scripts/build_plugin_package.py --root . --output /tmp/build-a.zip
           python3 scripts/build_plugin_package.py --root . --output /tmp/build-b.zip
           cmp /tmp/build-a.zip /tmp/build-b.zip
-      - run: git diff --exit-code
+      - name: Verify no generated drift
+        run: git diff --exit-code
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-evidence-${{ github.run_id }}
+          path: |
+            /tmp/creator-toolchain-unit-tests.log
+            /tmp/creator-toolchain-golden-e2e-report.json
+            /tmp/package-integrity-report.json
+            /tmp/creator-toolchain-release-check.log
+            /tmp/build-a.zip
+          if-no-files-found: warn
+          retention-days: 14
