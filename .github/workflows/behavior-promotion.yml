@@ -9,11 +9,13 @@ on:
       - scripts/adapters/deterministic_contract_response.py
       - scripts/adapters/deterministic_contract_evaluator.py
       - scripts/validate_behavior_report.py
+      - scripts/promote_behavior_evidence.py
       - tests/test_deterministic_behavior_adapters.py
+      - tests/test_skill_contracts.py
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: behavior-promotion-${{ github.ref }}
@@ -34,7 +36,7 @@ jobs:
         run: |
           python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
           python3 -m unittest tests.test_deterministic_behavior_adapters -v
-          python3 -m py_compile scripts/validate_behavior_report.py
+          python3 -m py_compile scripts/validate_behavior_report.py scripts/promote_behavior_evidence.py
       - name: Run focused eight-case gate on the current commit
         run: |
           set +e
@@ -45,20 +47,11 @@ jobs:
             --run-id "focused-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
             --commit-sha "${GITHUB_SHA}" \
             --output "behavior-runtime-output/focused" \
-            --case-id INTAKE-P02 \
-            --case-id EXEC-P01 \
-            --case-id STATE-P01 \
-            --case-id RULE-P02 \
-            --case-id AUDIT-P01 \
-            --case-id LOCAL-EXEC-P01 \
-            --case-id LOCAL-STATE-P01 \
-            --case-id LOCAL-AUDIT-P01
+            --case-id INTAKE-P02 --case-id EXEC-P01 --case-id STATE-P01 --case-id RULE-P02 \
+            --case-id AUDIT-P01 --case-id LOCAL-EXEC-P01 --case-id LOCAL-STATE-P01 --case-id LOCAL-AUDIT-P01
           code=$?
           set -e
-          if [[ ${code} -ne 1 ]]; then
-            echo "Focused harness must return 1 for a complete passing filtered run (status INCOMPLETE); got ${code}." >&2
-            exit 1
-          fi
+          [[ ${code} -eq 1 ]]
           python3 scripts/validate_behavior_report.py behavior-runtime-output/focused/report.json --expected-count 8
       - name: Run final complete 34-case promotion catalog
         run: |
@@ -71,6 +64,32 @@ jobs:
             --output "behavior-runtime-output/full" \
             --timeout 60
           python3 scripts/validate_behavior_report.py behavior-runtime-output/full/report.json --expected-count 34 --require-all-catalog
+      - name: Promote canonical evidence and recalculate health
+        run: |
+          RECORDED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          python3 scripts/promote_behavior_evidence.py \
+            --root . \
+            --report behavior-runtime-output/full/report.json \
+            --evidence-root behavior-runtime-output \
+            --tested-commit "${GITHUB_SHA}" \
+            --promotion-run-id "${GITHUB_RUN_ID}" \
+            --recorded-at "${RECORDED_AT}"
+          python3 scripts/creator_health_check.py --root . --calculated-at "${RECORDED_AT}" --write --fail-on amber
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Commit canonical Phase 7 evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/qa/behavior-acceptance-report.json \
+                  docs/qa/behavior-acceptance-status.json \
+                  docs/qa/behavior-acceptance-current.zip \
+                  .creator/health/health-report.json \
+                  .creator/state.json \
+                  docs/implementation/phase-7/RECONCILIATION-002.md \
+                  docs/implementation/phase-7/SUMMARY-002.md \
+                  docs/implementation/phase-7/activity_ledger.jsonl
+          git diff --cached --quiet || git commit -m "Phase 7: promote canonical 34-case behavior evidence"
+          git push origin HEAD:${GITHUB_REF_NAME}
       - name: Upload focused and full promotion evidence
         if: always()
         uses: actions/upload-artifact@v4
