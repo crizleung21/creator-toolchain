@@ -1,43 +1,159 @@
 {
-  "schema_version": "1.0.0",
-  "status": "PENDING_EVIDENCE",
-  "version": "1.1.0",
-  "tested_commit_sha": null,
-  "workflow_run_id": null,
-  "package_payload_sha256": null,
-  "archive_sha256": null,
+  "archive_sha256": "bc162305563e070bf237dd1e875afa7f22b1c256f24888ffd7d3ed826102cfb8",
   "behavior": {
     "case_count": 34,
-    "passed": null,
-    "failed": null,
-    "errored": null,
-    "status": "PENDING"
-  },
-  "health": {
-    "level": "pending",
-    "score": null,
-    "signal_count": null
+    "errored": 0,
+    "failed": 0,
+    "passed": 34,
+    "status": "CURRENT"
   },
   "gates": [
-    {"gate_id": "GATE-01", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-02", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-03", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-04", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-05", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-06", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-07", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-08", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-09", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-10", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-11", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-12", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-13", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-14", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-15", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-16", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-17", "status": "PENDING", "evidence": []},
-    {"gate_id": "GATE-18", "status": "PENDING", "evidence": []}
+    {
+      "evidence": [
+        "scripts/validate_creator_toolchain.py",
+        "GitHub Actions final validation"
+      ],
+      "gate_id": "GATE-01",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "schemas/workspace/",
+        ".creator/*.json"
+      ],
+      "gate_id": "GATE-02",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "tests/test_migrate_creator_state.py",
+        "docs/migrations/0.3.0-to-0.4.0.md"
+      ],
+      "gate_id": "GATE-03",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        ".agents/skills/",
+        "tests/test_skill_contracts.py"
+      ],
+      "gate_id": "GATE-04",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "tests/test_phase6_skill_integration.py"
+      ],
+      "gate_id": "GATE-05",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "scripts/sync_plugin_skills.py",
+        "docs/qa/package-integrity-report.json"
+      ],
+      "gate_id": "GATE-06",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "docs/qa/package-integrity-report.json"
+      ],
+      "gate_id": "GATE-07",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "GitHub Actions unit-test log"
+      ],
+      "gate_id": "GATE-08",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "tests/",
+        "GitHub Actions final validation"
+      ],
+      "gate_id": "GATE-09",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "scripts/run_golden_e2e.py",
+        "GitHub Actions Golden E2E report"
+      ],
+      "gate_id": "GATE-10",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "docs/qa/behavior-acceptance-report.json"
+      ],
+      "gate_id": "GATE-11",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "docs/qa/behavior-acceptance-status.json",
+        "docs/qa/behavior-acceptance-current.zip"
+      ],
+      "gate_id": "GATE-12",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "docs/qa/release-evidence.json"
+      ],
+      "gate_id": "GATE-13",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "docs/qa/release-evidence.json"
+      ],
+      "gate_id": "GATE-14",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "docs/qa/release-evidence.json"
+      ],
+      "gate_id": "GATE-15",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        ".creator/health/health-report.json"
+      ],
+      "gate_id": "GATE-16",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "GitHub Actions generated-drift and expected-change checks"
+      ],
+      "gate_id": "GATE-17",
+      "status": "PASS"
+    },
+    {
+      "evidence": [
+        "GitHub Actions workflow run 33469972771"
+      ],
+      "gate_id": "GATE-18",
+      "status": "PASS"
+    }
   ],
-  "recorded_at": null,
-  "publication_boundary": "Requires final Phase 9 Head validation and post-merge main validation before tag or GitHub Release."
+  "health": {
+    "level": "green",
+    "score": 0,
+    "signal_count": 0
+  },
+  "package_payload_sha256": "bfd5125eea614093bbf9f5e6818057f6ece9639cda79c4fa460a3e76256db6dd",
+  "publication_boundary": "Merge this evidence-only finalization commit, run the complete checks on the resulting main commit, then create immutable tag and GitHub Release.",
+  "recorded_at": "2026-09-01T04:28:43Z",
+  "schema_version": "1.0.0",
+  "status": "READY_FOR_PUBLICATION",
+  "tested_commit_sha": "176d55d909200223a92e13c23134c78ca2d57cdf",
+  "version": "1.1.0",
+  "workflow_run_id": 33469972771
 }
