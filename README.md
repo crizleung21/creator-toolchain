@@ -77,7 +77,7 @@ python3 scripts/release_creator_toolchain.py \
   --commit-sha "$(git rev-parse HEAD)"
 ```
 
-Build the reproducible Plugin archive:
+Build the reproducible Plugin archive through the unified release command:
 
 ```bash
 python3 scripts/release_creator_toolchain.py \
@@ -85,6 +85,14 @@ python3 scripts/release_creator_toolchain.py \
   --build \
   --output-dir dist \
   --commit-sha "$(git rev-parse HEAD)"
+```
+
+The low-level deterministic archive builder remains available for direct packaging checks:
+
+```bash
+python3 scripts/build_plugin_package.py \
+  --root . \
+  --output dist/creator-toolchain-v1.1.0.zip
 ```
 
 ## State Contract
