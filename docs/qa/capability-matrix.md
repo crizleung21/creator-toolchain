@@ -1,44 +1,49 @@
 # Creator Toolchain Capability Matrix
 
-## Status
+## Authority
 
-- contract date: `2026-06-28`
-- authority: current Creator-native skill contracts
-- implementation: `.agents/skills/`
-- package mirror: `plugin/creator-toolchain/skills/`
-- structural verification: `tests/test_skill_contracts.py`
+- stable version: `1.1.0`
+- state schema: `0.4.0`
+- authoritative implementation: `.agents/skills/`
+- generated Plugin mirror: `plugin/creator-toolchain/skills/`
+- structural tests: `tests/`
 - behavior catalog: `docs/qa/behavior-acceptance-cases.json`
-- behavior report: `docs/qa/behavior-acceptance-report.json`
+- canonical behavior report: `docs/qa/behavior-acceptance-report.json`
 - package report: `docs/qa/package-integrity-report.json`
+- final release status: `docs/qa/final-release-status.json`
 
 ## Capabilities
 
-| Capability | Skill | Design contract | Boundary | Evidence |
+| Capability | Owner | Deterministic support | Boundary | Release evidence |
 |---|---|---|---|---|
-| Intake | `creator-intake-planner` | Type raw ideas and produce acceptance-driven planning artifacts. | Does not implement product work. | Intake behavior cases and required type references. |
-| Execution Cycle | `creator-execution-cycle` | Plan, Execute, Verify, Reconcile, summarize, and append ledger evidence. | Requires an accepted plan. | Execution behavior cases and lifecycle references. |
-| Workspace State | `creator-workspace-manager` | Maintain declared state surfaces and report divergence. | Does not silently delete or execute backlog work. | State behavior cases and schema validation. |
-| Rule Governance | `creator-rule-router` | Select matching rules, stage proposals, and report conflicts. | Does not load or promote every rule automatically. | Rule behavior cases and rule references. |
-| Skill Workbench | `creator-skill-workbench` | Discover, scaffold, distill, score, and review skills. | Rejects collisions and oversized entry points. | Skill behavior cases and structure tests. |
-| Evidence Audit | `creator-evidence-audit` | Separate Findings, Remediation Guidance, and Execution Handoff. | Does not mutate the reviewed target. | Evidence-audit behavior cases and phase references. |
-| Routing | `creator-orchestrator` | Select one primary workflow and preserve downstream handoffs. | Does not absorb planning or execution. | Routing behavior cases. |
+| Routing | `creator-orchestrator` | `creator_workflow_router.py` | selects one primary workflow; does not absorb downstream work | routing cases |
+| Intake | `creator-intake-planner` | intake artifacts, project types, Planning Quality Gate | does not implement product work | intake cases and typed artifacts |
+| Execution Cycle | `creator-execution-cycle` | lifecycle, task verification, closure, recovery | requires explicit approval | execution and recovery tests |
+| Workspace State | `creator-workspace-manager` | bootstrap, schemas, transactions, Health, reconciliation | owns declared state surfaces except rules | state, migration, and Health tests |
+| Rule Governance | `creator-rule-router` | rule store, conflict engine, decision records | proposals never auto-promote | rule cases and conflict tests |
+| Skill Workbench | `creator-skill-workbench` | deterministic scoring and collision checks | does not create a mega-Skill or duplicate name | Workbench cases and scoring tests |
+| Evidence Audit | `creator-evidence-audit` | finding, remediation, correction, handoff schemas | does not mutate the reviewed target | audit cases and evidence tests |
+| Release | `creator-orchestrator` coordinates scripts | versioning, mirror sync, package inventory, behavior QA, clean install | does not add an eighth Skill | release evidence and Gates 01–18 |
 
-## Handoffs
+## Cross-Workflow Handoffs
 
-| From | To | Required handoff |
+| From | To | Required artifact |
 |---|---|---|
-| Intake | Execution Cycle | Approved planning context and unresolved-question status. |
-| Execution Cycle | Workspace State | Reconcile summary, ledger event, and state proposal. |
-| Workspace State | Rule Governance | Staged proposal requiring explicit review. |
-| Skill Workbench | Plugin Package | Validated skill tree with unique names and resolved references. |
-| Evidence Audit | Execution Cycle | Evidence-backed remediation handoff with rollback and verification gates. |
+| Intake | Execution Cycle | approved execution handoff |
+| Execution Cycle | Workspace State | reconciliation summary and state-update proposal |
+| Workspace State | Rule Governance | staged rule proposal requiring review |
+| Skill Workbench | Plugin package | validated unique Skill tree |
+| Evidence Audit | Execution Cycle | evidence-backed remediation handoff |
 
-## Release Gates
+## Stable Release Criteria
 
-- exactly seven authoritative skills;
+- exactly seven authoritative and seven packaged Skills;
 - thirteen project types with three required references each;
-- byte-equivalent plugin mirror;
-- exact runtime package allowlist;
-- deterministic package report and ZIP build;
-- 34 passing behavior cases;
-- repository, state, plugin, and CI validation.
+- schema `0.4.0` and transactional migration/rollback;
+- byte-equivalent Plugin mirror;
+- exact package allowlist and payload hash;
+- 34/34 current Behavior Acceptance cases;
+- writable Golden E2E and green Health;
+- byte-identical ZIP builds;
+- clean installation and exact seven-Skill discovery;
+- final branch and post-merge `main` validation.

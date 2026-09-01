@@ -4,7 +4,7 @@
   "package_version": "1.1.0",
   "package_root": "plugin/creator-toolchain",
   "file_count": 128,
-  "payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
+  "payload_sha256": "bfd5125eea614093bbf9f5e6818057f6ece9639cda79c4fa460a3e76256db6dd",
   "files": [
     {
       "path": ".codex-plugin/plugin.json",
@@ -12,7 +12,7 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "df21c6f7dc5539a4631a2a3c3c6e4a2d1bff306bbb22c56e05c4337ddae872b1"
+      "sha256": "ae921a3c8d83a795f3c3c18cacc89d10a06469ff67347d27459318cc73f0ca88"
     },
     {
       "path": "LICENSE",
@@ -20,7 +20,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "d28f42c9c369aab351c0bb545233526c586688b8b05adc3cf4de66ae7f7c352f"
+      "sha256": "ca86ebca3431c655a88b6e728b02c3fa66d5aa034b56b67865e258712c984c99"
     },
     {
       "path": "skills/creator-evidence-audit/SKILL.md",

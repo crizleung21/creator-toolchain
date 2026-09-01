@@ -1,7 +1,7 @@
 {
   "archive_path": "dist/creator-toolchain-v1.1.0.zip",
-  "archive_sha256": "c77acd7c24c559862e7a236a3ba3914cacee0d448691876606010f32ada935eb",
-  "archive_size": 88852,
+  "archive_sha256": "bc162305563e070bf237dd1e875afa7f22b1c256f24888ffd7d3ed826102cfb8",
+  "archive_size": 89378,
   "gates": {
     "behavior": "PASS",
     "clean_install": "PASS",
@@ -14,7 +14,7 @@
     "validator": "PASS",
     "version": "PASS"
   },
-  "generated_at": "2026-09-01T02:55:59Z",
+  "generated_at": "2026-09-01T04:28:44.093986Z",
   "installed_skills": [
     "creator-evidence-audit",
     "creator-execution-cycle",
@@ -24,10 +24,10 @@
     "creator-skill-workbench",
     "creator-workspace-manager"
   ],
-  "package_payload_sha256": "40b14421e74cfed6ba6d3b7cc14993273aff6b852f91c2b2ef58a89ec54b843d",
-  "recommended_next_action": "Complete Phase 9 documentation and final reconciliation before publishing v1.1.0.",
+  "package_payload_sha256": "bfd5125eea614093bbf9f5e6818057f6ece9639cda79c4fa460a3e76256db6dd",
+  "recommended_next_action": "Merge the final Phase 9 branch, require post-merge main validation, then publish v1.1.0 with the verified ZIP and checksum.",
   "schema_version": "1.0.0",
   "status": "PASS",
-  "tested_commit_sha": "fa535da0d98926fc816f9be0298eb617389054e1",
+  "tested_commit_sha": "176d55d909200223a92e13c23134c78ca2d57cdf",
   "version": "1.1.0"
 }
