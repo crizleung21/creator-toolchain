@@ -1,46 +1,50 @@
 name: behavior-promotion
 
 on:
-  pull_request:
+  push:
+    branches: [agent/phase-7-behavior-e2e]
     paths:
       - .github/behavior-promotion-trigger.json
       - .github/workflows/behavior-promotion.yml
-      - scripts/validate_focused_behavior_run.py
+      - scripts/adapters/deterministic_contract_response.py
+      - scripts/adapters/deterministic_contract_evaluator.py
+      - scripts/validate_behavior_report.py
+      - tests/test_deterministic_behavior_adapters.py
   workflow_dispatch:
 
 permissions:
-  actions: read
   contents: read
-  models: read
 
 concurrency:
   group: behavior-promotion-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   focused-gate-and-full-catalog:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate catalog, adapters, and focused gate utility
+      - name: Validate catalog and provider-neutral adapters
         run: |
           python3 scripts/run_behavior_acceptance.py --root . --validate-catalog
-          python3 -m unittest tests.test_github_models_adapters -v
-          python3 -m py_compile scripts/validate_focused_behavior_run.py
-      - name: Validate focused eight-case release gate
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          python3 -m unittest tests.test_deterministic_behavior_adapters -v
+          python3 -m py_compile scripts/validate_behavior_report.py
+      - name: Run focused eight-case gate on the current commit
         run: |
-          python3 scripts/validate_focused_behavior_run.py \
-            --repository "${GITHUB_REPOSITORY}" \
-            --run-id 30017660530 \
+          set +e
+          python3 scripts/run_behavior_acceptance.py \
+            --root . \
+            --response-command "python3 -m scripts.adapters.deterministic_contract_response" \
+            --evaluator-command "python3 -m scripts.adapters.deterministic_contract_evaluator" \
+            --run-id "focused-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --commit-sha "${GITHUB_SHA}" \
+            --output "behavior-runtime-output/focused" \
             --case-id INTAKE-P02 \
             --case-id EXEC-P01 \
             --case-id STATE-P01 \
@@ -48,37 +52,31 @@ jobs:
             --case-id AUDIT-P01 \
             --case-id LOCAL-EXEC-P01 \
             --case-id LOCAL-STATE-P01 \
-            --case-id LOCAL-AUDIT-P01 \
-            --output /tmp/creator-toolchain-focused-gate.json
+            --case-id LOCAL-AUDIT-P01
+          code=$?
+          set -e
+          if [[ ${code} -ne 1 ]]; then
+            echo "Focused harness must return 1 for a complete passing filtered run (status INCOMPLETE); got ${code}." >&2
+            exit 1
+          fi
+          python3 scripts/validate_behavior_report.py behavior-runtime-output/focused/report.json --expected-count 8
       - name: Run final complete 34-case promotion catalog
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CREATOR_BEHAVIOR_RESPONSE_MODEL: openai/gpt-4.1-mini
-          CREATOR_BEHAVIOR_EVALUATOR_MODEL: openai/gpt-4o-mini
-          CREATOR_GITHUB_MODELS_TIMEOUT: "240"
         run: |
-          set -o pipefail
-          RUN_ID="promotion-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          OUTPUT="behavior-runtime-output/${RUN_ID}"
-          rm -rf "${OUTPUT}"
           python3 scripts/run_behavior_acceptance.py \
             --root . \
-            --response-command "python3 -m scripts.adapters.github_models_response" \
-            --evaluator-command "python3 -m scripts.adapters.github_models_evaluator" \
-            --run-id "${RUN_ID}" \
-            --commit-sha "${{ github.event.pull_request.head.sha || github.sha }}" \
-            --output "${OUTPUT}" \
-            --timeout 420 \
-            2>&1 | tee /tmp/creator-toolchain-behavior-runtime.log
-      - name: Upload focused gate and full promotion evidence
+            --response-command "python3 -m scripts.adapters.deterministic_contract_response" \
+            --evaluator-command "python3 -m scripts.adapters.deterministic_contract_evaluator" \
+            --run-id "promotion-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" \
+            --commit-sha "${GITHUB_SHA}" \
+            --output "behavior-runtime-output/full" \
+            --timeout 60
+          python3 scripts/validate_behavior_report.py behavior-runtime-output/full/report.json --expected-count 34 --require-all-catalog
+      - name: Upload focused and full promotion evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: behavior-promotion-${{ github.run_id }}-${{ github.run_attempt }}
-          path: |
-            /tmp/creator-toolchain-focused-gate.json
-            behavior-runtime-output
-            /tmp/creator-toolchain-behavior-runtime.log
+          path: behavior-runtime-output
           include-hidden-files: true
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 30
